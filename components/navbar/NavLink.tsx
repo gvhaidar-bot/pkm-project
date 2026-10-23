@@ -1,56 +1,77 @@
 "use client";
+
 import clsx from "clsx";
-import Link from "next/link"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { IoClose, IoMenu } from "react-icons/io5";
 
+const links = [
+  { label: "Beranda", href: "/" },
+  { label: "Profil", href: "/profil" },
+  { label: "Program", href: "/program" },
+  { label: "Fasilitas", href: "/fasilitas" },
+  { label: "Galeri", href: "/galeri" },
+  { label: "Berita", href: "/berita" },
+  { label: "Kontak", href: "/kontak" },
+];
+
 const NavLink = () => {
-    const [open, setOpen] = useState(false)
-    return (
-        <>
-            <button onClick={() => setOpen(!open)} className="inline-flex items-center p-2 justify-center text-sm text-gray-600 rounded-md md:hidden  hover:bg-gray-100" >
-                {!open ? <IoMenu size={30} /> : <IoClose size={30} />}
-            </button>
+  const [open, setOpen] = useState(false);
+  const pathname = usePathname();
 
-            <div className={clsx("w-full  md:block  md:w-auto", {
-                hidden: !open,
-            })}>
-                <ul className="flex flex-col bg-white  gap-4 text-sm space-y-4 rounded-2xl shadow-xl p-4">
-                    <li>
-                        <Link href="/" className="hover:text-green-500 hover:bg-green-200 block p-2 rounded-lg">
-                            Beranda
-                        </Link>
-                    </li>
-                    <li>
-                        <Link href="/tentang" className="hover:text-green-500 hover:bg-green-200 block p-2 rounded-lg">
-                            Profil
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
-                        </Link>
-                    </li>
-                    <li className="hover:text-green-500 hover:bg-green-200 block p-2 rounded-lg">
-                        <Link href="/layanan">
-                            Program
-                        </Link>
-                    </li>
-                    <li className="hover:text-green-500 hover:bg-green-200 block p-2 rounded-lg">
-                        <Link href="/galeri">
-                            Galeri
-                        </Link>
-                    </li>
-                    <li className="hover:text-green-500 hover:bg-green-200 block p-2 rounded-lg">
-                        <Link href="/berita">
-                            Berita
-                        </Link>
-                    </li>
-                    <li className="hover:text-green-500 hover:bg-green-200 block p-2 rounded-lg">
-                        <Link href="/kontak">
-                            Kontak
-                        </Link>
-                    </li>
-                </ul>
-            </div>
-        </>
-    )
-}
+  return (
+    <nav aria-label="Menu utama" className="lg:flex lg:items-center">
+      <button
+        type="button"
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+        aria-label={open ? "Tutup menu" : "Buka menu"}
+        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-dark transition-colors hover:bg-primary-soft lg:hidden"
+      >
+        {open ? <IoClose size={26} /> : <IoMenu size={26} />}
+      </button>
 
-export default NavLink
+      <div
+        className={clsx(
+          "absolute inset-x-4 top-[80px] rounded-2xl border border-line bg-white p-3 shadow-[0_16px_40px_rgba(11,91,62,0.14)] lg:static lg:block lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none",
+          { hidden: !open },
+        )}
+      >
+        <ul className="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-1">
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={() => setOpen(false)}
+                aria-current={isActive(link.href) ? "page" : undefined}
+                className={clsx(
+                  "flex min-h-11 items-center rounded-full px-4 py-2 text-base font-medium whitespace-nowrap transition-colors",
+                  isActive(link.href)
+                    ? "bg-primary-soft font-bold text-primary"
+                    : "text-ink hover:bg-primary-soft hover:text-primary",
+                )}
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+          <li className="pt-2 lg:hidden">
+            <Link
+              href="/kontak"
+              onClick={() => setOpen(false)}
+              className="flex min-h-11 items-center justify-center rounded-full bg-primary px-6 text-base font-semibold text-white transition-colors hover:bg-primary-dark"
+            >
+              Hubungi Kami
+            </Link>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default NavLink;
