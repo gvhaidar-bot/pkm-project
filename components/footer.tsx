@@ -28,28 +28,17 @@ const kontak = [
 const Footer = () => {
   return (
     <footer className="bg-primary-dark text-cream">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
+      <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
             <Link href="/" className="flex items-center gap-3" aria-label="Beranda Madrasah Tsanawiyah">
-              <Image
-                src="/logo.svg"
-                alt="Logo Madrasah Tsanawiyah"
-                width={48}
-                height={48}
-                className="h-12 w-12 shrink-0"
-              />
+              <Image src="/logo.svg" alt="Logo Madrasah Tsanawiyah" width={48} height={48} className="h-12 w-12 shrink-0" />
               <span className="flex flex-col leading-tight">
                 <span className="text-[17px] font-extrabold tracking-tight">Madrasah Tsanawiyah</span>
-                <span className="text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">
-                  Website Promosi Sekolah
-                </span>
+                <span className="text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">Website Promosi Sekolah</span>
               </span>
             </Link>
-            <p className="mt-5 text-base leading-relaxed text-cream/80">
-              Website promosi Madrasah Tsanawiyah untuk orang tua: profil sekolah, program unggulan,
-              fasilitas, galeri, prestasi, dan berita sekolah.
-            </p>
+            <p className="mt-5 text-base leading-relaxed text-cream/80">Website promosi Madrasah Tsanawiyah untuk orang tua: profil sekolah, program unggulan, fasilitas, galeri, prestasi, dan berita sekolah.</p>
           </div>
 
           <nav aria-label="Menu footer">
@@ -58,10 +47,7 @@ const Footer = () => {
             <ul className="mt-4">
               {menu.map((item) => (
                 <li key={item.href + item.label}>
-                  <Link
-                    href={item.href}
-                    className="flex min-h-11 items-center text-base text-cream/80 transition-colors hover:text-cream"
-                  >
+                  <Link href={item.href} className="flex min-h-11 items-center text-base text-cream/80 transition-colors hover:text-cream">
                     {item.label}
                   </Link>
                 </li>
@@ -75,10 +61,7 @@ const Footer = () => {
             <ul className="mt-4">
               {program.map((item) => (
                 <li key={item.label}>
-                  <Link
-                    href={item.href}
-                    className="flex min-h-11 items-center text-base text-cream/80 transition-colors hover:text-cream"
-                  >
+                  <Link href={item.href} className="flex min-h-11 items-center text-base text-cream/80 transition-colors hover:text-cream">
                     {item.label}
                   </Link>
                 </li>
@@ -97,10 +80,7 @@ const Footer = () => {
                 </div>
               ))}
             </dl>
-            <Link
-              href="/kontak"
-              className="mt-6 inline-flex min-h-11 items-center rounded-full bg-accent px-6 text-base font-semibold text-primary-dark transition-colors hover:bg-accent-soft"
-            >
+            <Link href="/kontak" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-accent px-6 text-base font-semibold text-primary-dark transition-colors hover:bg-accent-soft">
               Hubungi Kami
             </Link>
           </div>
