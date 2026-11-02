@@ -3,7 +3,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuPencil, LuPlus } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
-import TombolHapus from "./_components/TombolHapus";
+import TombolHapus from "@/components/admin/TombolHapus";
+import { hapusGuru } from "./actions";
 
 export const metadata = {
   title: "Kelola Guru — Panel Admin",
@@ -77,7 +78,7 @@ async function TabelGuru() {
                   >
                     <LuPencil className="h-5 w-5" aria-hidden="true" />
                   </Link>
-                  <TombolHapus id={guru.id} nama={guru.nama} />
+                  <TombolHapus nama={guru.nama} onHapus={() => hapusGuru(guru.id)} />
                 </div>
               </td>
             </tr>

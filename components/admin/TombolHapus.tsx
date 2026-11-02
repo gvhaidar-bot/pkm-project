@@ -2,16 +2,24 @@
 
 import { useState } from "react";
 import { LuTrash2 } from "react-icons/lu";
-import { hapusGuru } from "../actions";
 
-export default function TombolHapus({ id, nama }: { id: number; nama: string }) {
+export default function TombolHapus({
+  nama,
+  onHapus,
+}: {
+  nama: string;
+  onHapus: () => Promise<void>;
+}) {
   const [menunggu, setMenunggu] = useState(false);
 
   async function tangani() {
-    if (!confirm(`Hapus ${nama} dari daftar guru? Tindakan ini tidak bisa dibatalkan.`)) return;
+    if (!confirm(`Hapus "${nama}"? Tindakan ini tidak bisa dibatalkan.`)) return;
     setMenunggu(true);
-    await hapusGuru(id);
-    setMenunggu(false);
+    try {
+      await onHapus();
+    } finally {
+      setMenunggu(false);
+    }
   }
 
   return (
