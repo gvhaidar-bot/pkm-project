@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import {
   LuBuilding2,
   LuCalendarDays,
@@ -128,7 +128,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
     <div className="flex min-h-screen bg-cream">
       <aside className="hidden w-72 shrink-0 bg-primary-dark lg:block" aria-label="Sidebar admin">
         <div className="sticky top-0 h-screen">
-          <IsiSidebar />
+          <Suspense fallback={<div className="h-full" aria-hidden="true" />}>
+            <IsiSidebar />
+          </Suspense>
         </div>
       </aside>
 
@@ -144,7 +146,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             >
               <LuX className="h-6 w-6" aria-hidden="true" />
             </button>
-            <IsiSidebar onNavigate={() => setBuka(false)} />
+            <Suspense fallback={<div className="h-full" aria-hidden="true" />}>
+              <IsiSidebar onNavigate={() => setBuka(false)} />
+            </Suspense>
           </aside>
         </div>
       )}
