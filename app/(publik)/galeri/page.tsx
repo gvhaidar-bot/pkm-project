@@ -16,11 +16,12 @@ function formatTanggal(tanggal: Date) {
 }
 
 async function IsiGaleri() {
-  const daftar = await prisma.kegiatan.findMany({
-    where: { foto: { some: {} } },
+  const semua = await prisma.kegiatan.findMany({
     orderBy: { tanggal: "desc" },
     include: { foto: { orderBy: { urutan: "asc" } } },
   });
+
+  const daftar = semua.filter((k) => k.foto.length > 0 || k.gambarUrl);
 
   if (daftar.length === 0) {
     return (
@@ -35,33 +36,41 @@ async function IsiGaleri() {
 
   return (
     <div className="mt-10 space-y-12">
-      {daftar.map((kegiatan) => (
-        <section key={kegiatan.id} aria-label={kegiatan.judul}>
-          <div className="flex flex-wrap items-baseline justify-between gap-2">
-            <h2 className="text-2xl font-extrabold tracking-tight text-ink">{kegiatan.judul}</h2>
-            <p className="text-sm font-semibold text-muted">
-              {formatTanggal(kegiatan.tanggal)}
-              {kegiatan.lokasi ? ` · ${kegiatan.lokasi}` : ""}
-            </p>
-          </div>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
-            {kegiatan.foto.map((foto) => (
-              <figure key={foto.id} className="overflow-hidden rounded-2xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
-                <Image
-                  src={foto.url}
-                  alt={foto.caption || `Foto ${kegiatan.judul}`}
-                  width={600}
-                  height={450}
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-                {foto.caption && (
-                  <figcaption className="px-3 py-2 text-sm text-muted">{foto.caption}</figcaption>
-                )}
-              </figure>
-            ))}
-          </div>
-        </section>
-      ))}
+      {daftar.map((kegiatan) => {
+        const semuaFoto = [
+          ...(kegiatan.gambarUrl
+            ? [{ id: "sampul", url: kegiatan.gambarUrl, caption: null as string | null }]
+            : []),
+          ...kegiatan.foto,
+        ];
+        return (
+          <section key={kegiatan.id} aria-label={kegiatan.judul}>
+            <div className="flex flex-wrap items-baseline justify-between gap-2">
+              <h2 className="text-2xl font-extrabold tracking-tight text-ink">{kegiatan.judul}</h2>
+              <p className="text-sm font-semibold text-muted">
+                {formatTanggal(kegiatan.tanggal)}
+                {kegiatan.lokasi ? ` · ${kegiatan.lokasi}` : ""}
+              </p>
+            </div>
+            <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+              {semuaFoto.map((foto) => (
+                <figure key={foto.id} className="overflow-hidden rounded-2xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+                  <Image
+                    src={foto.url}
+                    alt={foto.caption || `Foto ${kegiatan.judul}`}
+                    width={600}
+                    height={450}
+                    className="aspect-[4/3] w-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                  {foto.caption && (
+                    <figcaption className="px-3 py-2 text-sm text-muted">{foto.caption}</figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
 }
