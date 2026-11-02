@@ -67,7 +67,8 @@ export default function FormPrestasi({ prestasi, aksi }: { prestasi?: DataPresta
             min={1900}
             max={2100}
             required
-            defaultValue={prestasi?.tahun ?? new Date().getFullYear()}
+            defaultValue={prestasi?.tahun ?? ""}
+            placeholder="mis. 2026"
             className={inputCls}
           />
         </div>
