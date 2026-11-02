@@ -4,6 +4,7 @@ import { useActionState, useState } from "react";
 import Image from "next/image";
 import { LuImagePlus, LuTrash2 } from "react-icons/lu";
 import { hapusFotoBerita, tambahFotoBerita } from "../actions";
+import MasukanFoto from "@/components/admin/MasukanFoto";
 
 export type FotoBerita = {
   id: number;
@@ -65,15 +66,15 @@ export default function GaleriBerita({
         </div>
       )}
 
-      <form action={jalankan} className="mt-4 flex flex-wrap items-center gap-3">
-        <input
-          id="foto-galeri"
-          name="foto"
-          type="file"
-          accept="image/*"
-          multiple
-          className="block w-full text-sm text-muted file:mr-4 file:min-h-11 file:rounded-full file:border-0 file:bg-primary-soft file:px-5 file:text-sm file:font-bold file:text-primary hover:file:bg-primary hover:file:text-white sm:w-auto"
-        />
+      <form action={jalankan} className="mt-4 flex flex-wrap items-end gap-3">
+        <div className="min-w-64 flex-1">
+          <MasukanFoto
+            id="foto-galeri"
+            label="Tambah foto galeri"
+            banyak
+            teksBantuan="Boleh pilih beberapa sekaligus. Maksimal 2 MB per foto."
+          />
+        </div>
         <button
           type="submit"
           disabled={menunggu}

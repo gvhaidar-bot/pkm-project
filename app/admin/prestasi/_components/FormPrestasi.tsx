@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { HasilAksi } from "../actions";
+import MasukanFoto from "@/components/admin/MasukanFoto";
 
 export type DataPrestasi = {
   id: number;
@@ -88,9 +89,6 @@ export default function FormPrestasi({ prestasi, aksi }: { prestasi?: DataPresta
       </div>
 
       <div>
-        <label htmlFor="foto" className="mb-1.5 block text-sm font-semibold text-ink">
-          Foto {prestasi ? "(kosongkan jika tidak diganti)" : ""}
-        </label>
         {prestasi?.gambarUrl && (
           <div className="mb-3">
             <Image
@@ -102,14 +100,7 @@ export default function FormPrestasi({ prestasi, aksi }: { prestasi?: DataPresta
             />
           </div>
         )}
-        <input
-          id="foto"
-          name="foto"
-          type="file"
-          accept="image/*"
-          className="block w-full text-sm text-muted file:mr-4 file:min-h-11 file:rounded-full file:border-0 file:bg-primary-soft file:px-5 file:text-sm file:font-bold file:text-primary hover:file:bg-primary hover:file:text-white"
-        />
-        <p className="mt-1.5 text-sm text-muted">Format gambar, maksimal 2 MB.</p>
+        <MasukanFoto label="Foto" catatan={prestasi ? "(kosongkan jika tidak diganti)" : undefined} />
       </div>
 
       {hasil?.error && (

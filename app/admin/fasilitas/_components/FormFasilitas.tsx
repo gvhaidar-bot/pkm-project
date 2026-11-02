@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { HasilAksi } from "../actions";
+import MasukanFoto from "@/components/admin/MasukanFoto";
 
 export type DataFasilitas = {
   id: number;
@@ -57,9 +58,6 @@ export default function FormFasilitas({ fasilitas, aksi }: { fasilitas?: DataFas
       </div>
 
       <div>
-        <label htmlFor="foto" className="mb-1.5 block text-sm font-semibold text-ink">
-          Foto {fasilitas ? "(kosongkan jika tidak diganti)" : ""}
-        </label>
         {fasilitas?.gambarUrl && (
           <div className="mb-3">
             <Image
@@ -71,14 +69,11 @@ export default function FormFasilitas({ fasilitas, aksi }: { fasilitas?: DataFas
             />
           </div>
         )}
-        <input
-          id="foto"
-          name="foto"
-          type="file"
-          accept="image/*"
-          className="block w-full text-sm text-muted file:mr-4 file:min-h-11 file:rounded-full file:border-0 file:bg-primary-soft file:px-5 file:text-sm file:font-bold file:text-primary hover:file:bg-primary hover:file:text-white"
+        <MasukanFoto
+          label="Foto"
+          catatan={fasilitas ? "(kosongkan jika tidak diganti)" : undefined}
+          teksBantuan="Format gambar, maksimal 2 MB. Rasio 4:3 disarankan."
         />
-        <p className="mt-1.5 text-sm text-muted">Format gambar, maksimal 2 MB. Rasio 4:3 disarankan.</p>
       </div>
 
       <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
