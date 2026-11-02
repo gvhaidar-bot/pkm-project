@@ -5,10 +5,12 @@ import { LuTrash2 } from "react-icons/lu";
 
 export default function TombolHapus({
   nama,
-  onHapus,
+  id,
+  aksi,
 }: {
   nama: string;
-  onHapus: () => Promise<void>;
+  id: number;
+  aksi: (id: number) => Promise<void>;
 }) {
   const [menunggu, setMenunggu] = useState(false);
 
@@ -16,7 +18,7 @@ export default function TombolHapus({
     if (!confirm(`Hapus "${nama}"? Tindakan ini tidak bisa dibatalkan.`)) return;
     setMenunggu(true);
     try {
-      await onHapus();
+      await aksi(id);
     } finally {
       setMenunggu(false);
     }

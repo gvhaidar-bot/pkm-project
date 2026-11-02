@@ -78,7 +78,7 @@ async function TabelGuru() {
                   >
                     <LuPencil className="h-5 w-5" aria-hidden="true" />
                   </Link>
-                  <TombolHapus nama={guru.nama} onHapus={() => hapusGuru(guru.id)} />
+                  <TombolHapus nama={guru.nama} id={guru.id} aksi={hapusGuru} />
                 </div>
               </td>
             </tr>

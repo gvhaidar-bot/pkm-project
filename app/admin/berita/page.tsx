@@ -89,7 +89,7 @@ async function TabelBerita() {
                   >
                     <LuPencil className="h-5 w-5" aria-hidden="true" />
                   </Link>
-                  <TombolHapus nama={berita.judul} onHapus={() => hapusBerita(berita.id)} />
+                  <TombolHapus nama={berita.judul} id={berita.id} aksi={hapusBerita} />
                 </div>
               </td>
             </tr>
