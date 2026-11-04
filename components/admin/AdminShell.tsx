@@ -13,6 +13,7 @@ import {
   LuLogOut,
   LuMenu,
   LuNewspaper,
+  LuShapes,
   LuTrophy,
   LuUsers,
   LuX,
@@ -28,6 +29,7 @@ const menuKonten = [
   { label: "Prestasi", href: "/admin/prestasi", icon: LuTrophy },
   { label: "Kegiatan", href: "/admin/kegiatan", icon: LuCalendarDays },
   { label: "Program Akademik", href: "/admin/program-akademik", icon: LuGraduationCap },
+  { label: "Ekstrakurikuler", href: "/admin/ekstrakurikuler", icon: LuShapes },
 ];
 
 function tautanAktif(pathname: string, href: string) {

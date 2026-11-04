@@ -27,14 +27,16 @@ async function Sapaan() {
 }
 
 async function KartuStatistik() {
-  const [berita, fasilitas, guru, prestasi, kegiatan, programAkademik] = await Promise.all([
-    prisma.berita.count(),
-    prisma.fasilitas.count(),
-    prisma.guru.count(),
-    prisma.prestasi.count(),
-    prisma.kegiatan.count(),
-    prisma.programAkademik.count(),
-  ]);
+  const [berita, fasilitas, guru, prestasi, kegiatan, programAkademik, ekstrakurikuler] =
+    await Promise.all([
+      prisma.berita.count(),
+      prisma.fasilitas.count(),
+      prisma.guru.count(),
+      prisma.prestasi.count(),
+      prisma.kegiatan.count(),
+      prisma.programAkademik.count(),
+      prisma.ekstrakurikuler.count(),
+    ]);
 
   const data = [
     { label: "Berita", jumlah: berita, href: "/admin/berita" },
@@ -43,6 +45,7 @@ async function KartuStatistik() {
     { label: "Prestasi", jumlah: prestasi, href: "/admin/prestasi" },
     { label: "Kegiatan", jumlah: kegiatan, href: "/admin/kegiatan" },
     { label: "Program Akademik", jumlah: programAkademik, href: "/admin/program-akademik" },
+    { label: "Ekstrakurikuler", jumlah: ekstrakurikuler, href: "/admin/ekstrakurikuler" },
   ];
 
   return (
@@ -68,7 +71,7 @@ async function KartuStatistik() {
 function KerangkaStatistik() {
   return (
     <div className="grid animate-pulse grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-      {[0, 1, 2, 3, 4, 5].map((i) => (
+      {[0, 1, 2, 3, 4, 5, 6].map((i) => (
         <div key={i} className="h-40 rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
       ))}
     </div>

@@ -156,3 +156,19 @@ model ProgramAkademik {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+model Ekstrakurikuler {
+  id            Int      @id @default(autoincrement())
+  nama          String
+  slug          String   @unique
+  deskripsi     String
+  tujuan        String   @db.Text
+  kegiatanRutin String   @db.Text
+  fasilitas     String   @db.Text
+  jumlahAnggota Int?
+  ikon          String   @default("sains")
+  aktif         Boolean  @default(true)
+  urutan        Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
