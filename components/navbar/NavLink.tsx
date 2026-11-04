@@ -10,7 +10,7 @@ import { LuChevronDown } from "react-icons/lu";
 const tentangAnak = [
   { label: "Profil Sekolah", href: "/profil" },
   { label: "Visi & Misi", href: "/visi-misi" },
-  { label: "Staff & Guru", href: "/profil#guru" },
+  { label: "Staff & Guru", href: "/guru" },
 ];
 
 const links = [
@@ -36,7 +36,7 @@ const NavLink = () => {
     const path = href.split("#")[0];
     return path === "/" ? pathname === "/" : pathname.startsWith(path);
   };
-  const tentangAktif = pathname.startsWith("/profil") || pathname === "/visi-misi";
+  const tentangAktif = pathname.startsWith("/profil") || pathname === "/visi-misi" || pathname === "/guru";
 
   const tutupSemua = () => {
     setOpen(false);

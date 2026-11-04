@@ -1,90 +1,61 @@
-import { Suspense } from "react";
-import Image from "next/image";
-import { prisma } from "@/lib/prisma";
-
 export const metadata = {
-  title: "Profil — Madrasah Tsanawiyah",
-  description: "Profil Madrasah Tsanawiyah: guru dan tenaga kependidikan.",
+  title: "Profil Sekolah — Madrasah Tsanawiyah",
+  description: "Profil Madrasah Tsanawiyah: sejarah dan identitas sekolah.",
 };
 
-async function DaftarGuru() {
-  const daftar = await prisma.guru.findMany({
-    where: { aktif: true },
-    orderBy: [{ urutan: "asc" }, { nama: "asc" }],
-  });
-
-  if (daftar.length === 0) {
-    return (
-      <div className="mt-10 rounded-3xl bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
-        <p className="text-lg font-bold text-ink">Data guru belum tersedia</p>
-        <p className="mt-2 text-base text-muted">Daftar guru sedang disiapkan oleh pihak madrasah.</p>
-      </div>
-    );
-  }
-
-  return (
-    <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {daftar.map((guru) => (
-        <article
-          key={guru.id}
-          className="overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
-        >
-          {guru.fotoUrl ? (
-            <Image
-              src={guru.fotoUrl}
-              alt={`Foto ${guru.nama}, ${guru.jabatan}`}
-              width={400}
-              height={400}
-              className="aspect-square w-full object-cover"
-            />
-          ) : (
-            <div
-              className="flex aspect-square w-full items-center justify-center bg-primary-soft"
-              aria-hidden="true"
-            >
-              <span className="text-6xl font-extrabold text-primary">
-                {guru.nama.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
-          <div className="p-5">
-            <h2 className="text-lg font-bold tracking-tight text-ink">{guru.nama}</h2>
-            <p className="mt-1 text-sm font-bold tracking-wide text-primary uppercase">{guru.jabatan}</p>
-            {guru.bio && <p className="mt-3 text-[15px] leading-relaxed text-muted">{guru.bio}</p>}
-          </div>
-        </article>
-      ))}
-    </div>
-  );
-}
-
-function KerangkaGuru() {
-  return (
-    <div className="mt-10 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
-      {[0, 1, 2, 3].map((i) => (
-        <div key={i} className="h-80 rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
-      ))}
-    </div>
-  );
-}
+const identitas = [
+  { label: "Nama Madrasah", nilai: "[Nama Madrasah Tsanawiyah]" },
+  { label: "NPSN", nilai: "[NPSN]" },
+  { label: "Alamat", nilai: "[Alamat lengkap madrasah]" },
+  { label: "Telepon / WhatsApp", nilai: "[Nomor telepon]" },
+  { label: "Email", nilai: "[Email resmi]" },
+  { label: "Tahun Berdiri", nilai: "[Tahun berdiri]" },
+  { label: "Status", nilai: "[Swasta / Negeri]" },
+];
 
 export default function ProfilPage() {
   return (
     <div className="bg-cream">
       <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
-        <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Profil Sekolah</p>
-        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">
-          Guru & Tenaga Kependidikan
-        </h1>
+        <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Tentang Kami</p>
+        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">Profil Sekolah</h1>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          Para pendidik yang membersamai putra-putri Anda setiap hari di madrasah.
+          Mengenal lebih dekat madrasah tempat putra-putri Anda menimba ilmu.
         </p>
 
-        <div id="guru" className="scroll-mt-24">
-          <Suspense fallback={<KerangkaGuru />}>
-            <DaftarGuru />
-          </Suspense>
-        </div>
+        <section
+          aria-label="Sejarah madrasah"
+          className="mt-10 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
+        >
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Sejarah Singkat</h2>
+          <div className="mt-4 space-y-3 rounded-2xl border-2 border-dashed border-line bg-cream px-6 py-8">
+            <p className="text-base leading-relaxed text-muted">
+              [Sejarah berdirinya madrasah — menunggu data resmi dari pihak sekolah]
+            </p>
+          </div>
+        </section>
+
+        <section
+          aria-label="Identitas madrasah"
+          className="mt-6 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
+        >
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Identitas Sekolah</h2>
+          <dl className="mt-4 overflow-hidden rounded-2xl border border-line">
+            {identitas.map((item, i) => (
+              <div
+                key={item.label}
+                className={`grid grid-cols-1 gap-1 px-5 py-4 sm:grid-cols-[220px_1fr] sm:gap-4 ${
+                  i % 2 === 0 ? "bg-cream" : "bg-white"
+                }`}
+              >
+                <dt className="text-sm font-bold tracking-wide text-primary-dark uppercase">
+                  {item.label}
+                </dt>
+                <dd className="text-base text-muted">{item.nilai}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
       </div>
     </div>
   );
