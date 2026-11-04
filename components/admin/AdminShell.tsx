@@ -8,6 +8,7 @@ import {
   LuBuilding2,
   LuCalendarDays,
   LuGlobe,
+  LuGraduationCap,
   LuLayoutDashboard,
   LuLogOut,
   LuMenu,
@@ -26,6 +27,7 @@ const menuKonten = [
   { label: "Guru", href: "/admin/guru", icon: LuUsers },
   { label: "Prestasi", href: "/admin/prestasi", icon: LuTrophy },
   { label: "Kegiatan", href: "/admin/kegiatan", icon: LuCalendarDays },
+  { label: "Program Akademik", href: "/admin/program-akademik", icon: LuGraduationCap },
 ];
 
 function tautanAktif(pathname: string, href: string) {
