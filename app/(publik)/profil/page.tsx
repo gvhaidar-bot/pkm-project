@@ -80,9 +80,11 @@ export default function ProfilPage() {
           Para pendidik yang membersamai putra-putri Anda setiap hari di madrasah.
         </p>
 
-        <Suspense fallback={<KerangkaGuru />}>
-          <DaftarGuru />
-        </Suspense>
+        <div id="guru" className="scroll-mt-24">
+          <Suspense fallback={<KerangkaGuru />}>
+            <DaftarGuru />
+          </Suspense>
+        </div>
       </div>
     </div>
   );
