@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { connection } from "next/server";
 import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 import { auth } from "@/auth";
@@ -10,6 +11,7 @@ export const metadata = {
 };
 
 async function Sapaan() {
+  await connection();
   const session = await auth();
   return (
     <div>
