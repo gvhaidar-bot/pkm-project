@@ -13,9 +13,14 @@ const tentangAnak = [
   { label: "Staff & Guru", href: "/guru" },
 ];
 
+const programAnak = [
+  { label: "Akademik", href: "/program/akademik" },
+  { label: "Ekstrakurikuler", href: "/program/ekstrakurikuler" },
+  { label: "Program Unggulan", href: "/program/unggulan" },
+];
+
 const links = [
   { label: "Beranda", href: "/" },
-  { label: "Program", href: "/program" },
   { label: "Fasilitas", href: "/fasilitas" },
   { label: "Galeri", href: "/galeri" },
   { label: "Berita", href: "/berita" },
@@ -30,6 +35,7 @@ const tautanCls = (aktif: boolean) =>
 const NavLink = () => {
   const [open, setOpen] = useState(false);
   const [tentangBuka, setTentangBuka] = useState(false);
+  const [programBuka, setProgramBuka] = useState(false);
   const pathname = usePathname();
 
   const isActive = (href: string) => {
@@ -37,10 +43,12 @@ const NavLink = () => {
     return path === "/" ? pathname === "/" : pathname.startsWith(path);
   };
   const tentangAktif = pathname.startsWith("/profil") || pathname === "/visi-misi" || pathname === "/guru";
+  const programAktif = pathname.startsWith("/program");
 
   const tutupSemua = () => {
     setOpen(false);
     setTentangBuka(false);
+    setProgramBuka(false);
   };
 
   return (
@@ -113,6 +121,65 @@ const NavLink = () => {
             {tentangBuka && (
               <ul className="mt-1 mb-1 ml-4 space-y-1 border-l-2 border-primary-soft pl-3">
                 {tentangAnak.map((anak) => (
+                  <li key={anak.href}>
+                    <Link
+                      href={anak.href}
+                      onClick={tutupSemua}
+                      className="flex min-h-11 items-center rounded-xl px-3 py-2 text-base font-medium text-ink transition-colors hover:bg-primary-soft hover:text-primary"
+                    >
+                      {anak.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          <li className="group relative hidden lg:block">
+            <button
+              type="button"
+              aria-haspopup="true"
+              className={clsx(tautanCls(programAktif), "gap-1")}
+            >
+              Program
+              <LuChevronDown
+                className="h-4 w-4 transition-transform duration-200 group-hover:rotate-180"
+                aria-hidden="true"
+              />
+            </button>
+            <div className="invisible absolute top-full left-0 z-50 min-w-60 translate-y-2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
+              <ul className="overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-[0_16px_40px_rgba(11,91,62,0.14)]">
+                {programAnak.map((anak) => (
+                  <li key={anak.href}>
+                    <Link
+                      href={anak.href}
+                      aria-current={isActive(anak.href) ? "page" : undefined}
+                      className="flex min-h-11 items-center rounded-xl px-4 py-2 text-base font-medium whitespace-nowrap text-ink transition-colors hover:bg-primary-soft hover:text-primary"
+                    >
+                      {anak.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
+
+          <li className="lg:hidden">
+            <button
+              type="button"
+              onClick={() => setProgramBuka(!programBuka)}
+              aria-expanded={programBuka}
+              className={clsx(tautanCls(programAktif), "w-full justify-between")}
+            >
+              Program
+              <LuChevronDown
+                className={clsx("h-5 w-5 transition-transform duration-200", programBuka && "rotate-180")}
+                aria-hidden="true"
+              />
+            </button>
+            {programBuka && (
+              <ul className="mt-1 mb-1 ml-4 space-y-1 border-l-2 border-primary-soft pl-3">
+                {programAnak.map((anak) => (
                   <li key={anak.href}>
                     <Link
                       href={anak.href}
