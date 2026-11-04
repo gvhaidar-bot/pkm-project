@@ -1,9 +1,44 @@
+import { LuCheck, LuGlobe, LuHeart, LuMedal, LuTrophy } from "react-icons/lu";
+import type { IconType } from "react-icons";
+
 export const metadata = {
   title: "Program Unggulan — Madrasah Tsanawiyah",
   description: "Program unggulan Madrasah Tsanawiyah.",
 };
 
-const programUnggulan = [1, 2, 3];
+type Program = {
+  nama: string;
+  deskripsi: string;
+  keunggulan: string[];
+  Icon: IconType;
+};
+
+const daftarProgram: Program[] = [
+  {
+    nama: "[Program Unggulan 1]",
+    deskripsi: "[Deskripsi program unggulan 1 — menunggu data resmi dari pihak sekolah]",
+    keunggulan: ["[Keunggulan 1]", "[Keunggulan 2]", "[Keunggulan 3]", "[Keunggulan 4]"],
+    Icon: LuTrophy,
+  },
+  {
+    nama: "[Program Unggulan 2]",
+    deskripsi: "[Deskripsi program unggulan 2 — menunggu data resmi dari pihak sekolah]",
+    keunggulan: ["[Keunggulan 1]", "[Keunggulan 2]", "[Keunggulan 3]", "[Keunggulan 4]"],
+    Icon: LuGlobe,
+  },
+  {
+    nama: "[Program Unggulan 3]",
+    deskripsi: "[Deskripsi program unggulan 3 — menunggu data resmi dari pihak sekolah]",
+    keunggulan: ["[Keunggulan 1]", "[Keunggulan 2]", "[Keunggulan 3]", "[Keunggulan 4]"],
+    Icon: LuMedal,
+  },
+  {
+    nama: "[Program Unggulan 4]",
+    deskripsi: "[Deskripsi program unggulan 4 — menunggu data resmi dari pihak sekolah]",
+    keunggulan: ["[Keunggulan 1]", "[Keunggulan 2]", "[Keunggulan 3]", "[Keunggulan 4]"],
+    Icon: LuHeart,
+  },
+];
 
 export default function UnggulanPage() {
   return (
@@ -15,23 +50,27 @@ export default function UnggulanPage() {
           Program khas yang menjadi ciri khas dan kebanggaan madrasah kami.
         </p>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {programUnggulan.map((nomor) => (
+        <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-2">
+          {daftarProgram.map((program) => (
             <article
-              key={nomor}
-              className="flex flex-col rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
+              key={program.nama}
+              className="rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
             >
-              <div
-                className="flex h-36 items-center justify-center rounded-2xl bg-primary-soft px-6"
-                aria-hidden="true"
-              >
-                <span className="text-center text-lg font-extrabold text-primary">
-                  [Program Unggulan {nomor}]
-                </span>
+              <div className="flex items-center gap-3">
+                <program.Icon className="h-8 w-8 text-accent" aria-hidden="true" />
+                <h2 className="text-2xl font-extrabold tracking-tight text-primary">
+                  {program.nama}
+                </h2>
               </div>
-              <p className="mt-4 flex-1 text-[15px] leading-relaxed text-muted">
-                [Deskripsi program unggulan {nomor} — menunggu data resmi dari pihak sekolah]
-              </p>
+              <p className="mt-4 text-base leading-relaxed text-muted">{program.deskripsi}</p>
+              <ul className="mt-5 space-y-2.5">
+                {program.keunggulan.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-base text-muted">
+                    <LuCheck className="mt-1 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
             </article>
           ))}
         </div>
