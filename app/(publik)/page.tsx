@@ -3,12 +3,10 @@ import Hero from "@/components/Hero";
 import Statistik from "@/components/home/Statistik";
 import KenapaMemilihKami from "@/components/home/KenapaMemilihKami";
 import ProfilTeaser from "@/components/home/ProfilTeaser";
-import ProgramTeaser from "@/components/home/ProgramTeaser";
+import BeritaTeaser from "@/components/home/BeritaTeaser";
 import FasilitasTeaser from "@/components/home/FasilitasTeaser";
 import GaleriTeaser from "@/components/home/GaleriTeaser";
 import PrestasiTeaser from "@/components/home/PrestasiTeaser";
-import BeritaTeaser from "@/components/home/BeritaTeaser";
-import Testimoni from "@/components/home/Testimoni";
 import CtaPenutup from "@/components/home/CtaPenutup";
 
 function KerangkaKartu() {
@@ -40,7 +38,7 @@ export default function Home() {
       <KenapaMemilihKami />
       <ProfilTeaser />
       <Suspense fallback={<KerangkaKartu />}>
-        <ProgramTeaser />
+        <BeritaTeaser />
       </Suspense>
       <Suspense fallback={<KerangkaKartu />}>
         <FasilitasTeaser />
@@ -51,10 +49,6 @@ export default function Home() {
       <Suspense fallback={<KerangkaKartu />}>
         <PrestasiTeaser />
       </Suspense>
-      <Suspense fallback={<KerangkaKartu />}>
-        <BeritaTeaser />
-      </Suspense>
-      <Testimoni />
       <CtaPenutup />
     </div>
   );

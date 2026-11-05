@@ -215,20 +215,18 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
 
   `Hero (krem + foto) → Pita Statistik (hijau) → Krem (kartu putih) → CTA (hijau tua) → Footer (hijau tua)`
 
-- Urutan section homepage (diperbarui 2026-11-05 atas perintah Haidar, mengikuti pola SMAN 19 & SMAN 7 Jakarta; setiap section teaser mengarah ke halaman lengkapnya):
+- Urutan section homepage (diperbarui 2026-11-05 atas perintah Haidar, mengikuti pola SMAN 19 & SMAN 7 Jakarta; setiap section teaser mengarah ke halaman lengkapnya. Testimoni dihapus 2026-11-05; Program Akademik diganti Berita di posisi yang sama):
 
   1. Hero
   2. Statistik (pita hijau, angka live dari database)
   3. Kenapa Orang Tua Memilih Kami (4 kartu)
   4. Profil Sekolah (teaser tentang kami → /profil)
-  5. Program Akademik (3 kartu live → /program/akademik)
+  5. Berita & Agenda (3 kartu live → /berita)
   6. Fasilitas (4 kartu live → /fasilitas)
   7. Galeri (6 foto live → /galeri)
   8. Prestasi (4 item live)
-  9. Berita & Agenda (3 kartu live → /berita)
-  10. Testimoni Orang Tua (placeholder)
-  11. CTA penutup (→ /profil + /program; JANGAN ke /kontak karena masih 404)
-  12. Footer
+  9. CTA penutup (→ /profil + /program; JANGAN ke /kontak karena masih 404)
+  10. Footer
 
 - Menu utama terkunci, tujuh item ini: **Beranda, Tentang, Program, Fasilitas, Galeri, Berita, Kontak.** Item **Tentang** berupa dropdown berisi **Profil Sekolah** (`/profil`), **Visi & Misi** (`/visi-misi`), dan **Staff & Guru** (`/guru`). Item **Program** berupa dropdown berisi **Akademik** (`/program/akademik`), **Ekstrakurikuler** (`/program/ekstrakurikuler`), dan **Program Unggulan** (`/program/unggulan`); halaman `/program` sendiri menjadi indeks ketiga program tersebut. Tidak ada menu lain di navbar. (Perubahan 2026-11-04 atas perintah pemilik project: "Profil" sebagai item tunggal diganti dropdown "Tentang"; halaman Profil Sekolah dan Staff & Guru dipisah; "Program" dijadikan dropdown mengikuti pola Tentang.)
 - Semua target sentuh (tombol, menu, tautan kartu) minimal setinggi **44px**.
