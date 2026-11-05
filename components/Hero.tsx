@@ -1,5 +1,5 @@
 import HeroActions from "./hero/HeroActions";
-import HeroSlider from "./hero/HeroSlider";
+import HeroStack from "./hero/HeroStack";
 
 const Hero = () => {
   return (
@@ -15,7 +15,7 @@ const Hero = () => {
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-cream/80 md:text-lg">Kenali profil sekolah, program unggulan, fasilitas, dan prestasi kami — semua informasi yang orang tua butuhkan, dalam satu tempat.</p>
           <HeroActions />
         </div>
-        <HeroSlider />
+        <HeroStack />
       </div>
     </section>
   );
