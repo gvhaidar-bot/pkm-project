@@ -174,7 +174,7 @@ File ini adalah aturan desain yang **wajib** diikuti setiap AI/agent yang menger
 Palet ini terkunci. Agent tidak boleh memperkenalkan warna baru.
 
 - **Primary ({colors.primary}, #0B5B3E):** Hijau MTS. Warna utama merek — tombol utama, judul aksen, ikon, tautan, dan elemen interaktif utama.
-- **Primary Dark ({colors.primary-dark}, #1E3932):** Hijau sangat tua. Untuk latar hero, pita statistik boleh memakai Primary, dan Footer selalu memakai warna ini.
+- **Primary Dark ({colors.primary-dark}, #1E3932):** Hijau sangat tua. Hero memakai krem sejak 2026-11-05 (agar tidak sama dengan footer); pita statistik boleh memakai Primary, dan Footer selalu memakai warna ini.
 - **Primary Soft ({colors.primary-soft}, #E7F0EB):** Hijau sangat muda. Untuk latar chip, badge, dan kartu yang dipilih/aktif. Bukan untuk latar section besar.
 - **Accent ({colors.accent}, #C9A227):** Emas. Hanya untuk aksen kecil yang penting — garis pembatas pendek, ikon bintang/geometris, label-caps di atas judul, angka statistik, dan tombol emas khusus di atas latar hijau tua. Emas **tidak pernah** dipakai untuk teks isi, dan tidak pernah untuk teks kecil di atas latar putih/krem karena kontrasnya tidak cukup.
 - **Accent Soft ({colors.accent-soft}, #CBA258):** Emas lembut untuk hover aksen dan detail pola geometris.
@@ -213,20 +213,22 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
 - Grid desktop 12 kolom. Kartu program/fasilitas: **3 kolom di desktop, 2 kolom di tablet, 1 kolom di HP.** Tidak pernah 4 kolom untuk kartu berisi teks.
 - Jarak antar-section adalah {spacing.section} (96px) di desktop dan 64px di HP. Ritme latar section homepage harus bergantian:
 
-  `Hero (hijau tua + foto) → Krem → Putih → Pita Statistik (hijau) → Krem → Putih → Footer (hijau tua)`
+  `Hero (krem + foto) → Pita Statistik (hijau) → Krem (kartu putih) → CTA (hijau tua) → Footer (hijau tua)`
 
-- Urutan section homepage terkunci, tidak boleh ditambah, dikurangi, atau ditukar tanpa persetujuan pemilik project:
+- Urutan section homepage (diperbarui 2026-11-05 atas perintah Haidar, mengikuti pola SMAN 19 & SMAN 7 Jakarta; setiap section teaser mengarah ke halaman lengkapnya):
 
   1. Hero
-  2. Statistik / keunggulan singkat
-  3. Program Unggulan
-  4. Kenapa Orang Tua Memilih Kami
-  5. Fasilitas (galeri foto)
-  6. Prestasi
-  7. Berita & Agenda
-  8. Testimoni Orang Tua
-  9. CTA penutup: Hubungi Sekolah / Kunjungi Sekolah
-  10. Footer
+  2. Statistik (pita hijau, angka live dari database)
+  3. Kenapa Orang Tua Memilih Kami (4 kartu)
+  4. Profil Sekolah (teaser tentang kami → /profil)
+  5. Program Akademik (3 kartu live → /program/akademik)
+  6. Fasilitas (4 kartu live → /fasilitas)
+  7. Galeri (6 foto live → /galeri)
+  8. Prestasi (4 item live)
+  9. Berita & Agenda (3 kartu live → /berita)
+  10. Testimoni Orang Tua (placeholder)
+  11. CTA penutup (→ /profil + /program; JANGAN ke /kontak karena masih 404)
+  12. Footer
 
 - Menu utama terkunci, tujuh item ini: **Beranda, Tentang, Program, Fasilitas, Galeri, Berita, Kontak.** Item **Tentang** berupa dropdown berisi **Profil Sekolah** (`/profil`), **Visi & Misi** (`/visi-misi`), dan **Staff & Guru** (`/guru`). Item **Program** berupa dropdown berisi **Akademik** (`/program/akademik`), **Ekstrakurikuler** (`/program/ekstrakurikuler`), dan **Program Unggulan** (`/program/unggulan`); halaman `/program` sendiri menjadi indeks ketiga program tersebut. Tidak ada menu lain di navbar. (Perubahan 2026-11-04 atas perintah pemilik project: "Profil" sebagai item tunggal diganti dropdown "Tentang"; halaman Profil Sekolah dan Staff & Guru dipisah; "Program" dijadikan dropdown mengikuti pola Tentang.)
 - Semua target sentuh (tombol, menu, tautan kartu) minimal setinggi **44px**.
@@ -270,7 +272,7 @@ Mengikuti pola MTs YPPMI: tepat **tiga kartu** di homepage — contoh pola isiny
 
 ### Pita Statistik
 
-Latar Primary, empat angka maksimal, angka besar berwarna putih dan label kecil berwarna Accent Soft di bawahnya. **Agent tidak boleh mengarang angka.** Jika data asli (jumlah siswa, guru, prestasi, alumni) belum diberikan pemilik project, tulis placeholder yang jelas seperti `[Jumlah Siswa]` — jangan mengisi angka karangan.
+Latar Primary, empat angka maksimal, angka besar berwarna putih dan label kecil berwarna Accent Soft di bawahnya. **Angka diambil LIVE dari database** (jumlah Guru, Program Akademik, Ekstrakurikuler, dan Fasilitas yang aktif); stat yang masih 0 disembunyikan otomatis. **Agent tidak boleh mengarang angka** — jumlah siswa/alumni tidak ditampilkan karena tidak ada di database.
 
 ### Kartu Fasilitas & Galeri
 
