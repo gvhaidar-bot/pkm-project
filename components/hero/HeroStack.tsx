@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { CSSProperties, PointerEvent as ReactPointerEvent } from "react";
-import { LuArrowUpRight, LuHeart } from "react-icons/lu";
 
 const foto = [
   {
@@ -213,16 +212,6 @@ export default function HeroStack() {
           </div>
         );
       })}
-      <div className="absolute bottom-5 left-5 z-50 rounded-2xl bg-white px-5 py-4 text-ink shadow-xl">
-        <span className="absolute -top-4 -right-4 flex h-9 w-9 items-center justify-center rounded-full bg-accent text-white shadow-md" aria-hidden="true">
-          <LuHeart className="h-5 w-5 fill-current" />
-        </span>
-        <p className="flex items-center gap-1 text-3xl font-extrabold tracking-tight">
-          [Jumlah]
-          <LuArrowUpRight className="h-6 w-6" aria-hidden="true" />
-        </p>
-        <p className="mt-0.5 text-sm text-muted">Siswa</p>
-      </div>
     </div>
   );
 }
