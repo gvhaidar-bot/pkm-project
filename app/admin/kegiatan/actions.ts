@@ -1,31 +1,15 @@
 "use server";
 
-import { mkdir, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { MAKS_FOTO_GALERI, hapusBerkas, simpanFoto } from "@/lib/upload";
+import { bacaId, cekPanjang, pesanGalat, wajibAdmin } from "@/lib/admin";
+import type { HasilAksi } from "@/lib/hasil";
 
-const DIREKTORI = join(process.cwd(), "public", "uploads", "kegiatan");
-const MAKS_UKURAN = 2 * 1024 * 1024;
+export type { HasilAksi };
 
-export type HasilAksi = { error?: string } | null;
-
-async function simpanFoto(file: unknown): Promise<string | null> {
-  if (!(file instanceof File) || file.size === 0) return null;
-  if (!file.type.startsWith("image/")) throw new Error("File foto harus berupa gambar.");
-  if (file.size > MAKS_UKURAN) throw new Error("Ukuran foto maksimal 2 MB.");
-  await mkdir(DIREKTORI, { recursive: true });
-  const ekstensi = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const namaBerkas = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ekstensi}`;
-  await writeFile(join(DIREKTORI, namaBerkas), Buffer.from(await file.arrayBuffer()));
-  return `/uploads/kegiatan/${namaBerkas}`;
-}
-
-async function hapusBerkas(url: string | null) {
-  if (!url || !url.startsWith("/uploads/kegiatan/")) return;
-  await unlink(join(process.cwd(), "public", url)).catch(() => undefined);
-}
+const FOLDER = "kegiatan";
 
 function muatUlang() {
   revalidatePath("/admin/kegiatan");
@@ -38,7 +22,11 @@ function bacaTanggal(nilai: FormDataEntryValue | null): Date | null {
   return isNaN(d.getTime()) ? null : d;
 }
 
-export async function tambahKegiatan(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
+export async function tambahKegiatan(
+  _sebelumnya: HasilAksi,
+  formData: FormData,
+): Promise<HasilAksi> {
+  await wajibAdmin();
   const judul = (formData.get("judul") as string | null)?.trim();
   const deskripsi = (formData.get("deskripsi") as string | null)?.trim();
   const tanggal = bacaTanggal(formData.get("tanggal"));
@@ -46,21 +34,30 @@ export async function tambahKegiatan(_sebelumnya: HasilAksi, formData: FormData)
 
   if (!judul || !deskripsi) return { error: "Judul dan deskripsi wajib diisi." };
   if (!tanggal) return { error: "Tanggal kegiatan wajib diisi." };
+  const panjang =
+    cekPanjang(judul, 200, "Judul") ?? cekPanjang(deskripsi, 2000, "Deskripsi");
+  if (panjang) return { error: panjang };
 
   let fotoUrl: string | null = null;
   try {
-    fotoUrl = await simpanFoto(formData.get("foto"));
-    await prisma.kegiatan.create({ data: { judul, deskripsi, tanggal, lokasi, gambarUrl: fotoUrl } });
+    fotoUrl = await simpanFoto(formData.get("foto"), FOLDER);
+    await prisma.kegiatan.create({
+      data: { judul, deskripsi, tanggal, lokasi, gambarUrl: fotoUrl },
+    });
   } catch (e) {
-    if (fotoUrl) await hapusBerkas(fotoUrl);
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan kegiatan." };
+    if (fotoUrl) await hapusBerkas(fotoUrl, FOLDER);
+    return { error: pesanGalat(e, "Gagal menyimpan kegiatan.") };
   }
   muatUlang();
   redirect("/admin/kegiatan");
 }
 
-export async function ubahKegiatan(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
-  const id = Number(formData.get("id"));
+export async function ubahKegiatan(
+  _sebelumnya: HasilAksi,
+  formData: FormData,
+): Promise<HasilAksi> {
+  await wajibAdmin();
+  const id = bacaId(formData.get("id"));
   const judul = (formData.get("judul") as string | null)?.trim();
   const deskripsi = (formData.get("deskripsi") as string | null)?.trim();
   const tanggal = bacaTanggal(formData.get("tanggal"));
@@ -69,34 +66,44 @@ export async function ubahKegiatan(_sebelumnya: HasilAksi, formData: FormData): 
   if (!id) return { error: "ID kegiatan tidak valid." };
   if (!judul || !deskripsi) return { error: "Judul dan deskripsi wajib diisi." };
   if (!tanggal) return { error: "Tanggal kegiatan wajib diisi." };
+  const panjang =
+    cekPanjang(judul, 200, "Judul") ?? cekPanjang(deskripsi, 2000, "Deskripsi");
+  if (panjang) return { error: panjang };
 
   const lama = await prisma.kegiatan.findUnique({ where: { id } });
   if (!lama) return { error: "Kegiatan tidak ditemukan." };
 
-  let fotoUrl = lama.gambarUrl;
+  let fotoBaru: string | null = null;
   try {
-    const baru = await simpanFoto(formData.get("foto"));
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.gambarUrl);
-    }
-    await prisma.kegiatan.update({ where: { id }, data: { judul, deskripsi, tanggal, lokasi, gambarUrl: fotoUrl } });
+    fotoBaru = await simpanFoto(formData.get("foto"), FOLDER);
+    await prisma.kegiatan.update({
+      where: { id },
+      data: { judul, deskripsi, tanggal, lokasi, gambarUrl: fotoBaru ?? lama.gambarUrl },
+    });
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah kegiatan." };
+    if (fotoBaru) await hapusBerkas(fotoBaru, FOLDER);
+    return { error: pesanGalat(e, "Gagal mengubah kegiatan.") };
   }
+  if (fotoBaru && lama.gambarUrl) await hapusBerkas(lama.gambarUrl, FOLDER);
   muatUlang();
   redirect("/admin/kegiatan");
 }
 
 export async function hapusKegiatan(id: number): Promise<void> {
+  await wajibAdmin();
+  if (!Number.isInteger(id) || id <= 0) return;
   const kegiatan = await prisma.kegiatan.findUnique({
     where: { id },
     include: { foto: true },
   });
   if (!kegiatan) return;
-  for (const f of kegiatan.foto) await hapusBerkas(f.url);
-  await hapusBerkas(kegiatan.gambarUrl);
-  await prisma.kegiatan.delete({ where: { id } });
+  try {
+    await prisma.kegiatan.delete({ where: { id } });
+  } catch {
+    return;
+  }
+  for (const f of kegiatan.foto) await hapusBerkas(f.url, FOLDER);
+  await hapusBerkas(kegiatan.gambarUrl, FOLDER);
   muatUlang();
 }
 
@@ -105,36 +112,53 @@ export async function tambahFotoKegiatan(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
+  await wajibAdmin();
+  if (!Number.isInteger(kegiatanId) || kegiatanId <= 0)
+    return { error: "Kegiatan tidak ditemukan." };
   const kegiatan = await prisma.kegiatan.findUnique({ where: { id: kegiatanId } });
   if (!kegiatan) return { error: "Kegiatan tidak ditemukan." };
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
 
-  const tersimpan: string[] = [];
+  const jumlah = await prisma.kegiatanFoto.count({ where: { kegiatanId } });
+  if (jumlah + files.length > MAKS_FOTO_GALERI)
+    return {
+      error: `Maksimal ${MAKS_FOTO_GALERI} foto per kegiatan (saat ini ${jumlah}).`,
+    };
+
+  const tersimpan: { id: number; url: string }[] = [];
   try {
-    const jumlah = await prisma.kegiatanFoto.count({ where: { kegiatanId } });
     let n = 0;
     for (const file of files) {
-      const url = await simpanFoto(file);
+      const url = await simpanFoto(file, FOLDER);
       if (!url) continue;
-      tersimpan.push(url);
-      await prisma.kegiatanFoto.create({
+      const dibuat = await prisma.kegiatanFoto.create({
         data: { url, kegiatanId, urutan: jumlah + n++ },
       });
+      tersimpan.push({ id: dibuat.id, url });
     }
   } catch (e) {
-    for (const url of tersimpan) await hapusBerkas(url);
-    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+    for (const t of tersimpan) {
+      await prisma.kegiatanFoto.delete({ where: { id: t.id } }).catch(() => undefined);
+      await hapusBerkas(t.url, FOLDER);
+    }
+    return { error: pesanGalat(e, "Gagal mengunggah foto.") };
   }
   muatUlang();
   return null;
 }
 
 export async function hapusFotoKegiatan(id: number): Promise<void> {
+  await wajibAdmin();
+  if (!Number.isInteger(id) || id <= 0) return;
   const foto = await prisma.kegiatanFoto.findUnique({ where: { id } });
   if (!foto) return;
-  await hapusBerkas(foto.url);
-  await prisma.kegiatanFoto.delete({ where: { id } });
+  try {
+    await prisma.kegiatanFoto.delete({ where: { id } });
+  } catch {
+    return;
+  }
+  await hapusBerkas(foto.url, FOLDER);
   muatUlang();
 }

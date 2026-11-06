@@ -5,6 +5,9 @@ import { notFound } from "next/navigation";
 import { LuArrowLeft } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 
+// Halaman ini membaca database langsung, jadi dirender per permintaan
+// (bukan di-prerender) agar selalu menampilkan data terbaru.
+export const instant = false;
 export const metadata = {
   title: "Berita — Madrasah Tsanawiyah",
   description: "Baca berita Madrasah Tsanawiyah.",

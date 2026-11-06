@@ -2,6 +2,9 @@ import { Suspense } from "react";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
+// Halaman ini membaca database langsung, jadi dirender per permintaan
+// (bukan di-prerender) agar selalu menampilkan data terbaru.
+export const instant = false;
 export const metadata = {
   title: "Staff & Guru — Madrasah Tsanawiyah",
   description: "Staff dan guru Madrasah Tsanawiyah.",

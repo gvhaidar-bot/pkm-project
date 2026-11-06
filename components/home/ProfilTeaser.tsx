@@ -15,7 +15,7 @@ export default function ProfilTeaser() {
       <div className="mx-auto grid w-full max-w-[1200px] grid-cols-1 items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:px-6">
         <div className="order-2 lg:order-1">
           <Image
-            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1600&auto=format&fit=crop"
+            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=1600&auto=format&fit=crop"
             alt="Siswa di ruang kelas"
             width={800}
             height={600}

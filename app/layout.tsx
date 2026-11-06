@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Amiri, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
   description: "Website promosi Madrasah Tsanawiyah: profil sekolah, program unggulan, fasilitas, galeri, prestasi, dan berita untuk orang tua.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="id" className={`${plusJakartaSans.variable} ${amiri.variable} h-full antialiased`}>
       <body className="flex min-h-full flex-col">{children}</body>

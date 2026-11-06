@@ -103,11 +103,6 @@ components:
     textColor: "{colors.text-primary}"
     rounded: "{rounded.lg}"
     padding: 24px
-  card-testimoni:
-    backgroundColor: "{colors.surface-warm}"
-    textColor: "{colors.text-primary}"
-    rounded: "{rounded.lg}"
-    padding: 24px
   navbar:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text-primary}"
@@ -156,16 +151,17 @@ Satu kalimat penuntun untuk semua keputusan desain:
 
 Audiens utama adalah **orang tua usia kurang lebih 30–50 tahun** yang sedang membandingkan sekolah untuk anaknya yang lulus SD/MI. Mereka membuka website dari HP, sering lewat tautan yang dibagikan di WhatsApp, dan mereka memutuskan percaya atau tidak dari kesan pertama: apakah sekolah ini rapi, Islami, jelas programnya, dan mudah dihubungi.
 
-Tujuan website hanya satu: **memperkenalkan dan mempromosikan sekolah** — profil, program unggulan, fasilitas, prestasi, galeri, berita, dan testimoni — sampai orang tua yakin untuk menghubungi atau mengunjungi sekolah.
+Tujuan website hanya satu: **memperkenalkan dan mempromosikan sekolah** — profil, program unggulan, fasilitas, prestasi, galeri, dan berita — sampai orang tua yakin untuk menghubungi atau mengunjungi sekolah.
 
 Referensi yang mengikat:
 
 - **Struktur: MTs YPPMI** — program unggulan dibuat kartu yang jelas, berita dan agenda teratur, informasi dipisah per kebutuhan pengunjung. Abaikan seluruh bagian SPMB/PPDB dari referensi ini.
 - **Warna dan ritme halaman: Starbucks** — hijau tua, krem hangat, pita hijau tua di antara section krem dan putih, tombol berbentuk pill.
-- **Kartu foto: Airbnb** — foto adalah bintang utama pada kartu fasilitas, galeri, dan testimoni. Warna asli Airbnb (pink/merah) tidak dipakai, diganti hijau MTS.
+- **Kartu foto: Airbnb** — foto adalah bintang utama pada kartu fasilitas dan galeri. Warna asli Airbnb (pink/merah) tidak dipakai, diganti hijau MTS.
 - **Hero: Apple** — satu foto full-width, satu headline besar, dua tombol. Tidak lebih.
+- **Struktur hero dan blok tautan cepat: Responsive School Website Template (Figma Community)** — dipakai sebagai referensi struktur saja (hero foto lebar penuh + tiga blok tautan bernomor 01/02/03 di bawahnya). Palet, tipografi, dan isi tetap mengikuti file ini; tidak ada ajakan mendaftar dari template tersebut.
 
-Website ini dibangun dengan **Next.js (App Router)**. Konten homepage ada di `app/page.js`. Navbar dan Footer adalah komponen reusable yang dipasang satu kali di `app/layout.js` dan tampil di semua halaman.
+Website ini dibangun dengan **Next.js (App Router)**. Konten homepage ada di `app/(publik)/page.tsx`. Navbar dan Footer adalah komponen reusable yang dipasang satu kali di `app/(publik)/layout.tsx` dan tampil di semua halaman.
 
 File ini adalah aturan desain yang **wajib** diikuti setiap AI/agent yang mengerjakan website ini. Jika instruksi lain bertentangan dengan file ini dalam hal tampilan, file ini yang menang untuk tampilan. Jika ada hal yang tidak diatur di file ini, agent harus bertanya kepada pemilik project, bukan mengarang sendiri.
 
@@ -174,13 +170,13 @@ File ini adalah aturan desain yang **wajib** diikuti setiap AI/agent yang menger
 Palet ini terkunci. Agent tidak boleh memperkenalkan warna baru.
 
 - **Primary ({colors.primary}, #0B5B3E):** Hijau MTS. Warna utama merek — tombol utama, judul aksen, ikon, tautan, dan elemen interaktif utama.
-- **Primary Dark ({colors.primary-dark}, #1E3932):** Hijau sangat tua. Hero memakai krem sejak 2026-11-05 (agar tidak sama dengan footer); pita statistik boleh memakai Primary, dan Footer selalu memakai warna ini.
+- **Primary Dark ({colors.primary-dark}, #1E3932):** Hijau sangat tua. Hero memakai foto full-width dengan overlay hijau tua sejak 2026-11-06; pita statistik boleh memakai Primary, dan Footer selalu memakai warna ini.
 - **Primary Soft ({colors.primary-soft}, #E7F0EB):** Hijau sangat muda. Untuk latar chip, badge, dan kartu yang dipilih/aktif. Bukan untuk latar section besar.
 - **Accent ({colors.accent}, #C9A227):** Emas. Hanya untuk aksen kecil yang penting — garis pembatas pendek, ikon bintang/geometris, label-caps di atas judul, angka statistik, dan tombol emas khusus di atas latar hijau tua. Emas **tidak pernah** dipakai untuk teks isi, dan tidak pernah untuk teks kecil di atas latar putih/krem karena kontrasnya tidak cukup.
 - **Accent Soft ({colors.accent-soft}, #CBA258):** Emas lembut untuk hover aksen dan detail pola geometris.
 - **Background ({colors.background}, #F7F3EA):** Krem/gading hangat. Latar dasar halaman, bergantian dengan Surface.
 - **Surface ({colors.surface}, #FFFFFF):** Putih bersih untuk kartu dan section selingan.
-- **Surface Warm ({colors.surface-warm}, #F2F0EB):** Krem sedikit lebih gelap untuk kartu testimoni dan section yang ingin terasa hangat.
+- **Surface Warm ({colors.surface-warm}, #F2F0EB):** Krem sedikit lebih gelap untuk kartu dan section yang ingin terasa hangat.
 - **Text Primary ({colors.text-primary}, #1A2E28):** Hijau-hitam. Semua judul dan teks utama.
 - **Text Secondary ({colors.text-secondary}, #5A6B64):** Abu kehijauan. Untuk deskripsi, caption, dan metadata. Tidak untuk teks penting yang harus dibaca cepat.
 - **Text on Dark ({colors.text-on-dark}, #F7F3EA):** Krem terang untuk teks di atas Primary Dark.
@@ -213,9 +209,9 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
 - Grid desktop 12 kolom. Kartu program/fasilitas: **3 kolom di desktop, 2 kolom di tablet, 1 kolom di HP.** Tidak pernah 4 kolom untuk kartu berisi teks.
 - Jarak antar-section adalah {spacing.section} (96px) di desktop dan 64px di HP. Ritme latar section homepage harus bergantian:
 
-  `Hero (krem + foto) → Pita Statistik (hijau) → Krem (kartu putih) → CTA (hijau tua) → Footer (hijau tua)`
+  `Hero (foto full-width + 3 blok tautan cepat) → Pita Statistik (hijau) → Krem (kartu putih) → CTA (hijau tua) → Footer (hijau tua)`
 
-- Urutan section homepage (diperbarui 2026-11-05 atas perintah Haidar, mengikuti pola SMAN 19 & SMAN 7 Jakarta; setiap section teaser mengarah ke halaman lengkapnya. Testimoni dihapus 2026-11-05; Program Akademik diganti Berita di posisi yang sama):
+- Urutan section homepage (diperbarui 2026-11-06: hero menjadi foto full-width dengan 3 blok tautan cepat mengikuti referensi Figma; halaman /kontak sudah dibuat sehingga tautan ke sana tidak lagi 404. Testimoni dihapus 2026-11-05; Program Akademik diganti Berita di posisi yang sama):
 
   1. Hero
   2. Statistik (pita hijau, angka live dari database)
@@ -225,7 +221,7 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
   6. Fasilitas (4 kartu live → /fasilitas)
   7. Galeri (6 foto live → /galeri)
   8. Prestasi (4 item live)
-  9. CTA penutup (→ /profil + /program; JANGAN ke /kontak karena masih 404)
+  9. CTA penutup (→ /profil + /program)
   10. Footer
 
 - Menu utama terkunci, tujuh item ini: **Beranda, Tentang, Program, Fasilitas, Galeri, Berita, Kontak.** Item **Tentang** berupa dropdown berisi **Profil Sekolah** (`/profil`), **Visi & Misi** (`/visi-misi`), dan **Staff & Guru** (`/guru`). Item **Program** berupa dropdown berisi **Akademik** (`/program/akademik`), **Ekstrakurikuler** (`/program/ekstrakurikuler`), dan **Program Unggulan** (`/program/unggulan`); halaman `/program` sendiri menjadi indeks ketiga program tersebut. Tidak ada menu lain di navbar. (Perubahan 2026-11-04 atas perintah pemilik project: "Profil" sebagai item tunggal diganti dropdown "Tentang"; halaman Profil Sekolah dan Staff & Guru dipisah; "Program" dijadikan dropdown mengikuti pola Tentang.)
@@ -279,10 +275,6 @@ Foto sebagai elemen terbesar (pola Airbnb): foto 4:3 memenuhi bagian atas kartu,
 ### Kartu Berita
 
 Foto 16:9, tanggal dalam format Indonesia (contoh: 12 Oktober 2026), H3 sebagai judul, dan satu baris ringkasan. Berita diurutkan dari yang terbaru.
-
-### Testimoni
-
-Kartu Surface Warm. Isi: kutipan orang tua maksimal tiga baris, nama, dan keterangan singkat (contoh: Wali murid kelas 8). Foto wajah hanya jika ada izin dan foto asli. Testimoni tidak boleh dikarang — jika belum ada testimoni asli, section ini dikosongkan dan diberi catatan placeholder untuk pemilik project, bukan diisi kutipan fiktif.
 
 ### CTA Penutup
 

@@ -8,7 +8,7 @@ const menu = [
   { label: "Fasilitas", href: "/fasilitas" },
   { label: "Galeri", href: "/galeri" },
   { label: "Berita", href: "/berita" },
-  { label: "Tentang", href: "/tentang" },
+  { label: "Tentang", href: "/profil" },
 ];
 
 const program = [
