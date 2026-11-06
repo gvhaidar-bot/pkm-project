@@ -51,15 +51,15 @@ async function DaftarBerita() {
             />
           ) : (
             <div className="flex aspect-video w-full items-center justify-center bg-primary-soft" aria-hidden="true">
-              <span className="px-6 text-center text-sm font-bold text-primary">{berita.judul}</span>
+              <span className="px-6 text-center text-sm font-bold break-words text-primary">{berita.judul}</span>
             </div>
           )}
           <div className="p-5">
             <p className="text-sm font-semibold text-muted">{formatTanggal(berita.publishedAt)}</p>
-            <h2 className="mt-2 text-lg font-bold tracking-tight text-ink transition-colors group-hover:text-primary">
+            <h2 className="mt-2 text-lg font-bold tracking-tight break-words text-ink transition-colors group-hover:text-primary">
               {berita.judul}
             </h2>
-            <p className="mt-2 line-clamp-2 text-[15px] leading-relaxed text-muted">{berita.ringkasan}</p>
+            <p className="mt-2 line-clamp-2 text-[15px] leading-relaxed break-words text-muted">{berita.ringkasan}</p>
             <p className="mt-3 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
               Baca selengkapnya
               <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />

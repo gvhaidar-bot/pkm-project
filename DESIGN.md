@@ -281,7 +281,7 @@ Foto sebagai elemen terbesar (pola Airbnb): foto 4:3 memenuhi bagian atas kartu,
 Kartu utama besar (foto + overlay gelap + badge emas "Unggulan" + tombol Baca Selengkapnya) dan 2 kartu samping horizontal (foto kiri, teks kanan). Berita Unggulan (checkbox "Tampilkan di Beranda" di form admin) tampil lebih dulu, sisanya diisi berita terbaru yang sudah terbit; tanggal dalam format Indonesia.
 
 ### Halaman Detail Berita
-Gaya detikcom (tetap palet hijau/emas): kolom baca max-w-3xl di tengah; judul besar; byline (inisial penulis, tanggal + hari, estimasi menit baca, badge Unggulan, tombol bagikan WhatsApp/Facebook/X/salin tautan); ringkasan sebagai lead tebal tanpa garis; isi 17–18px, jarak baris 1.8, tanpa drop cap; kotak Baca Juga setelah paragraf pertama; Enter di form = paragraf baru; galeri + Berita Terkait (3 kartu) di bawah.
+Gaya SMAN 7 Jakarta: latar putih; judul 3xl/4xl; baris meta (Ditulis oleh, Tanggal + hari, Waktu baca, Status Unggulan bila ada); ringkasan sebagai lead tebal; foto sampul tampil utuh tanpa dipotong (object-contain) supaya poster tegak tidak terpotong; isi memakai format mini-markdown — baris `## ` jadi judul bagian (h2), `**teks**` jadi tebal, `- ` jadi daftar poin, `1. ` jadi daftar bernomor; Enter di form = paragraf baru; semua teks memakai break-words supaya kata panjang turun ke baris bawah; kotak penulis + galeri + Berita Terkait (3 kartu) di bawah. Form admin punya tombol Judul Bagian, Tebal, Poin, Nomor yang menyisipkan format itu (opsional).
 
 ### Testimoni
 

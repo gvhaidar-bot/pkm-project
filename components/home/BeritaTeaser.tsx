@@ -64,7 +64,7 @@ export default async function BeritaTeaser() {
                 className="flex aspect-[4/3] w-full items-center justify-center bg-primary sm:aspect-[16/10]"
                 aria-hidden="true"
               >
-                <span className="px-6 text-center text-lg font-bold text-white">{utama.judul}</span>
+                <span className="px-6 text-center text-lg font-bold break-words text-white">{utama.judul}</span>
               </div>
             )}
             <div
@@ -83,10 +83,10 @@ export default async function BeritaTeaser() {
                 {formatTanggal(utama.publishedAt)}
                 {utama.author ? ` · oleh ${utama.author.nama}` : ""}
               </p>
-              <h3 className="mt-2 text-xl font-extrabold tracking-tight text-white sm:text-3xl">
+              <h3 className="mt-2 text-xl font-extrabold tracking-tight break-words text-white sm:text-3xl">
                 {utama.judul}
               </h3>
-              <p className="mt-2 hidden max-w-2xl text-base leading-relaxed text-cream/90 sm:block sm:line-clamp-2">
+              <p className="mt-2 hidden max-w-2xl text-base leading-relaxed break-words text-cream/90 sm:block sm:line-clamp-2">
                 {utama.ringkasan}
               </p>
               <span className="mt-4 inline-flex min-h-11 items-center gap-1.5 rounded-full bg-white px-5 text-sm font-bold text-primary transition-colors group-hover:bg-accent group-hover:text-primary-dark">
@@ -131,7 +131,7 @@ export default async function BeritaTeaser() {
                         </span>
                       )}
                     </p>
-                    <h3 className="mt-1.5 line-clamp-2 text-base font-bold tracking-tight text-ink transition-colors group-hover:text-primary sm:text-lg">
+                    <h3 className="mt-1.5 line-clamp-2 text-base font-bold tracking-tight break-words text-ink transition-colors group-hover:text-primary sm:text-lg">
                       {berita.judul}
                     </h3>
                     <p className="mt-2 hidden items-center gap-1 text-sm font-bold text-primary sm:inline-flex">

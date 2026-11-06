@@ -1,10 +1,10 @@
-import { Fragment, Suspense } from "react";
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft, LuArrowRight, LuCalendarDays, LuClock, LuSparkles } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuSparkles } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
-import BagikanBerita from "@/components/berita/BagikanBerita";
+import IsiArtikel from "@/components/berita/IsiArtikel";
 
 export const metadata = {
   title: "Berita — Madrasah Tsanawiyah",
@@ -46,15 +46,12 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
   });
   if (!berita || !berita.published) notFound();
 
-  const paragraf = berita.isi.split(/\n+/).map((p) => p.trim()).filter(Boolean);
   const menitBaca = hitungMenitBaca(berita.isi);
   const terkait = await prisma.berita.findMany({
     where: { published: true, id: { not: berita.id } },
     orderBy: { publishedAt: "desc" },
-    take: 4,
+    take: 3,
   });
-  const bacaJuga = terkait[0] ?? null;
-  const lainnya = terkait.slice(1);
 
   return (
     <article>
@@ -67,45 +64,35 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
           Semua berita
         </Link>
 
-        <p className="mt-10 text-xs font-bold tracking-[0.12em] text-primary uppercase">Berita Madrasah</p>
-        <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl sm:leading-[1.15]">
+        <h1 className="mt-8 text-3xl font-extrabold tracking-tight break-words text-ink sm:text-4xl">
           {berita.judul}
         </h1>
 
-        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-y border-line py-4">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="flex items-center gap-2.5">
-              <span
-                className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-base font-extrabold text-white"
-                aria-hidden="true"
-              >
-                {(berita.author?.nama ?? "A").charAt(0).toUpperCase()}
-              </span>
-              <span className="text-base">
-                <span className="block text-xs font-semibold text-muted">Ditulis oleh</span>
-                <span className="block font-bold text-ink">{berita.author?.nama ?? "Administrator"}</span>
-              </span>
-            </span>
-            <span className="hidden h-8 w-px bg-line sm:block" aria-hidden="true" />
-            <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
-              <LuCalendarDays className="h-4 w-4" aria-hidden="true" />
-              {formatTanggalLengkap(berita.publishedAt)}
-            </span>
-            <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
-              <LuClock className="h-4 w-4" aria-hidden="true" />
-              {menitBaca} menit baca
-            </span>
-            {berita.unggulan && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
+        <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-y border-line py-4">
+          <div>
+            <p className="text-xs font-semibold text-muted">Ditulis oleh</p>
+            <p className="mt-0.5 text-base font-bold break-words text-ink">{berita.author?.nama ?? "Administrator"}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-muted">Tanggal</p>
+            <p className="mt-0.5 text-base font-bold text-ink">{formatTanggalLengkap(berita.publishedAt)}</p>
+          </div>
+          <div>
+            <p className="text-xs font-semibold text-muted">Waktu baca</p>
+            <p className="mt-0.5 text-base font-bold text-ink">{menitBaca} menit</p>
+          </div>
+          {berita.unggulan && (
+            <div>
+              <p className="text-xs font-semibold text-muted">Status</p>
+              <p className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
                 <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Unggulan
-              </span>
-            )}
-          </div>
-          <BagikanBerita judul={berita.judul} />
+              </p>
+            </div>
+          )}
         </div>
 
-        <p className="mt-8 text-xl leading-relaxed font-bold text-ink">{berita.ringkasan}</p>
+        <p className="mt-8 text-xl leading-relaxed font-bold break-words text-ink">{berita.ringkasan}</p>
       </div>
 
       {berita.gambarUrl && (
@@ -116,29 +103,12 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
             width={1200}
             height={675}
             priority
-            className="aspect-video w-full rounded-3xl object-cover"
+            className="h-auto w-full object-contain"
           />
         </div>
       )}
 
-      <div className="mx-auto mt-10 max-w-3xl space-y-7">
-        {paragraf.map((p, i) => (
-          <Fragment key={i}>
-            <p className="text-[17px] leading-[1.8] text-ink sm:text-lg">{p}</p>
-            {i === 0 && bacaJuga && (
-              <aside className="rounded-2xl border-l-4 border-accent bg-white p-5 shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
-                <p className="text-sm font-bold text-muted">Baca Juga:</p>
-                <Link
-                  href={`/berita/${bacaJuga.slug}`}
-                  className="mt-1 block text-lg font-bold leading-snug text-primary hover:underline"
-                >
-                  {bacaJuga.judul}
-                </Link>
-              </aside>
-            )}
-          </Fragment>
-        ))}
-      </div>
+      <IsiArtikel isi={berita.isi} />
 
       {berita.foto.length > 0 && (
         <div className="mx-auto mt-12 max-w-4xl">
@@ -158,11 +128,26 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
         </div>
       )}
 
-      {lainnya.length > 0 && (
+      <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-line bg-white p-6">
+        <div className="flex items-center gap-4">
+          <span
+            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-surface-warm text-2xl font-extrabold text-primary"
+            aria-hidden="true"
+          >
+            {(berita.author?.nama ?? "A").charAt(0).toUpperCase()}
+          </span>
+          <div>
+            <p className="text-xs font-bold tracking-wide text-muted uppercase">Penulis</p>
+            <p className="text-lg font-extrabold break-words text-ink">{berita.author?.nama ?? "Administrator"}</p>
+          </div>
+        </div>
+      </div>
+
+      {terkait.length > 0 && (
         <div className="mx-auto mt-16 max-w-4xl border-t border-line pt-10">
           <h2 className="text-2xl font-extrabold tracking-tight text-ink">Berita Terkait</h2>
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {lainnya.map((item) => (
+            {terkait.map((item) => (
               <Link
                 key={item.id}
                 href={`/berita/${item.slug}`}
@@ -181,12 +166,12 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
                     className="flex aspect-video w-full items-center justify-center bg-primary-soft"
                     aria-hidden="true"
                   >
-                    <span className="px-4 text-center text-sm font-bold text-primary">{item.judul}</span>
+                    <span className="px-4 text-center text-sm font-bold break-words text-primary">{item.judul}</span>
                   </div>
                 )}
                 <div className="p-4">
                   <p className="text-xs font-semibold text-muted">{formatTanggal(item.publishedAt)}</p>
-                  <h3 className="mt-1.5 line-clamp-2 text-base font-bold tracking-tight text-ink transition-colors group-hover:text-primary">
+                  <h3 className="mt-1.5 line-clamp-2 text-base font-bold tracking-tight break-words text-ink transition-colors group-hover:text-primary">
                     {item.judul}
                   </h3>
                   <p className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-primary">
@@ -206,15 +191,14 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
 function Kerangka() {
   return (
     <div className="mx-auto max-w-3xl animate-pulse">
-      <div className="h-11 w-40 rounded-full bg-white" />
-      <div className="mt-10 h-4 w-32 rounded-full bg-white" />
-      <div className="mt-3 h-10 w-3/4 rounded-2xl bg-white" />
-      <div className="mt-6 h-16 w-full rounded-2xl bg-white" />
-      <div className="mt-8 h-24 w-full rounded-2xl bg-white" />
-      <div className="mt-10 aspect-video w-full rounded-3xl bg-white" />
+      <div className="h-11 w-40 rounded-full bg-surface-warm" />
+      <div className="mt-8 h-10 w-3/4 rounded-2xl bg-surface-warm" />
+      <div className="mt-6 h-16 w-full rounded-2xl bg-surface-warm" />
+      <div className="mt-8 h-24 w-full rounded-2xl bg-surface-warm" />
+      <div className="mt-10 aspect-video w-full rounded-3xl bg-surface-warm" />
       <div className="mt-10 space-y-4">
         {[0, 1, 2].map((i) => (
-          <div key={i} className="h-5 w-full rounded-full bg-white" />
+          <div key={i} className="h-5 w-full rounded-full bg-surface-warm" />
         ))}
       </div>
     </div>
@@ -223,7 +207,7 @@ function Kerangka() {
 
 export default function DetailBeritaPage({ params }: { params: Promise<{ slug: string }> }) {
   return (
-    <div className="bg-cream">
+    <div className="bg-white">
       <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
         <Suspense fallback={<Kerangka />}>
           <IsiBerita params={params} />
