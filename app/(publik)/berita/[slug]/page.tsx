@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuCalendarDays, LuClock, LuSparkles } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
@@ -19,6 +19,11 @@ function formatTanggal(t: Date | null) {
   }).format(t);
 }
 
+function hitungMenitBaca(isi: string) {
+  const kata = isi.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(kata / 200));
+}
+
 async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const berita = await prisma.berita.findUnique({
@@ -30,48 +35,95 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
   });
   if (!berita || !berita.published) notFound();
 
-  const paragraf = berita.isi.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+  const paragraf = berita.isi.split(/\n+/).map((p) => p.trim()).filter(Boolean);
+  const menitBaca = hitungMenitBaca(berita.isi);
+  const terkait = await prisma.berita.findMany({
+    where: { published: true, id: { not: berita.id } },
+    orderBy: { publishedAt: "desc" },
+    take: 3,
+  });
 
   return (
     <article>
-      <Link
-        href="/berita"
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white px-5 text-base font-semibold text-primary transition-colors hover:bg-primary-soft"
-      >
-        <LuArrowLeft className="h-5 w-5" aria-hidden="true" />
-        Semua berita
-      </Link>
+      <div className="mx-auto max-w-3xl">
+        <Link
+          href="/berita"
+          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white px-5 text-base font-semibold text-primary transition-colors hover:bg-primary-soft"
+        >
+          <LuArrowLeft className="h-5 w-5" aria-hidden="true" />
+          Semua berita
+        </Link>
 
-      <p className="mt-8 text-sm font-semibold text-muted">
-        {formatTanggal(berita.publishedAt)}
-        {berita.author ? ` · oleh ${berita.author.nama}` : ""}
-      </p>
-      <h1 className="mt-2 max-w-3xl text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-        {berita.judul}
-      </h1>
-      <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted">{berita.ringkasan}</p>
+        <p className="mt-10 text-xs font-bold tracking-[0.12em] text-primary uppercase">Berita Madrasah</p>
+        <h1 className="mt-3 text-4xl font-extrabold tracking-tight text-ink sm:text-5xl sm:leading-[1.15]">
+          {berita.judul}
+        </h1>
+
+        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4">
+          <span className="flex items-center gap-2.5">
+            <span
+              className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-base font-extrabold text-white"
+              aria-hidden="true"
+            >
+              {(berita.author?.nama ?? "A").charAt(0).toUpperCase()}
+            </span>
+            <span className="text-base">
+              <span className="block text-xs font-semibold text-muted">Ditulis oleh</span>
+              <span className="block font-bold text-ink">{berita.author?.nama ?? "Administrator"}</span>
+            </span>
+          </span>
+          <span className="hidden h-8 w-px bg-line sm:block" aria-hidden="true" />
+          <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
+            <LuCalendarDays className="h-4 w-4" aria-hidden="true" />
+            {formatTanggal(berita.publishedAt)}
+          </span>
+          <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
+            <LuClock className="h-4 w-4" aria-hidden="true" />
+            {menitBaca} menit baca
+          </span>
+          {berita.unggulan && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
+              <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
+              Unggulan
+            </span>
+          )}
+        </div>
+
+        <p className="mt-8 border-l-4 border-accent pl-5 text-xl leading-relaxed font-medium text-ink">
+          {berita.ringkasan}
+        </p>
+      </div>
 
       {berita.gambarUrl && (
-        <Image
-          src={berita.gambarUrl}
-          alt={`Sampul ${berita.judul}`}
-          width={1200}
-          height={675}
-          priority
-          className="mt-8 aspect-video w-full rounded-3xl object-cover"
-        />
+        <div className="mx-auto mt-10 max-w-4xl">
+          <Image
+            src={berita.gambarUrl}
+            alt={`Sampul ${berita.judul}`}
+            width={1200}
+            height={675}
+            priority
+            className="aspect-video w-full rounded-3xl object-cover"
+          />
+        </div>
       )}
 
-      <div className="mt-8 max-w-3xl space-y-5">
+      <div className="mx-auto mt-10 max-w-3xl space-y-7">
         {paragraf.map((p, i) => (
-          <p key={i} className="text-base leading-relaxed text-ink sm:text-lg">
+          <p
+            key={i}
+            className={
+              i === 0
+                ? "text-lg leading-[1.9] text-ink first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-6xl first-letter:leading-none first-letter:font-extrabold first-letter:text-primary sm:text-xl"
+                : "text-lg leading-[1.9] text-ink sm:text-xl"
+            }
+          >
             {p}
           </p>
         ))}
       </div>
 
       {berita.foto.length > 0 && (
-        <div className="mt-10">
+        <div className="mx-auto mt-12 max-w-4xl">
           <h2 className="text-xl font-bold tracking-tight text-ink">Galeri Foto</h2>
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
             {berita.foto.map((foto) => (
@@ -87,17 +139,66 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
           </div>
         </div>
       )}
+
+      {terkait.length > 0 && (
+        <div className="mx-auto mt-16 max-w-4xl border-t border-line pt-10">
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Berita Lainnya</h2>
+          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
+            {terkait.map((item) => (
+              <Link
+                key={item.id}
+                href={`/berita/${item.slug}`}
+                className="group overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+              >
+                {item.gambarUrl ? (
+                  <Image
+                    src={item.gambarUrl}
+                    alt={`Sampul ${item.judul}`}
+                    width={400}
+                    height={225}
+                    className="aspect-video w-full object-cover"
+                  />
+                ) : (
+                  <div
+                    className="flex aspect-video w-full items-center justify-center bg-primary-soft"
+                    aria-hidden="true"
+                  >
+                    <span className="px-4 text-center text-sm font-bold text-primary">{item.judul}</span>
+                  </div>
+                )}
+                <div className="p-4">
+                  <p className="text-xs font-semibold text-muted">{formatTanggal(item.publishedAt)}</p>
+                  <h3 className="mt-1.5 line-clamp-2 text-base font-bold tracking-tight text-ink transition-colors group-hover:text-primary">
+                    {item.judul}
+                  </h3>
+                  <p className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-primary">
+                    Baca selengkapnya
+                    <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
     </article>
   );
 }
 
 function Kerangka() {
   return (
-    <div className="animate-pulse">
+    <div className="mx-auto max-w-3xl animate-pulse">
       <div className="h-11 w-40 rounded-full bg-white" />
-      <div className="mt-8 h-4 w-48 rounded-full bg-white" />
+      <div className="mt-10 h-4 w-32 rounded-full bg-white" />
       <div className="mt-3 h-10 w-3/4 rounded-2xl bg-white" />
-      <div className="mt-8 aspect-video w-full rounded-3xl bg-white" />
+      <div className="mt-6 h-16 w-full rounded-2xl bg-white" />
+      <div className="mt-8 h-24 w-full rounded-2xl bg-white" />
+      <div className="mt-10 aspect-video w-full rounded-3xl bg-white" />
+      <div className="mt-10 space-y-4">
+        {[0, 1, 2].map((i) => (
+          <div key={i} className="h-5 w-full rounded-full bg-white" />
+        ))}
+      </div>
     </div>
   );
 }

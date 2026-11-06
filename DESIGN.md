@@ -280,6 +280,9 @@ Foto sebagai elemen terbesar (pola Airbnb): foto 4:3 memenuhi bagian atas kartu,
 
 Kartu utama besar (foto + overlay gelap + badge emas "Unggulan" + tombol Baca Selengkapnya) dan 2 kartu samping horizontal (foto kiri, teks kanan). Berita Unggulan (checkbox "Tampilkan di Beranda" di form admin) tampil lebih dulu, sisanya diisi berita terbaru yang sudah terbit; tanggal dalam format Indonesia.
 
+### Halaman Detail Berita
+Kolom baca max-w-3xl di tengah; judul besar; byline (inisial penulis, tanggal, estimasi menit baca, badge Unggulan bila ada); ringkasan sebagai lead dengan garis emas di kiri; isi 18–20px, jarak baris 1.9, drop cap hijau di paragraf pertama; Enter di form = paragraf baru; galeri + Berita Lainnya (3 kartu) di bawah.
+
 ### Testimoni
 
 Kartu Surface Warm. Isi: kutipan orang tua maksimal tiga baris, nama, dan keterangan singkat (contoh: Wali murid kelas 8). Foto wajah hanya jika ada izin dan foto asli. Testimoni tidak boleh dikarang — jika belum ada testimoni asli, section ini dikosongkan dan diberi catatan placeholder untuk pemilik project, bukan diisi kutipan fiktif.

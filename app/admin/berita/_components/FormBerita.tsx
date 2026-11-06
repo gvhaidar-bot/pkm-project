@@ -96,7 +96,7 @@ export default function FormBerita({ berita, aksi }: { berita?: DataBerita; aksi
           rows={10}
           required
           defaultValue={berita?.isi ?? ""}
-          placeholder="Tulis isi berita. Pisahkan paragraf dengan satu baris kosong."
+          placeholder="Tulis isi berita. Tekan Enter untuk membuat paragraf baru."
           className="w-full rounded-2xl border border-line bg-white px-4 py-3 text-base leading-relaxed text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
         />
       </div>
