@@ -1,9 +1,10 @@
-import { Suspense } from "react";
+import { Fragment, Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { LuArrowLeft, LuArrowRight, LuCalendarDays, LuClock, LuSparkles } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import BagikanBerita from "@/components/berita/BagikanBerita";
 
 export const metadata = {
   title: "Berita — Madrasah Tsanawiyah",
@@ -13,6 +14,16 @@ export const metadata = {
 function formatTanggal(t: Date | null) {
   if (!t) return "";
   return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  }).format(t);
+}
+
+function formatTanggalLengkap(t: Date | null) {
+  if (!t) return "";
+  return new Intl.DateTimeFormat("id-ID", {
+    weekday: "long",
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -40,8 +51,10 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
   const terkait = await prisma.berita.findMany({
     where: { published: true, id: { not: berita.id } },
     orderBy: { publishedAt: "desc" },
-    take: 3,
+    take: 4,
   });
+  const bacaJuga = terkait[0] ?? null;
+  const lainnya = terkait.slice(1);
 
   return (
     <article>
@@ -59,39 +72,40 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
           {berita.judul}
         </h1>
 
-        <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4">
-          <span className="flex items-center gap-2.5">
-            <span
-              className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-base font-extrabold text-white"
-              aria-hidden="true"
-            >
-              {(berita.author?.nama ?? "A").charAt(0).toUpperCase()}
+        <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-y border-line py-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
+            <span className="flex items-center gap-2.5">
+              <span
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-base font-extrabold text-white"
+                aria-hidden="true"
+              >
+                {(berita.author?.nama ?? "A").charAt(0).toUpperCase()}
+              </span>
+              <span className="text-base">
+                <span className="block text-xs font-semibold text-muted">Ditulis oleh</span>
+                <span className="block font-bold text-ink">{berita.author?.nama ?? "Administrator"}</span>
+              </span>
             </span>
-            <span className="text-base">
-              <span className="block text-xs font-semibold text-muted">Ditulis oleh</span>
-              <span className="block font-bold text-ink">{berita.author?.nama ?? "Administrator"}</span>
+            <span className="hidden h-8 w-px bg-line sm:block" aria-hidden="true" />
+            <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
+              <LuCalendarDays className="h-4 w-4" aria-hidden="true" />
+              {formatTanggalLengkap(berita.publishedAt)}
             </span>
-          </span>
-          <span className="hidden h-8 w-px bg-line sm:block" aria-hidden="true" />
-          <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
-            <LuCalendarDays className="h-4 w-4" aria-hidden="true" />
-            {formatTanggal(berita.publishedAt)}
-          </span>
-          <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
-            <LuClock className="h-4 w-4" aria-hidden="true" />
-            {menitBaca} menit baca
-          </span>
-          {berita.unggulan && (
-            <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
-              <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Unggulan
+            <span className="flex items-center gap-1.5 text-sm font-semibold text-muted">
+              <LuClock className="h-4 w-4" aria-hidden="true" />
+              {menitBaca} menit baca
             </span>
-          )}
+            {berita.unggulan && (
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
+                <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
+                Unggulan
+              </span>
+            )}
+          </div>
+          <BagikanBerita judul={berita.judul} />
         </div>
 
-        <p className="mt-8 border-l-4 border-accent pl-5 text-xl leading-relaxed font-medium text-ink">
-          {berita.ringkasan}
-        </p>
+        <p className="mt-8 text-xl leading-relaxed font-bold text-ink">{berita.ringkasan}</p>
       </div>
 
       {berita.gambarUrl && (
@@ -109,16 +123,20 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
 
       <div className="mx-auto mt-10 max-w-3xl space-y-7">
         {paragraf.map((p, i) => (
-          <p
-            key={i}
-            className={
-              i === 0
-                ? "text-lg leading-[1.9] text-ink first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-6xl first-letter:leading-none first-letter:font-extrabold first-letter:text-primary sm:text-xl"
-                : "text-lg leading-[1.9] text-ink sm:text-xl"
-            }
-          >
-            {p}
-          </p>
+          <Fragment key={i}>
+            <p className="text-[17px] leading-[1.8] text-ink sm:text-lg">{p}</p>
+            {i === 0 && bacaJuga && (
+              <aside className="rounded-2xl border-l-4 border-accent bg-white p-5 shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+                <p className="text-sm font-bold text-muted">Baca Juga:</p>
+                <Link
+                  href={`/berita/${bacaJuga.slug}`}
+                  className="mt-1 block text-lg font-bold leading-snug text-primary hover:underline"
+                >
+                  {bacaJuga.judul}
+                </Link>
+              </aside>
+            )}
+          </Fragment>
         ))}
       </div>
 
@@ -140,11 +158,11 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
         </div>
       )}
 
-      {terkait.length > 0 && (
+      {lainnya.length > 0 && (
         <div className="mx-auto mt-16 max-w-4xl border-t border-line pt-10">
-          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Berita Lainnya</h2>
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Berita Terkait</h2>
           <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
-            {terkait.map((item) => (
+            {lainnya.map((item) => (
               <Link
                 key={item.id}
                 href={`/berita/${item.slug}`}

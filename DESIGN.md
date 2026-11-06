@@ -281,7 +281,7 @@ Foto sebagai elemen terbesar (pola Airbnb): foto 4:3 memenuhi bagian atas kartu,
 Kartu utama besar (foto + overlay gelap + badge emas "Unggulan" + tombol Baca Selengkapnya) dan 2 kartu samping horizontal (foto kiri, teks kanan). Berita Unggulan (checkbox "Tampilkan di Beranda" di form admin) tampil lebih dulu, sisanya diisi berita terbaru yang sudah terbit; tanggal dalam format Indonesia.
 
 ### Halaman Detail Berita
-Kolom baca max-w-3xl di tengah; judul besar; byline (inisial penulis, tanggal, estimasi menit baca, badge Unggulan bila ada); ringkasan sebagai lead dengan garis emas di kiri; isi 18–20px, jarak baris 1.9, drop cap hijau di paragraf pertama; Enter di form = paragraf baru; galeri + Berita Lainnya (3 kartu) di bawah.
+Gaya detikcom (tetap palet hijau/emas): kolom baca max-w-3xl di tengah; judul besar; byline (inisial penulis, tanggal + hari, estimasi menit baca, badge Unggulan, tombol bagikan WhatsApp/Facebook/X/salin tautan); ringkasan sebagai lead tebal tanpa garis; isi 17–18px, jarak baris 1.8, tanpa drop cap; kotak Baca Juga setelah paragraf pertama; Enter di form = paragraf baru; galeri + Berita Terkait (3 kartu) di bawah.
 
 ### Testimoni
 
