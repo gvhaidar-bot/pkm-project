@@ -1,38 +1,23 @@
 "use server";
 
-import { mkdir, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-
-const DIREKTORI = join(process.cwd(), "public", "uploads", "guru");
-const MAKS_UKURAN = 2 * 1024 * 1024;
+import { adminLogin } from "@/lib/admin";
+import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error: string } | null;
 
-async function simpanFoto(file: unknown): Promise<string | null> {
-  if (!(file instanceof File) || file.size === 0) return null;
-  if (!file.type.startsWith("image/")) throw new Error("File foto harus berupa gambar.");
-  if (file.size > MAKS_UKURAN) throw new Error("Ukuran foto maksimal 2 MB.");
-  await mkdir(DIREKTORI, { recursive: true });
-  const ekstensi = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const namaBerkas = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ekstensi}`;
-  await writeFile(join(DIREKTORI, namaBerkas), Buffer.from(await file.arrayBuffer()));
-  return `/uploads/guru/${namaBerkas}`;
-}
-
-async function hapusBerkas(url: string | null) {
-  if (!url || !url.startsWith("/uploads/guru/")) return;
-  await unlink(join(process.cwd(), "public", url)).catch(() => undefined);
-}
-
 function muatUlang() {
   revalidatePath("/admin/guru");
+  revalidatePath("/guru");
   revalidatePath("/profil");
+  revalidatePath("/");
 }
 
 export async function tambahGuru(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
   const nama = (formData.get("nama") as string | null)?.trim();
   const jabatan = (formData.get("jabatan") as string | null)?.trim();
   const bio = (formData.get("bio") as string | null)?.trim() || null;
@@ -43,10 +28,10 @@ export async function tambahGuru(_sebelumnya: HasilAksi, formData: FormData): Pr
 
   let fotoUrl: string | null = null;
   try {
-    fotoUrl = await simpanFoto(formData.get("foto"));
+    fotoUrl = await simpanFoto(formData.get("foto"), "guru");
     await prisma.guru.create({ data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
   } catch (e) {
-    if (fotoUrl) await hapusBerkas(fotoUrl);
+    if (fotoUrl) await hapusBerkas(fotoUrl, "guru");
     return { error: e instanceof Error ? e.message : "Gagal menyimpan data guru." };
   }
   muatUlang();
@@ -54,6 +39,8 @@ export async function tambahGuru(_sebelumnya: HasilAksi, formData: FormData): Pr
 }
 
 export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
   const id = Number(formData.get("id"));
   const nama = (formData.get("nama") as string | null)?.trim();
   const jabatan = (formData.get("jabatan") as string | null)?.trim();
@@ -69,10 +56,10 @@ export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Prom
 
   let fotoUrl = lama.fotoUrl;
   try {
-    const baru = await simpanFoto(formData.get("foto"));
+    const baru = await simpanFoto(formData.get("foto"), "guru");
     if (baru) {
       fotoUrl = baru;
-      await hapusBerkas(lama.fotoUrl);
+      await hapusBerkas(lama.fotoUrl, "guru");
     }
     await prisma.guru.update({ where: { id }, data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
   } catch (e) {
@@ -83,9 +70,56 @@ export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Prom
 }
 
 export async function hapusGuru(id: number): Promise<void> {
-  const guru = await prisma.guru.findUnique({ where: { id } });
+  if (!(await adminLogin())) return;
+  const guru = await prisma.guru.findUnique({
+    where: { id },
+    include: { foto: true },
+  });
   if (!guru) return;
-  await hapusBerkas(guru.fotoUrl);
+  await hapusBerkas(guru.fotoUrl, "guru");
+  for (const f of guru.foto) await hapusBerkas(f.url, "guru");
   await prisma.guru.delete({ where: { id } });
+  muatUlang();
+}
+
+export async function tambahFotoGuru(
+  guruId: number,
+  _sebelumnya: HasilAksi,
+  formData: FormData,
+): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
+  const guru = await prisma.guru.findUnique({ where: { id: guruId } });
+  if (!guru) return { error: "Data guru tidak ditemukan." };
+
+  const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
+  if (files.length === 0) return { error: "Pilih minimal satu foto." };
+
+  const tersimpan: string[] = [];
+  try {
+    const jumlah = await prisma.guruFoto.count({ where: { guruId } });
+    let n = 0;
+    for (const file of files) {
+      const url = await simpanFoto(file, "guru");
+      if (!url) continue;
+      tersimpan.push(url);
+      await prisma.guruFoto.create({
+        data: { url, guruId, urutan: jumlah + n++ },
+      });
+    }
+  } catch (e) {
+    for (const url of tersimpan) await hapusBerkas(url, "guru");
+    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+  }
+  muatUlang();
+  return null;
+}
+
+export async function hapusFotoGuru(fotoId: number): Promise<void> {
+  if (!(await adminLogin())) return;
+  const foto = await prisma.guruFoto.findUnique({ where: { id: fotoId } });
+  if (!foto) return;
+  await hapusBerkas(foto.url, "guru");
+  await prisma.guruFoto.delete({ where: { id: fotoId } });
   muatUlang();
 }

@@ -3,7 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-import { buatSlug } from "@/lib/slug";
+import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
+import { adminLogin } from "@/lib/admin";
 import { IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 
 export type HasilAksi = { error?: string } | null;
@@ -51,6 +52,7 @@ function bacaForm(formData: FormData) {
 function muatUlang(slug?: string) {
   revalidatePath("/admin/ekstrakurikuler");
   revalidatePath("/program/ekstrakurikuler");
+  revalidatePath("/");
   if (slug) revalidatePath(`/program/ekstrakurikuler/${slug}`);
 }
 
@@ -58,6 +60,8 @@ export async function tambahEkstrakurikuler(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
   const data = bacaForm(formData);
 
   if (!data.nama || !data.deskripsi || !data.tujuan || !data.kegiatanRutin || !data.fasilitas) {
@@ -81,6 +85,7 @@ export async function tambahEkstrakurikuler(
       },
     });
   } catch (e) {
+    if (adalahGalatDuplikat(e)) return { error: "Nama sudah dipakai. Coba nama lain." };
     return { error: e instanceof Error ? e.message : "Gagal menyimpan ekstrakurikuler." };
   }
   muatUlang();
@@ -91,6 +96,8 @@ export async function ubahEkstrakurikuler(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
   const id = Number(formData.get("id"));
   if (!id) return { error: "ID ekstrakurikuler tidak valid." };
 
@@ -121,12 +128,14 @@ export async function ubahEkstrakurikuler(
     });
     muatUlang(slug);
   } catch (e) {
+    if (adalahGalatDuplikat(e)) return { error: "Nama sudah dipakai. Coba nama lain." };
     return { error: e instanceof Error ? e.message : "Gagal mengubah ekstrakurikuler." };
   }
   redirect("/admin/ekstrakurikuler");
 }
 
 export async function hapusEkstrakurikuler(id: number): Promise<void> {
+  if (!(await adminLogin())) return;
   const ekstrakurikuler = await prisma.ekstrakurikuler.findUnique({ where: { id } });
   if (!ekstrakurikuler) return;
   await prisma.ekstrakurikuler.delete({ where: { id } });

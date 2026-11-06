@@ -1,37 +1,21 @@
 "use server";
 
-import { mkdir, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
-
-const DIREKTORI = join(process.cwd(), "public", "uploads", "prestasi");
-const MAKS_UKURAN = 2 * 1024 * 1024;
+import { adminLogin } from "@/lib/admin";
+import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
 
-async function simpanFoto(file: unknown): Promise<string | null> {
-  if (!(file instanceof File) || file.size === 0) return null;
-  if (!file.type.startsWith("image/")) throw new Error("File foto harus berupa gambar.");
-  if (file.size > MAKS_UKURAN) throw new Error("Ukuran foto maksimal 2 MB.");
-  await mkdir(DIREKTORI, { recursive: true });
-  const ekstensi = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const namaBerkas = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ekstensi}`;
-  await writeFile(join(DIREKTORI, namaBerkas), Buffer.from(await file.arrayBuffer()));
-  return `/uploads/prestasi/${namaBerkas}`;
-}
-
-async function hapusBerkas(url: string | null) {
-  if (!url || !url.startsWith("/uploads/prestasi/")) return;
-  await unlink(join(process.cwd(), "public", url)).catch(() => undefined);
-}
-
 function muatUlang() {
   revalidatePath("/admin/prestasi");
+  revalidatePath("/");
 }
 
 export async function tambahPrestasi(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
   const judul = (formData.get("judul") as string | null)?.trim();
   const deskripsi = (formData.get("deskripsi") as string | null)?.trim() || null;
   const tahun = Number(formData.get("tahun"));
@@ -42,10 +26,10 @@ export async function tambahPrestasi(_sebelumnya: HasilAksi, formData: FormData)
 
   let fotoUrl: string | null = null;
   try {
-    fotoUrl = await simpanFoto(formData.get("foto"));
+    fotoUrl = await simpanFoto(formData.get("foto"), "prestasi");
     await prisma.prestasi.create({ data: { judul, deskripsi, tahun, tingkat, gambarUrl: fotoUrl } });
   } catch (e) {
-    if (fotoUrl) await hapusBerkas(fotoUrl);
+    if (fotoUrl) await hapusBerkas(fotoUrl, "prestasi");
     return { error: e instanceof Error ? e.message : "Gagal menyimpan prestasi." };
   }
   muatUlang();
@@ -53,6 +37,8 @@ export async function tambahPrestasi(_sebelumnya: HasilAksi, formData: FormData)
 }
 
 export async function ubahPrestasi(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
   const id = Number(formData.get("id"));
   const judul = (formData.get("judul") as string | null)?.trim();
   const deskripsi = (formData.get("deskripsi") as string | null)?.trim() || null;
@@ -68,10 +54,10 @@ export async function ubahPrestasi(_sebelumnya: HasilAksi, formData: FormData): 
 
   let fotoUrl = lama.gambarUrl;
   try {
-    const baru = await simpanFoto(formData.get("foto"));
+    const baru = await simpanFoto(formData.get("foto"), "prestasi");
     if (baru) {
       fotoUrl = baru;
-      await hapusBerkas(lama.gambarUrl);
+      await hapusBerkas(lama.gambarUrl, "prestasi");
     }
     await prisma.prestasi.update({ where: { id }, data: { judul, deskripsi, tahun, tingkat, gambarUrl: fotoUrl } });
   } catch (e) {
@@ -82,9 +68,56 @@ export async function ubahPrestasi(_sebelumnya: HasilAksi, formData: FormData): 
 }
 
 export async function hapusPrestasi(id: number): Promise<void> {
-  const prestasi = await prisma.prestasi.findUnique({ where: { id } });
+  if (!(await adminLogin())) return;
+  const prestasi = await prisma.prestasi.findUnique({
+    where: { id },
+    include: { foto: true },
+  });
   if (!prestasi) return;
-  await hapusBerkas(prestasi.gambarUrl);
+  await hapusBerkas(prestasi.gambarUrl, "prestasi");
+  for (const f of prestasi.foto) await hapusBerkas(f.url, "prestasi");
   await prisma.prestasi.delete({ where: { id } });
+  muatUlang();
+}
+
+export async function tambahFotoPrestasi(
+  prestasiId: number,
+  _sebelumnya: HasilAksi,
+  formData: FormData,
+): Promise<HasilAksi> {
+  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+
+  const prestasi = await prisma.prestasi.findUnique({ where: { id: prestasiId } });
+  if (!prestasi) return { error: "Prestasi tidak ditemukan." };
+
+  const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
+  if (files.length === 0) return { error: "Pilih minimal satu foto." };
+
+  const tersimpan: string[] = [];
+  try {
+    const jumlah = await prisma.prestasiFoto.count({ where: { prestasiId } });
+    let n = 0;
+    for (const file of files) {
+      const url = await simpanFoto(file, "prestasi");
+      if (!url) continue;
+      tersimpan.push(url);
+      await prisma.prestasiFoto.create({
+        data: { url, prestasiId, urutan: jumlah + n++ },
+      });
+    }
+  } catch (e) {
+    for (const url of tersimpan) await hapusBerkas(url, "prestasi");
+    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+  }
+  muatUlang();
+  return null;
+}
+
+export async function hapusFotoPrestasi(fotoId: number): Promise<void> {
+  if (!(await adminLogin())) return;
+  const foto = await prisma.prestasiFoto.findUnique({ where: { id: fotoId } });
+  if (!foto) return;
+  await hapusBerkas(foto.url, "prestasi");
+  await prisma.prestasiFoto.delete({ where: { id: fotoId } });
   muatUlang();
 }

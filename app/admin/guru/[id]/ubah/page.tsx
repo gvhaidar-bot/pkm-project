@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import FormGuru from "../../_components/FormGuru";
+import GaleriGuru from "../../_components/GaleriGuru";
 import { ubahGuru } from "../../actions";
 
 export const metadata = {
@@ -11,9 +12,17 @@ export const metadata = {
 
 async function FormUbah({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const guru = await prisma.guru.findUnique({ where: { id: Number(id) } });
+  const guru = await prisma.guru.findUnique({
+    where: { id: Number(id) },
+    include: { foto: { orderBy: { urutan: "asc" } } },
+  });
   if (!guru) notFound();
-  return <FormGuru guru={guru} aksi={ubahGuru} />;
+  return (
+    <>
+      <FormGuru guru={guru} aksi={ubahGuru} />
+      <GaleriGuru guruId={guru.id} fotoAwal={guru.foto} />
+    </>
+  );
 }
 
 export default function UbahGuruPage({ params }: { params: Promise<{ id: string }> }) {

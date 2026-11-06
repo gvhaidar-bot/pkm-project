@@ -10,7 +10,7 @@ export default function MasukanFoto({
   label = "Foto",
   catatan,
   banyak = false,
-  teksBantuan = "Format gambar, maksimal 2 MB.",
+  teksBantuan = "Format JPG, PNG, atau WebP, maksimal 2 MB.",
 }: {
   id?: string;
   nama?: string;

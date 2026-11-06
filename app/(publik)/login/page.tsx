@@ -1,5 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
+import { redirect } from "next/navigation";
+import { connection } from "next/server";
+import { auth } from "@/auth";
 import LoginForm from "./LoginForm";
 
 export const metadata = {
@@ -7,7 +10,10 @@ export const metadata = {
   description: "Halaman login khusus pengelola website Madrasah Tsanawiyah.",
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  await connection();
+  const session = await auth();
+  if (session?.user?.email) redirect("/admin");
   return (
     <main className="flex min-h-[80vh] items-center justify-center bg-cream px-5 py-16">
       <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)]">

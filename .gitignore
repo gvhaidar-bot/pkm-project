@@ -40,4 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-/app/generated/prisma
+# prisma generated client (dibuat ulang otomatis oleh `prisma generate` via postinstall)
+/prisma/generated
+
+# ai agent lokal
+.agents/
+.claude/
+.windsurf/

@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import FormPrestasi from "../../_components/FormPrestasi";
+import GaleriPrestasi from "../../_components/GaleriPrestasi";
 import { ubahPrestasi } from "../../actions";
 
 export const metadata = {
@@ -11,9 +12,17 @@ export const metadata = {
 
 async function KontenUbah({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const prestasi = await prisma.prestasi.findUnique({ where: { id: Number(id) } });
+  const prestasi = await prisma.prestasi.findUnique({
+    where: { id: Number(id) },
+    include: { foto: { orderBy: { urutan: "asc" } } },
+  });
   if (!prestasi) notFound();
-  return <FormPrestasi prestasi={prestasi} aksi={ubahPrestasi} />;
+  return (
+    <>
+      <FormPrestasi prestasi={prestasi} aksi={ubahPrestasi} />
+      <GaleriPrestasi prestasiId={prestasi.id} fotoAwal={prestasi.foto} />
+    </>
+  );
 }
 
 function Kerangka() {
