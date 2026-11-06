@@ -1,4 +1,5 @@
 "use client";
+import { inputCls, textareaCls } from "@/components/admin/kelas-form";
 
 import { useActionState } from "react";
 import Image from "next/image";
@@ -36,7 +37,7 @@ export default function FormGuru({ guru, aksi }: { guru?: DataGuru; aksi: AksiFo
           required
           defaultValue={guru?.nama ?? ""}
           placeholder="Nama guru"
-          className="flex min-h-11 w-full items-center rounded-2xl border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
+          className={inputCls}
         />
       </div>
 
@@ -51,7 +52,7 @@ export default function FormGuru({ guru, aksi }: { guru?: DataGuru; aksi: AksiFo
           required
           defaultValue={guru?.jabatan ?? ""}
           placeholder="mis. Guru Matematika, Kepala Madrasah"
-          className="flex min-h-11 w-full items-center rounded-2xl border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
+          className={inputCls}
         />
       </div>
 
@@ -65,7 +66,7 @@ export default function FormGuru({ guru, aksi }: { guru?: DataGuru; aksi: AksiFo
           rows={4}
           defaultValue={guru?.bio ?? ""}
           placeholder="Latar pendidikan dan pengalaman mengajar (tanpa data sensitif seperti NIP, alamat, atau nomor HP)"
-          className="w-full rounded-2xl border border-line bg-white px-4 py-3 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
+          className={textareaCls}
         />
       </div>
 

@@ -5,6 +5,9 @@ import { LuArrowLeft, LuCircleCheck } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler } from "@/components/ekstrakurikuler/ikon";
 
+// Halaman ini membaca database langsung, jadi dirender per permintaan
+// (bukan di-prerender) agar selalu menampilkan data terbaru.
+export const instant = false;
 export const metadata = {
   title: "Ekstrakurikuler — Madrasah Tsanawiyah",
   description: "Detail kegiatan ekstrakurikuler Madrasah Tsanawiyah.",

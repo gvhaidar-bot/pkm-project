@@ -1,31 +1,15 @@
 "use server";
 
-import { mkdir, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { hapusBerkas, simpanFoto } from "@/lib/upload";
+import { bacaId, bacaUrutan, cekPanjang, pesanGalat, wajibAdmin } from "@/lib/admin";
+import type { HasilAksi } from "@/lib/hasil";
 
-const DIREKTORI = join(process.cwd(), "public", "uploads", "guru");
-const MAKS_UKURAN = 2 * 1024 * 1024;
+export type { HasilAksi };
 
-export type HasilAksi = { error: string } | null;
-
-async function simpanFoto(file: unknown): Promise<string | null> {
-  if (!(file instanceof File) || file.size === 0) return null;
-  if (!file.type.startsWith("image/")) throw new Error("File foto harus berupa gambar.");
-  if (file.size > MAKS_UKURAN) throw new Error("Ukuran foto maksimal 2 MB.");
-  await mkdir(DIREKTORI, { recursive: true });
-  const ekstensi = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const namaBerkas = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ekstensi}`;
-  await writeFile(join(DIREKTORI, namaBerkas), Buffer.from(await file.arrayBuffer()));
-  return `/uploads/guru/${namaBerkas}`;
-}
-
-async function hapusBerkas(url: string | null) {
-  if (!url || !url.startsWith("/uploads/guru/")) return;
-  await unlink(join(process.cwd(), "public", url)).catch(() => undefined);
-}
+const FOLDER = "guru";
 
 function muatUlang() {
   revalidatePath("/admin/guru");
@@ -33,59 +17,78 @@ function muatUlang() {
 }
 
 export async function tambahGuru(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
+  await wajibAdmin();
   const nama = (formData.get("nama") as string | null)?.trim();
   const jabatan = (formData.get("jabatan") as string | null)?.trim();
   const bio = (formData.get("bio") as string | null)?.trim() || null;
-  const urutan = Number(formData.get("urutan") ?? 0) || 0;
+  const urutan = bacaUrutan(formData.get("urutan"));
   const aktif = formData.get("aktif") === "on";
 
   if (!nama || !jabatan) return { error: "Nama dan jabatan wajib diisi." };
+  const panjang =
+    cekPanjang(nama, 200, "Nama") ??
+    cekPanjang(jabatan, 200, "Jabatan") ??
+    cekPanjang(bio, 2000, "Bio");
+  if (panjang) return { error: panjang };
 
   let fotoUrl: string | null = null;
   try {
-    fotoUrl = await simpanFoto(formData.get("foto"));
+    fotoUrl = await simpanFoto(formData.get("foto"), FOLDER);
     await prisma.guru.create({ data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
   } catch (e) {
-    if (fotoUrl) await hapusBerkas(fotoUrl);
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan data guru." };
+    if (fotoUrl) await hapusBerkas(fotoUrl, FOLDER);
+    return { error: pesanGalat(e, "Gagal menyimpan data guru.") };
   }
   muatUlang();
   redirect("/admin/guru");
 }
 
 export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Promise<HasilAksi> {
-  const id = Number(formData.get("id"));
+  await wajibAdmin();
+  const id = bacaId(formData.get("id"));
   const nama = (formData.get("nama") as string | null)?.trim();
   const jabatan = (formData.get("jabatan") as string | null)?.trim();
   const bio = (formData.get("bio") as string | null)?.trim() || null;
-  const urutan = Number(formData.get("urutan") ?? 0) || 0;
+  const urutan = bacaUrutan(formData.get("urutan"));
   const aktif = formData.get("aktif") === "on";
 
   if (!id) return { error: "ID guru tidak valid." };
   if (!nama || !jabatan) return { error: "Nama dan jabatan wajib diisi." };
+  const panjang =
+    cekPanjang(nama, 200, "Nama") ??
+    cekPanjang(jabatan, 200, "Jabatan") ??
+    cekPanjang(bio, 2000, "Bio");
+  if (panjang) return { error: panjang };
 
   const lama = await prisma.guru.findUnique({ where: { id } });
   if (!lama) return { error: "Data guru tidak ditemukan." };
 
-  let fotoUrl = lama.fotoUrl;
+  let fotoBaru: string | null = null;
   try {
-    const baru = await simpanFoto(formData.get("foto"));
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.fotoUrl);
-    }
-    await prisma.guru.update({ where: { id }, data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
+    fotoBaru = await simpanFoto(formData.get("foto"), FOLDER);
+    await prisma.guru.update({
+      where: { id },
+      data: { nama, jabatan, bio, fotoUrl: fotoBaru ?? lama.fotoUrl, urutan, aktif },
+    });
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah data guru." };
+    if (fotoBaru) await hapusBerkas(fotoBaru, FOLDER);
+    return { error: pesanGalat(e, "Gagal mengubah data guru.") };
   }
+  if (fotoBaru && lama.fotoUrl) await hapusBerkas(lama.fotoUrl, FOLDER);
   muatUlang();
   redirect("/admin/guru");
 }
 
 export async function hapusGuru(id: number): Promise<void> {
+  await wajibAdmin();
+  if (!Number.isInteger(id) || id <= 0) return;
   const guru = await prisma.guru.findUnique({ where: { id } });
   if (!guru) return;
-  await hapusBerkas(guru.fotoUrl);
-  await prisma.guru.delete({ where: { id } });
+  try {
+    await prisma.guru.delete({ where: { id } });
+  } catch {
+    return;
+  }
+  await hapusBerkas(guru.fotoUrl, FOLDER);
   muatUlang();
 }

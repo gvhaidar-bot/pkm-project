@@ -9,7 +9,7 @@ export const metadata = {
 
 export default function LoginPage() {
   return (
-    <main className="flex min-h-[80vh] items-center justify-center bg-cream px-5 py-16">
+    <div className="flex min-h-[80vh] items-center justify-center bg-cream px-5 py-16">
       <div className="w-full max-w-md rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
         <Link href="/" className="flex items-center gap-3" aria-label="Kembali ke beranda">
           <Image src="/logo.svg" alt="Logo Madrasah Tsanawiyah" width={44} height={44} className="h-11 w-11" />
@@ -30,6 +30,6 @@ export default function LoginPage() {
 
         <LoginForm />
       </div>
-    </main>
+    </div>
   );
 }

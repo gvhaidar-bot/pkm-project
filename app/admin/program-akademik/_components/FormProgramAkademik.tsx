@@ -1,4 +1,5 @@
 "use client";
+import { inputCls } from "@/components/admin/kelas-form";
 
 import { useActionState, useRef, useState } from "react";
 import Image from "next/image";
@@ -20,9 +21,6 @@ export type DataProgramAkademik = {
 };
 
 type AksiForm = (sebelumnya: HasilAksi, formData: FormData) => Promise<HasilAksi>;
-
-const inputCls =
-  "flex min-h-11 w-full items-center rounded-2xl border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none";
 
 export default function FormProgramAkademik({
   program,

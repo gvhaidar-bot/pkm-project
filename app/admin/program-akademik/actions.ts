@@ -1,32 +1,16 @@
 "use server";
 
-import { mkdir, unlink, writeFile } from "node:fs/promises";
-import { join } from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { buatSlug } from "@/lib/slug";
+import { hapusBerkas, simpanFoto } from "@/lib/upload";
+import { bacaId, bacaUrutan, cekPanjang, pesanGalat, wajibAdmin } from "@/lib/admin";
+import type { HasilAksi } from "@/lib/hasil";
 
-const DIREKTORI = join(process.cwd(), "public", "uploads", "program-akademik");
-const MAKS_UKURAN = 2 * 1024 * 1024;
+export type { HasilAksi };
 
-export type HasilAksi = { error?: string } | null;
-
-async function simpanFoto(file: unknown): Promise<string | null> {
-  if (!(file instanceof File) || file.size === 0) return null;
-  if (!file.type.startsWith("image/")) throw new Error("File foto harus berupa gambar.");
-  if (file.size > MAKS_UKURAN) throw new Error("Ukuran foto maksimal 2 MB.");
-  await mkdir(DIREKTORI, { recursive: true });
-  const ekstensi = file.name.split(".").pop()?.toLowerCase() || "jpg";
-  const namaBerkas = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ekstensi}`;
-  await writeFile(join(DIREKTORI, namaBerkas), Buffer.from(await file.arrayBuffer()));
-  return `/uploads/program-akademik/${namaBerkas}`;
-}
-
-async function hapusBerkas(url: string | null) {
-  if (!url || !url.startsWith("/uploads/program-akademik/")) return;
-  await unlink(join(process.cwd(), "public", url)).catch(() => undefined);
-}
+const FOLDER = "program-akademik";
 
 async function slugUnik(dasar: string, kecualiId?: number): Promise<string> {
   let slug = dasar;
@@ -41,6 +25,7 @@ async function slugUnik(dasar: string, kecualiId?: number): Promise<string> {
 function muatUlang(slug?: string) {
   revalidatePath("/admin/program-akademik");
   revalidatePath("/program/akademik");
+  revalidatePath("/program/unggulan");
   if (slug) revalidatePath(`/program/akademik/${slug}`);
 }
 
@@ -48,27 +33,33 @@ export async function tambahProgramAkademik(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
+  await wajibAdmin();
   const judul = (formData.get("judul") as string | null)?.trim();
   const ringkasan = (formData.get("ringkasan") as string | null)?.trim();
   const isi = (formData.get("isi") as string | null)?.trim();
   const unggulan = formData.get("unggulan") === "on";
   const aktif = formData.get("aktif") === "on";
-  const urutan = Number(formData.get("urutan")) || 0;
+  const urutan = bacaUrutan(formData.get("urutan"));
 
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
+  const panjang =
+    cekPanjang(judul, 200, "Judul") ??
+    cekPanjang(ringkasan, 500, "Ringkasan") ??
+    cekPanjang(isi, 50000, "Isi");
+  if (panjang) return { error: panjang };
 
   const slugMasukan = (formData.get("slug") as string | null)?.trim();
 
   let fotoUrl: string | null = null;
   try {
     const slug = await slugUnik(buatSlug(slugMasukan || judul));
-    fotoUrl = await simpanFoto(formData.get("foto"));
+    fotoUrl = await simpanFoto(formData.get("foto"), FOLDER);
     await prisma.programAkademik.create({
       data: { judul, slug, ringkasan, isi, gambarUrl: fotoUrl, unggulan, aktif, urutan },
     });
   } catch (e) {
-    if (fotoUrl) await hapusBerkas(fotoUrl);
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan program akademik." };
+    if (fotoUrl) await hapusBerkas(fotoUrl, FOLDER);
+    return { error: pesanGalat(e, "Gagal menyimpan program akademik.") };
   }
   muatUlang();
   redirect("/admin/program-akademik");
@@ -78,45 +69,56 @@ export async function ubahProgramAkademik(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
-  const id = Number(formData.get("id"));
+  await wajibAdmin();
+  const id = bacaId(formData.get("id"));
   const judul = (formData.get("judul") as string | null)?.trim();
   const ringkasan = (formData.get("ringkasan") as string | null)?.trim();
   const isi = (formData.get("isi") as string | null)?.trim();
   const unggulan = formData.get("unggulan") === "on";
   const aktif = formData.get("aktif") === "on";
-  const urutan = Number(formData.get("urutan")) || 0;
+  const urutan = bacaUrutan(formData.get("urutan"));
 
   if (!id) return { error: "ID program tidak valid." };
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
+  const panjang =
+    cekPanjang(judul, 200, "Judul") ??
+    cekPanjang(ringkasan, 500, "Ringkasan") ??
+    cekPanjang(isi, 50000, "Isi");
+  if (panjang) return { error: panjang };
 
   const lama = await prisma.programAkademik.findUnique({ where: { id } });
   if (!lama) return { error: "Program akademik tidak ditemukan." };
 
   const slugMasukan = (formData.get("slug") as string | null)?.trim();
 
-  let fotoUrl = lama.gambarUrl;
+  let slug = lama.slug;
+  let fotoBaru: string | null = null;
   try {
-    const slug = await slugUnik(buatSlug(slugMasukan || judul), id);
-    const baru = await simpanFoto(formData.get("foto"));
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.gambarUrl);
-    }
+    slug = await slugUnik(buatSlug(slugMasukan || judul), id);
+    fotoBaru = await simpanFoto(formData.get("foto"), FOLDER);
     await prisma.programAkademik.update({
       where: { id },
-      data: { judul, slug, ringkasan, isi, gambarUrl: fotoUrl, unggulan, aktif, urutan },
+      data: { judul, slug, ringkasan, isi, gambarUrl: fotoBaru ?? lama.gambarUrl, unggulan, aktif, urutan },
     });
-    muatUlang(slug);
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah program akademik." };
+    if (fotoBaru) await hapusBerkas(fotoBaru, FOLDER);
+    return { error: pesanGalat(e, "Gagal mengubah program akademik.") };
   }
+  if (fotoBaru && lama.gambarUrl) await hapusBerkas(lama.gambarUrl, FOLDER);
+  muatUlang(slug);
   redirect("/admin/program-akademik");
 }
 
 export async function hapusProgramAkademik(id: number): Promise<void> {
+  await wajibAdmin();
+  if (!Number.isInteger(id) || id <= 0) return;
   const program = await prisma.programAkademik.findUnique({ where: { id } });
   if (!program) return;
-  await hapusBerkas(program.gambarUrl);
-  await prisma.programAkademik.delete({ where: { id } });
+  try {
+    await prisma.programAkademik.delete({ where: { id } });
+  } catch {
+    return;
+  }
+  await hapusBerkas(program.gambarUrl, FOLDER);
   muatUlang(program.slug);
 }
