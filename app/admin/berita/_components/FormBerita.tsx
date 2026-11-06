@@ -15,6 +15,7 @@ export type DataBerita = {
   isi: string;
   gambarUrl: string | null;
   published: boolean;
+  unggulan: boolean;
 };
 
 type AksiForm = (sebelumnya: HasilAksi, formData: FormData) => Promise<HasilAksi>;
@@ -130,6 +131,24 @@ export default function FormBerita({ berita, aksi }: { berita?: DataBerita; aksi
           />
           Terbitkan (tampil di website)
         </label>
+      </div>
+
+      <div>
+        <div className="flex items-center pb-1">
+          <label htmlFor="unggulan" className="flex min-h-11 cursor-pointer items-center gap-3 text-base font-medium text-ink">
+            <input
+              id="unggulan"
+              name="unggulan"
+              type="checkbox"
+              defaultChecked={berita?.unggulan ?? false}
+              className="h-5 w-5 accent-[#0B5B3E]"
+            />
+            Tampilkan di Beranda
+          </label>
+        </div>
+        <p className="text-sm text-muted">
+          Berita yang ditandai tampil di bagian Berita Terbaru pada halaman utama. Maksimal 3 berita, yang terbaru didahulukan.
+        </p>
       </div>
 
       {hasil?.error && (

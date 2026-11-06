@@ -35,6 +35,7 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
   const ringkasan = (formData.get("ringkasan") as string | null)?.trim();
   const isi = (formData.get("isi") as string | null)?.trim();
   const published = formData.get("published") === "on";
+  const unggulan = formData.get("unggulan") === "on";
 
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
 
@@ -55,6 +56,7 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
         isi,
         gambarUrl: fotoUrl,
         published,
+        unggulan,
         publishedAt: published ? new Date() : null,
         authorId: admin.id,
       },
@@ -78,6 +80,7 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
   const ringkasan = (formData.get("ringkasan") as string | null)?.trim();
   const isi = (formData.get("isi") as string | null)?.trim();
   const published = formData.get("published") === "on";
+  const unggulan = formData.get("unggulan") === "on";
 
   if (!id) return { error: "ID berita tidak valid." };
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
@@ -107,6 +110,7 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
         isi,
         gambarUrl: fotoUrl,
         published,
+        unggulan,
         publishedAt: published ? (lama.publishedAt ?? new Date()) : lama.publishedAt,
       },
     });

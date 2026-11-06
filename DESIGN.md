@@ -221,7 +221,7 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
   2. Statistik (pita hijau, angka live dari database)
   3. Kenapa Orang Tua Memilih Kami (4 kartu)
   4. Profil Sekolah (teaser tentang kami → /profil)
-  5. Berita & Agenda (3 kartu live → /berita)
+  5. Berita Terbaru (kartu utama besar + 2 kartu samping; berita Unggulan didahulukan, sisanya berita terbaru → /berita)
   6. Fasilitas (4 kartu live → /fasilitas)
   7. Galeri (6 foto live → /galeri)
   8. Prestasi (4 item live)
@@ -278,7 +278,7 @@ Foto sebagai elemen terbesar (pola Airbnb): foto 4:3 memenuhi bagian atas kartu,
 
 ### Kartu Berita
 
-Foto 16:9, tanggal dalam format Indonesia (contoh: 12 Oktober 2026), H3 sebagai judul, dan satu baris ringkasan. Berita diurutkan dari yang terbaru.
+Kartu utama besar (foto + overlay gelap + badge emas "Unggulan" + tombol Baca Selengkapnya) dan 2 kartu samping horizontal (foto kiri, teks kanan). Berita Unggulan (checkbox "Tampilkan di Beranda" di form admin) tampil lebih dulu, sisanya diisi berita terbaru yang sudah terbit; tanggal dalam format Indonesia.
 
 ### Testimoni
 

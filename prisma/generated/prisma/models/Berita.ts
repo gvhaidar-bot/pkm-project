@@ -264,6 +264,7 @@ export type BeritaWhereInput = {
   isi?: Prisma.StringFilter<"Berita"> | string
   gambarUrl?: Prisma.StringNullableFilter<"Berita"> | string | null
   published?: Prisma.BoolFilter<"Berita"> | boolean
+  unggulan?: Prisma.BoolFilter<"Berita"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Berita"> | Date | string | null
   authorId?: Prisma.IntNullableFilter<"Berita"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Berita"> | Date | string
@@ -299,6 +300,7 @@ export type BeritaWhereUniqueInput = Prisma.AtLeast<{
   isi?: Prisma.StringFilter<"Berita"> | string
   gambarUrl?: Prisma.StringNullableFilter<"Berita"> | string | null
   published?: Prisma.BoolFilter<"Berita"> | boolean
+  unggulan?: Prisma.BoolFilter<"Berita"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Berita"> | Date | string | null
   authorId?: Prisma.IntNullableFilter<"Berita"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Berita"> | Date | string
@@ -350,6 +352,7 @@ export type BeritaCreateInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -365,6 +368,7 @@ export type BeritaUncheckedCreateInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   authorId?: number | null
   createdAt?: Date | string
@@ -379,6 +383,7 @@ export type BeritaUpdateInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -394,6 +399,7 @@ export type BeritaUncheckedUpdateInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -409,6 +415,7 @@ export type BeritaCreateManyInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   authorId?: number | null
   createdAt?: Date | string
@@ -422,6 +429,7 @@ export type BeritaUpdateManyMutationInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -435,6 +443,7 @@ export type BeritaUncheckedUpdateManyInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -587,6 +596,7 @@ export type BeritaCreateWithoutAuthorInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -601,6 +611,7 @@ export type BeritaUncheckedCreateWithoutAuthorInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -644,6 +655,7 @@ export type BeritaScalarWhereInput = {
   isi?: Prisma.StringFilter<"Berita"> | string
   gambarUrl?: Prisma.StringNullableFilter<"Berita"> | string | null
   published?: Prisma.BoolFilter<"Berita"> | boolean
+  unggulan?: Prisma.BoolFilter<"Berita"> | boolean
   publishedAt?: Prisma.DateTimeNullableFilter<"Berita"> | Date | string | null
   authorId?: Prisma.IntNullableFilter<"Berita"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Berita"> | Date | string
@@ -657,6 +669,7 @@ export type BeritaCreateWithoutFotoInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -671,6 +684,7 @@ export type BeritaUncheckedCreateWithoutFotoInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   authorId?: number | null
   createdAt?: Date | string
@@ -700,6 +714,7 @@ export type BeritaUpdateWithoutFotoInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,6 +729,7 @@ export type BeritaUncheckedUpdateWithoutFotoInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   authorId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -728,6 +744,7 @@ export type BeritaCreateManyAuthorInput = {
   isi: string
   gambarUrl?: string | null
   published?: boolean
+  unggulan?: boolean
   publishedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -740,6 +757,7 @@ export type BeritaUpdateWithoutAuthorInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -754,6 +772,7 @@ export type BeritaUncheckedUpdateWithoutAuthorInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -768,6 +787,7 @@ export type BeritaUncheckedUpdateManyWithoutAuthorInput = {
   isi?: Prisma.StringFieldUpdateOperationsInput | string
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   published?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   publishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -812,6 +832,7 @@ export type BeritaSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   isi?: boolean
   gambarUrl?: boolean
   published?: boolean
+  unggulan?: boolean
   publishedAt?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -829,6 +850,7 @@ export type BeritaSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isi?: boolean
   gambarUrl?: boolean
   published?: boolean
+  unggulan?: boolean
   publishedAt?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -844,6 +866,7 @@ export type BeritaSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   isi?: boolean
   gambarUrl?: boolean
   published?: boolean
+  unggulan?: boolean
   publishedAt?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -859,6 +882,7 @@ export type BeritaSelectScalar = {
   isi?: boolean
   gambarUrl?: boolean
   published?: boolean
+  unggulan?: boolean
   publishedAt?: boolean
   authorId?: boolean
   createdAt?: boolean
@@ -892,6 +916,7 @@ export type $BeritaPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     isi: string
     gambarUrl: string | null
     published: boolean
+    unggulan: boolean
     publishedAt: Date | null
     authorId: number | null
     createdAt: Date

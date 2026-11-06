@@ -69,13 +69,20 @@ async function TabelBerita() {
                 <p className="truncate text-sm text-muted">/{berita.slug}</p>
               </td>
               <td className="px-6 py-3">
-                <span
-                  className={`inline-block rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase ${
-                    berita.published ? "bg-primary-soft text-primary" : "bg-surface-warm text-muted"
-                  }`}
-                >
-                  {berita.published ? "Terbit" : "Draf"}
-                </span>
+                <div className="flex flex-col items-start gap-1.5">
+                  <span
+                    className={`inline-block rounded-full px-3 py-1 text-xs font-bold tracking-wide uppercase ${
+                      berita.published ? "bg-primary-soft text-primary" : "bg-surface-warm text-muted"
+                    }`}
+                  >
+                    {berita.published ? "Terbit" : "Draf"}
+                  </span>
+                  {berita.unggulan && (
+                    <span className="inline-block rounded-full bg-accent px-3 py-1 text-xs font-bold tracking-wide text-primary-dark uppercase">
+                      Unggulan
+                    </span>
+                  )}
+                </div>
               </td>
               <td className="px-6 py-3 text-base text-muted">
                 {formatTanggal(berita.publishedAt ?? berita.createdAt)}
@@ -120,7 +127,7 @@ export default function DaftarBeritaPage() {
           <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Kelola Konten</p>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">Berita</h1>
           <p className="mt-2 text-base text-muted">
-            Tulis dan terbitkan berita yang tampil di halaman Berita website.
+            Tulis dan terbitkan berita. Tandai sebagai Unggulan agar tampil di Beranda.
           </p>
         </div>
         <Link
