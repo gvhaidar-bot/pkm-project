@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -37,6 +38,9 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
 
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
 
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Ringkasan", ringkasan, 500) ?? cekPanjang("Isi", isi, 50000);
+  if (batas) return { error: batas };
+
   const slugMasukan = (formData.get("slug") as string | null)?.trim();
 
   let fotoUrl: string | null = null;
@@ -58,7 +62,8 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "berita");
     if (adalahGalatDuplikat(e)) return { error: "Judul sudah dipakai. Coba judul lain." };
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan berita." };
+    console.error(e);
+    return { error: "Gagal menyimpan berita." };
   }
   muatUlang();
   redirect("/admin/berita");
@@ -76,6 +81,9 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
 
   if (!id) return { error: "ID berita tidak valid." };
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
+
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Ringkasan", ringkasan, 500) ?? cekPanjang("Isi", isi, 50000);
+  if (batas) return { error: batas };
 
   const lama = await prisma.berita.findUnique({ where: { id } });
   if (!lama) return { error: "Berita tidak ditemukan." };
@@ -105,7 +113,8 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
     muatUlang(slug);
   } catch (e) {
     if (adalahGalatDuplikat(e)) return { error: "Judul sudah dipakai. Coba judul lain." };
-    return { error: e instanceof Error ? e.message : "Gagal mengubah berita." };
+    console.error(e);
+    return { error: "Gagal mengubah berita." };
   }
   redirect("/admin/berita");
 }
@@ -135,6 +144,7 @@ export async function tambahFotoBerita(
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
+  if (files.length > 10) return { error: "Maksimal 10 foto sekali unggah." };
 
   const tersimpan: string[] = [];
   try {
@@ -150,7 +160,8 @@ export async function tambahFotoBerita(
     }
   } catch (e) {
     for (const url of tersimpan) await hapusBerkas(url, "berita");
-    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+    console.error(e);
+    return { error: "Gagal mengunggah foto." };
   }
   muatUlang(berita.slug);
   return null;

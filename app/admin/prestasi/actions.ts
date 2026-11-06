@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -22,6 +23,9 @@ export async function tambahPrestasi(_sebelumnya: HasilAksi, formData: FormData)
   const tingkat = (formData.get("tingkat") as string | null)?.trim() || null;
 
   if (!judul) return { error: "Judul prestasi wajib diisi." };
+
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Deskripsi", deskripsi, 5000) ?? cekPanjang("Tingkat", tingkat, 200);
+  if (batas) return { error: batas };
   if (!tahun || tahun < 1900 || tahun > 2100) return { error: "Tahun tidak valid." };
 
   let fotoUrl: string | null = null;
@@ -30,7 +34,8 @@ export async function tambahPrestasi(_sebelumnya: HasilAksi, formData: FormData)
     await prisma.prestasi.create({ data: { judul, deskripsi, tahun, tingkat, gambarUrl: fotoUrl } });
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "prestasi");
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan prestasi." };
+    console.error(e);
+    return { error: "Gagal menyimpan prestasi." };
   }
   muatUlang();
   redirect("/admin/prestasi");
@@ -47,6 +52,9 @@ export async function ubahPrestasi(_sebelumnya: HasilAksi, formData: FormData): 
 
   if (!id) return { error: "ID prestasi tidak valid." };
   if (!judul) return { error: "Judul prestasi wajib diisi." };
+
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Deskripsi", deskripsi, 5000) ?? cekPanjang("Tingkat", tingkat, 200);
+  if (batas) return { error: batas };
   if (!tahun || tahun < 1900 || tahun > 2100) return { error: "Tahun tidak valid." };
 
   const lama = await prisma.prestasi.findUnique({ where: { id } });
@@ -61,7 +69,8 @@ export async function ubahPrestasi(_sebelumnya: HasilAksi, formData: FormData): 
     }
     await prisma.prestasi.update({ where: { id }, data: { judul, deskripsi, tahun, tingkat, gambarUrl: fotoUrl } });
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah prestasi." };
+    console.error(e);
+    return { error: "Gagal mengubah prestasi." };
   }
   muatUlang();
   redirect("/admin/prestasi");
@@ -92,6 +101,7 @@ export async function tambahFotoPrestasi(
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
+  if (files.length > 10) return { error: "Maksimal 10 foto sekali unggah." };
 
   const tersimpan: string[] = [];
   try {
@@ -107,7 +117,8 @@ export async function tambahFotoPrestasi(
     }
   } catch (e) {
     for (const url of tersimpan) await hapusBerkas(url, "prestasi");
-    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+    console.error(e);
+    return { error: "Gagal mengunggah foto." };
   }
   muatUlang();
   return null;

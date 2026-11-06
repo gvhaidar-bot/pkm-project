@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -24,13 +25,17 @@ export async function tambahFasilitas(_sebelumnya: HasilAksi, formData: FormData
 
   if (!nama || !deskripsi) return { error: "Nama dan deskripsi wajib diisi." };
 
+  const batas = cekPanjang("Nama", nama, 200) ?? cekPanjang("Deskripsi", deskripsi, 5000);
+  if (batas) return { error: batas };
+
   let fotoUrl: string | null = null;
   try {
     fotoUrl = await simpanFoto(formData.get("foto"), "fasilitas");
     await prisma.fasilitas.create({ data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif } });
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "fasilitas");
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan fasilitas." };
+    console.error(e);
+    return { error: "Gagal menyimpan fasilitas." };
   }
   muatUlang();
   redirect("/admin/fasilitas");
@@ -48,6 +53,9 @@ export async function ubahFasilitas(_sebelumnya: HasilAksi, formData: FormData):
   if (!id) return { error: "ID fasilitas tidak valid." };
   if (!nama || !deskripsi) return { error: "Nama dan deskripsi wajib diisi." };
 
+  const batas = cekPanjang("Nama", nama, 200) ?? cekPanjang("Deskripsi", deskripsi, 5000);
+  if (batas) return { error: batas };
+
   const lama = await prisma.fasilitas.findUnique({ where: { id } });
   if (!lama) return { error: "Fasilitas tidak ditemukan." };
 
@@ -60,7 +68,8 @@ export async function ubahFasilitas(_sebelumnya: HasilAksi, formData: FormData):
     }
     await prisma.fasilitas.update({ where: { id }, data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif } });
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah fasilitas." };
+    console.error(e);
+    return { error: "Gagal mengubah fasilitas." };
   }
   muatUlang();
   redirect("/admin/fasilitas");
@@ -91,6 +100,7 @@ export async function tambahFotoFasilitas(
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
+  if (files.length > 10) return { error: "Maksimal 10 foto sekali unggah." };
 
   const tersimpan: string[] = [];
   try {
@@ -106,7 +116,8 @@ export async function tambahFotoFasilitas(
     }
   } catch (e) {
     for (const url of tersimpan) await hapusBerkas(url, "fasilitas");
-    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+    console.error(e);
+    return { error: "Gagal mengunggah foto." };
   }
   muatUlang();
   return null;

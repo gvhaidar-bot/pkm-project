@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -41,6 +42,9 @@ export async function tambahProgramAkademik(
 
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
 
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Ringkasan", ringkasan, 500) ?? cekPanjang("Isi", isi, 50000);
+  if (batas) return { error: batas };
+
   const slugMasukan = (formData.get("slug") as string | null)?.trim();
 
   let fotoUrl: string | null = null;
@@ -53,7 +57,8 @@ export async function tambahProgramAkademik(
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "program-akademik");
     if (adalahGalatDuplikat(e)) return { error: "Judul sudah dipakai. Coba judul lain." };
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan program akademik." };
+    console.error(e);
+    return { error: "Gagal menyimpan program akademik." };
   }
   muatUlang();
   redirect("/admin/program-akademik");
@@ -76,6 +81,9 @@ export async function ubahProgramAkademik(
   if (!id) return { error: "ID program tidak valid." };
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
 
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Ringkasan", ringkasan, 500) ?? cekPanjang("Isi", isi, 50000);
+  if (batas) return { error: batas };
+
   const lama = await prisma.programAkademik.findUnique({ where: { id } });
   if (!lama) return { error: "Program akademik tidak ditemukan." };
 
@@ -96,7 +104,8 @@ export async function ubahProgramAkademik(
     muatUlang(slug);
   } catch (e) {
     if (adalahGalatDuplikat(e)) return { error: "Judul sudah dipakai. Coba judul lain." };
-    return { error: e instanceof Error ? e.message : "Gagal mengubah program akademik." };
+    console.error(e);
+    return { error: "Gagal mengubah program akademik." };
   }
   redirect("/admin/program-akademik");
 }

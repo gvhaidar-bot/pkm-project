@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error: string } | null;
@@ -26,13 +27,17 @@ export async function tambahGuru(_sebelumnya: HasilAksi, formData: FormData): Pr
 
   if (!nama || !jabatan) return { error: "Nama dan jabatan wajib diisi." };
 
+  const batas = cekPanjang("Nama", nama, 200) ?? cekPanjang("Jabatan", jabatan, 200) ?? cekPanjang("Bio", bio, 2000);
+  if (batas) return { error: batas };
+
   let fotoUrl: string | null = null;
   try {
     fotoUrl = await simpanFoto(formData.get("foto"), "guru");
     await prisma.guru.create({ data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "guru");
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan data guru." };
+    console.error(e);
+    return { error: "Gagal menyimpan data guru." };
   }
   muatUlang();
   redirect("/admin/guru");
@@ -51,6 +56,9 @@ export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Prom
   if (!id) return { error: "ID guru tidak valid." };
   if (!nama || !jabatan) return { error: "Nama dan jabatan wajib diisi." };
 
+  const batas = cekPanjang("Nama", nama, 200) ?? cekPanjang("Jabatan", jabatan, 200) ?? cekPanjang("Bio", bio, 2000);
+  if (batas) return { error: batas };
+
   const lama = await prisma.guru.findUnique({ where: { id } });
   if (!lama) return { error: "Data guru tidak ditemukan." };
 
@@ -63,7 +71,8 @@ export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Prom
     }
     await prisma.guru.update({ where: { id }, data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah data guru." };
+    console.error(e);
+    return { error: "Gagal mengubah data guru." };
   }
   muatUlang();
   redirect("/admin/guru");
@@ -94,6 +103,7 @@ export async function tambahFotoGuru(
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
+  if (files.length > 10) return { error: "Maksimal 10 foto sekali unggah." };
 
   const tersimpan: string[] = [];
   try {
@@ -109,7 +119,8 @@ export async function tambahFotoGuru(
     }
   } catch (e) {
     for (const url of tersimpan) await hapusBerkas(url, "guru");
-    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+    console.error(e);
+    return { error: "Gagal mengunggah foto." };
   }
   muatUlang();
   return null;

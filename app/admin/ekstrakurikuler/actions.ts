@@ -5,6 +5,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 
 export type HasilAksi = { error?: string } | null;
@@ -68,6 +69,14 @@ export async function tambahEkstrakurikuler(
     return { error: "Nama, deskripsi, tujuan, kegiatan rutin, dan fasilitas wajib diisi." };
   }
 
+  const batas =
+    cekPanjang("Nama", data.nama, 200) ??
+    cekPanjang("Deskripsi", data.deskripsi, 5000) ??
+    cekPanjang("Tujuan", data.tujuan, 5000) ??
+    cekPanjang("Kegiatan rutin", data.kegiatanRutin, 5000) ??
+    cekPanjang("Fasilitas", data.fasilitas, 5000);
+  if (batas) return { error: batas };
+
   try {
     const slug = await slugUnik(buatSlug(data.slugMasukan || data.nama));
     await prisma.ekstrakurikuler.create({
@@ -86,7 +95,8 @@ export async function tambahEkstrakurikuler(
     });
   } catch (e) {
     if (adalahGalatDuplikat(e)) return { error: "Nama sudah dipakai. Coba nama lain." };
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan ekstrakurikuler." };
+    console.error(e);
+    return { error: "Gagal menyimpan ekstrakurikuler." };
   }
   muatUlang();
   redirect("/admin/ekstrakurikuler");
@@ -105,6 +115,14 @@ export async function ubahEkstrakurikuler(
   if (!data.nama || !data.deskripsi || !data.tujuan || !data.kegiatanRutin || !data.fasilitas) {
     return { error: "Nama, deskripsi, tujuan, kegiatan rutin, dan fasilitas wajib diisi." };
   }
+
+  const batas =
+    cekPanjang("Nama", data.nama, 200) ??
+    cekPanjang("Deskripsi", data.deskripsi, 5000) ??
+    cekPanjang("Tujuan", data.tujuan, 5000) ??
+    cekPanjang("Kegiatan rutin", data.kegiatanRutin, 5000) ??
+    cekPanjang("Fasilitas", data.fasilitas, 5000);
+  if (batas) return { error: batas };
 
   const lama = await prisma.ekstrakurikuler.findUnique({ where: { id } });
   if (!lama) return { error: "Ekstrakurikuler tidak ditemukan." };
@@ -129,7 +147,8 @@ export async function ubahEkstrakurikuler(
     muatUlang(slug);
   } catch (e) {
     if (adalahGalatDuplikat(e)) return { error: "Nama sudah dipakai. Coba nama lain." };
-    return { error: e instanceof Error ? e.message : "Gagal mengubah ekstrakurikuler." };
+    console.error(e);
+    return { error: "Gagal mengubah ekstrakurikuler." };
   }
   redirect("/admin/ekstrakurikuler");
 }

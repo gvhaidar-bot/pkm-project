@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { adminLogin } from "@/lib/admin";
+import { cekPanjang } from "@/lib/validasi";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -29,6 +30,9 @@ export async function tambahKegiatan(_sebelumnya: HasilAksi, formData: FormData)
   const lokasi = (formData.get("lokasi") as string | null)?.trim() || null;
 
   if (!judul || !deskripsi) return { error: "Judul dan deskripsi wajib diisi." };
+
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Deskripsi", deskripsi, 5000) ?? cekPanjang("Lokasi", lokasi, 200);
+  if (batas) return { error: batas };
   if (!tanggal) return { error: "Tanggal kegiatan wajib diisi." };
 
   let fotoUrl: string | null = null;
@@ -37,7 +41,8 @@ export async function tambahKegiatan(_sebelumnya: HasilAksi, formData: FormData)
     await prisma.kegiatan.create({ data: { judul, deskripsi, tanggal, lokasi, gambarUrl: fotoUrl } });
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "kegiatan");
-    return { error: e instanceof Error ? e.message : "Gagal menyimpan kegiatan." };
+    console.error(e);
+    return { error: "Gagal menyimpan kegiatan." };
   }
   muatUlang();
   redirect("/admin/kegiatan");
@@ -54,6 +59,9 @@ export async function ubahKegiatan(_sebelumnya: HasilAksi, formData: FormData): 
 
   if (!id) return { error: "ID kegiatan tidak valid." };
   if (!judul || !deskripsi) return { error: "Judul dan deskripsi wajib diisi." };
+
+  const batas = cekPanjang("Judul", judul, 200) ?? cekPanjang("Deskripsi", deskripsi, 5000) ?? cekPanjang("Lokasi", lokasi, 200);
+  if (batas) return { error: batas };
   if (!tanggal) return { error: "Tanggal kegiatan wajib diisi." };
 
   const lama = await prisma.kegiatan.findUnique({ where: { id } });
@@ -68,7 +76,8 @@ export async function ubahKegiatan(_sebelumnya: HasilAksi, formData: FormData): 
     }
     await prisma.kegiatan.update({ where: { id }, data: { judul, deskripsi, tanggal, lokasi, gambarUrl: fotoUrl } });
   } catch (e) {
-    return { error: e instanceof Error ? e.message : "Gagal mengubah kegiatan." };
+    console.error(e);
+    return { error: "Gagal mengubah kegiatan." };
   }
   muatUlang();
   redirect("/admin/kegiatan");
@@ -99,6 +108,7 @@ export async function tambahFotoKegiatan(
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
+  if (files.length > 10) return { error: "Maksimal 10 foto sekali unggah." };
 
   const tersimpan: string[] = [];
   try {
@@ -114,7 +124,8 @@ export async function tambahFotoKegiatan(
     }
   } catch (e) {
     for (const url of tersimpan) await hapusBerkas(url, "kegiatan");
-    return { error: e instanceof Error ? e.message : "Gagal mengunggah foto." };
+    console.error(e);
+    return { error: "Gagal mengunggah foto." };
   }
   muatUlang();
   return null;
