@@ -1,22 +1,18 @@
 import {
   LuFacebook,
   LuInstagram,
-  LuMail,
   LuMapPin,
   LuMessageCircle,
-  LuPhone,
   LuYoutube,
 } from "react-icons/lu";
 
 const kontak = [
-  { label: "Telepon", value: "[Nomor Telepon]", Icon: LuPhone, kelas: "flex" },
-  { label: "Email", value: "[Email Sekolah]", Icon: LuMail, kelas: "hidden sm:flex" },
-  { label: "Alamat", value: "[Alamat Sekolah]", Icon: LuMapPin, kelas: "hidden lg:flex" },
+  { label: "Alamat", value: "Lengkong Gudang, Serpong, Tangerang Selatan, Banten 15310", Icon: LuMapPin, kelas: "flex" },
 ];
 
 const mediaSosial = [
   { label: "Facebook", href: "#", Icon: LuFacebook },
-  { label: "Instagram", href: "#", Icon: LuInstagram },
+  { label: "Instagram", href: "https://www.instagram.com/mts_nurulfalah_lengkong/", Icon: LuInstagram },
   { label: "YouTube", href: "#", Icon: LuYoutube },
   { label: "WhatsApp", href: "#", Icon: LuMessageCircle },
 ];

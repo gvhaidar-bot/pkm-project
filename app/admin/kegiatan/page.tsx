@@ -8,7 +8,7 @@ import { hapusKegiatan } from "./actions";
 
 export const metadata = {
   title: "Kelola Kegiatan — Panel Admin",
-  description: "Tambah, ubah, dan hapus kegiatan Madrasah Tsanawiyah.",
+  description: "Tambah, ubah, dan hapus kegiatan MTs Nurul Falah Serpong.",
 };
 
 function formatTanggal(tanggal: Date) {

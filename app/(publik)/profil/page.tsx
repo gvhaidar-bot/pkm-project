@@ -1,16 +1,29 @@
+import Link from "next/link";
+
 export const metadata = {
-  title: "Profil Sekolah — Madrasah Tsanawiyah",
-  description: "Profil Madrasah Tsanawiyah: sejarah dan identitas sekolah.",
+  title: "Profil Sekolah",
+  description:
+    "Profil MTs Nurul Falah Serpong: sejarah, identitas, dan sarana prasarana madrasah tsanawiyah swasta di Lengkong Gudang, Serpong, Kota Tangerang Selatan.",
 };
 
 const identitas = [
-  { label: "Nama Madrasah", nilai: "[Nama Madrasah Tsanawiyah]" },
-  { label: "NPSN", nilai: "[NPSN]" },
-  { label: "Alamat", nilai: "[Alamat lengkap madrasah]" },
-  { label: "Telepon / WhatsApp", nilai: "[Nomor telepon]" },
-  { label: "Email", nilai: "[Email resmi]" },
-  { label: "Tahun Berdiri", nilai: "[Tahun berdiri]" },
-  { label: "Status", nilai: "[Swasta / Negeri]" },
+  { label: "Nama Madrasah", nilai: "MTs Nurul Falah Serpong" },
+  { label: "NPSN", nilai: "20623052" },
+  { label: "NSM", nilai: "121236740033" },
+  { label: "Yayasan", nilai: "Yayasan Pendidikan Islam Yatim dan Duafa (YPYD)" },
+  { label: "Tahun Berdiri", nilai: "2001 (16 November 2001)" },
+  { label: "Status", nilai: "Swasta — Terakreditasi B (nilai 83, tahun 2019)" },
+  { label: "Alamat", nilai: "Jl. Serpong Raya, Lengkong Gudang RT 06/04, Kecamatan Serpong, Kota Tangerang Selatan, Banten 15310" },
+  { label: "Instagram", nilai: "@mts_nurulfalah_lengkong" },
+  { label: "TikTok", nilai: "@mtsnurulfalahlengkong" },
+];
+
+const sarana = [
+  "6 ruang kelas (3 ruang lantai 1 dan 3 ruang lantai 2)",
+  "Ruang kepala madrasah dan ruang tata usaha",
+  "WC guru dan 4 WC siswa",
+  "Kantin dan gudang",
+  "Luas tanah 1.400 m² dengan halaman 200 m²",
 ];
 
 export default function ProfilPage() {
@@ -18,9 +31,10 @@ export default function ProfilPage() {
     <div className="bg-cream">
       <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
         <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Tentang Kami</p>
-        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">Profil Sekolah</h1>
+        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">Profil MTs Nurul Falah Serpong</h1>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          Mengenal lebih dekat madrasah tempat putra-putri Anda menimba ilmu.
+          Mengenal lebih dekat madrasah tempat putra-putri Anda menimba ilmu — berdiri sejak 2001,
+          terakreditasi B, dan berkomitmen membentuk generasi yang berakhlakul karimah.
         </p>
 
         <section
@@ -28,9 +42,19 @@ export default function ProfilPage() {
           className="mt-10 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
         >
           <h2 className="text-2xl font-extrabold tracking-tight text-ink">Sejarah Singkat</h2>
-          <div className="mt-4 space-y-3 rounded-2xl border-2 border-dashed border-line bg-cream px-6 py-8">
-            <p className="text-base leading-relaxed text-muted">
-              [Sejarah berdirinya madrasah — menunggu data resmi dari pihak sekolah]
+          <div className="mt-4 space-y-3 text-base leading-relaxed text-muted">
+            <p>
+              MTs Nurul Falah Serpong diselenggarakan oleh Yayasan Pendidikan Islam Yatim dan Duafa
+              (YPYD). Madrasah ini berdiri pada 16 November 2001 berdasarkan SK Kepala Kanwil Kemenag
+              Provinsi Jawa Barat Nomor D/Wi/MTs/965/2001, dengan angkatan pertama sebanyak 25 siswa.
+            </p>
+            <p>
+              Jumlah siswa terus berkembang dari tahun ke tahun. Pada tahun ajaran 2015/2016, madrasah
+              ini memiliki 129 siswa dalam lima kelas.
+            </p>
+            <p>
+              Kurikulum yang diterapkan memadukan KTSP dengan kurikulum Departemen Agama, dan pada kelas
+              VII dan VIII beberapa mata pelajaran menggunakan Kurikulum 2013.
             </p>
           </div>
         </section>
@@ -51,10 +75,29 @@ export default function ProfilPage() {
                 <dt className="text-sm font-bold tracking-wide text-primary-dark uppercase">
                   {item.label}
                 </dt>
-                <dd className="text-base text-muted">{item.nilai}</dd>
+                <dd className="text-base break-words text-muted">{item.nilai}</dd>
               </div>
             ))}
           </dl>
+        </section>
+
+        <section
+          aria-label="Sarana dan prasarana madrasah"
+          className="mt-6 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
+        >
+          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Sarana &amp; Prasarana</h2>
+          <ul className="mt-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-muted">
+            {sarana.map((item) => (
+              <li key={item}>{item}</li>
+            ))}
+          </ul>
+          <p className="mt-6 text-base leading-relaxed text-muted">
+            Lihat daftar fasilitas selengkapnya di halaman{" "}
+            <Link href="/fasilitas" className="font-bold text-primary underline underline-offset-4 hover:text-primary-dark">
+              Fasilitas
+            </Link>
+            .
+          </p>
         </section>
       </div>
     </div>

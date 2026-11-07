@@ -7,7 +7,7 @@ import { ubahGuru } from "../../actions";
 
 export const metadata = {
   title: "Ubah Guru — Panel Admin",
-  description: "Ubah data guru Madrasah Tsanawiyah.",
+  description: "Ubah data guru MTs Nurul Falah Serpong.",
 };
 
 async function FormUbah({ params }: { params: Promise<{ id: string }> }) {

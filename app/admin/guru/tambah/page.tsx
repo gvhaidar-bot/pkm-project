@@ -3,7 +3,7 @@ import { tambahGuru } from "../actions";
 
 export const metadata = {
   title: "Tambah Guru — Panel Admin",
-  description: "Tambah data guru baru Madrasah Tsanawiyah.",
+  description: "Tambah data guru baru MTs Nurul Falah Serpong.",
 };
 
 export default function TambahGuruPage() {

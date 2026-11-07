@@ -6,8 +6,8 @@ import { LuArrowLeft } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Program Akademik — Madrasah Tsanawiyah",
-  description: "Detail program akademik Madrasah Tsanawiyah.",
+  title: "Program Akademik",
+  description: "Detail program akademik MTs Nurul Falah Serpong.",
 };
 
 async function IsiProgram({ params }: { params: Promise<{ slug: string }> }) {

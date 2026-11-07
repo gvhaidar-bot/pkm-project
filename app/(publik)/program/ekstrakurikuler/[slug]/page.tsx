@@ -6,8 +6,8 @@ import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler } from "@/components/ekstrakurikuler/ikon";
 
 export const metadata = {
-  title: "Ekstrakurikuler — Madrasah Tsanawiyah",
-  description: "Detail kegiatan ekstrakurikuler Madrasah Tsanawiyah.",
+  title: "Ekstrakurikuler",
+  description: "Detail kegiatan ekstrakurikuler MTs Nurul Falah Serpong.",
 };
 
 function daftarPoin(teks: string): string[] {

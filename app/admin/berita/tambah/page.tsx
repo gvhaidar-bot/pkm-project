@@ -3,7 +3,7 @@ import { tambahBerita } from "../actions";
 
 export const metadata = {
   title: "Tulis Berita — Panel Admin",
-  description: "Tulis berita baru Madrasah Tsanawiyah.",
+  description: "Tulis berita baru MTs Nurul Falah Serpong.",
 };
 
 export default function TambahBeritaPage() {

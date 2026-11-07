@@ -6,7 +6,7 @@ import { ubahEkstrakurikuler } from "../../actions";
 
 export const metadata = {
   title: "Ubah Ekstrakurikuler — Panel Admin",
-  description: "Ubah ekstrakurikuler Madrasah Tsanawiyah.",
+  description: "Ubah ekstrakurikuler MTs Nurul Falah Serpong.",
 };
 
 async function KontenUbah({ params }: { params: Promise<{ id: string }> }) {

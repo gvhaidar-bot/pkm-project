@@ -2,8 +2,8 @@ import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 
 export const metadata = {
-  title: "Program — Madrasah Tsanawiyah",
-  description: "Program akademik, ekstrakurikuler, dan program unggulan Madrasah Tsanawiyah.",
+  title: "Program",
+  description: "Program akademik, ekstrakurikuler, dan program unggulan MTs Nurul Falah Serpong.",
 };
 
 const daftar = [

@@ -7,7 +7,7 @@ export default function CtaPenutup() {
       <div className="mx-auto w-full max-w-[1200px] px-5 pb-16 lg:px-6">
         <div className="rounded-3xl bg-primary-dark px-6 py-14 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)] md:px-12">
           <h2 className="mx-auto max-w-2xl text-3xl font-extrabold tracking-tight text-cream md:text-4xl">
-            Kenali Madrasah Tsanawiyah Lebih Dekat
+            Kenali MTs Nurul Falah Serpong Lebih Dekat
           </h2>
           <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-cream/80">
             Lihat profil sekolah, program, dan fasilitas kami — semua informasi yang orang tua butuhkan,

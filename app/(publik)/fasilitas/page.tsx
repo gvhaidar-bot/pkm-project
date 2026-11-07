@@ -3,8 +3,8 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Fasilitas — Madrasah Tsanawiyah",
-  description: "Fasilitas pendukung kegiatan belajar di Madrasah Tsanawiyah.",
+  title: "Fasilitas",
+  description: "Fasilitas pendukung kegiatan belajar di MTs Nurul Falah Serpong.",
 };
 
 async function DaftarFasilitas() {

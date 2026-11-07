@@ -3,7 +3,7 @@ import { tambahProgramAkademik } from "../actions";
 
 export const metadata = {
   title: "Tambah Program Akademik — Panel Admin",
-  description: "Tambah program akademik baru Madrasah Tsanawiyah.",
+  description: "Tambah program akademik baru MTs Nurul Falah Serpong.",
 };
 
 export default function TambahProgramAkademikPage() {

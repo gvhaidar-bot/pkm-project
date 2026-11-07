@@ -5,8 +5,8 @@ import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Akademik — Madrasah Tsanawiyah",
-  description: "Program akademik Madrasah Tsanawiyah: kurikulum dan pembelajaran.",
+  title: "Akademik",
+  description: "Program akademik MTs Nurul Falah Serpong: kurikulum dan pembelajaran.",
 };
 
 async function DaftarProgram() {

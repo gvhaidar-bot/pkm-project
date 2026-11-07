@@ -6,8 +6,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Dasbor Admin — Madrasah Tsanawiyah",
-  description: "Ringkasan dan pengelolaan konten website Madrasah Tsanawiyah.",
+  title: "Dasbor Admin",
+  description: "Ringkasan dan pengelolaan konten website MTs Nurul Falah Serpong.",
 };
 
 async function Sapaan() {

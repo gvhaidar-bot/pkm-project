@@ -5,8 +5,8 @@ import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Berita — Madrasah Tsanawiyah",
-  description: "Berita dan agenda terbaru Madrasah Tsanawiyah.",
+  title: "Berita",
+  description: "Berita dan agenda terbaru MTs Nurul Falah Serpong.",
 };
 
 function formatTanggal(t: Date | null) {

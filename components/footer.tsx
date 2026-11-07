@@ -18,7 +18,7 @@ const program = [
 ];
 
 const kontak = [
-  { label: "Alamat", value: "[Alamat Sekolah]" },
+  { label: "Alamat", value: "Jl. Serpong Raya, Lengkong Gudang, Serpong, Tangerang Selatan, Banten 15310" },
   { label: "Telepon", value: "[Nomor Telepon]" },
   { label: "WhatsApp", value: "[Nomor WhatsApp]" },
   { label: "Email", value: "[Email Sekolah]" },
@@ -31,14 +31,14 @@ const Footer = () => {
       <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <Link href="/" className="flex items-center gap-3" aria-label="Beranda Madrasah Tsanawiyah">
-              <Image src="/logo.svg" alt="Logo Madrasah Tsanawiyah" width={48} height={48} className="h-12 w-12 shrink-0" />
+            <Link href="/" className="flex items-center gap-3" aria-label="Beranda MTs Nurul Falah Serpong">
+              <Image src="/logo.svg" alt="Logo MTs Nurul Falah Serpong" width={48} height={48} className="h-12 w-12 shrink-0" />
               <span className="flex flex-col leading-tight">
-                <span className="text-[17px] font-extrabold tracking-tight">Madrasah Tsanawiyah</span>
-                <span className="text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">Website Promosi Sekolah</span>
+                <span className="text-[17px] font-extrabold tracking-tight">MTs Nurul Falah</span>
+                <span className="text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">Serpong, Tangerang Selatan</span>
               </span>
             </Link>
-            <p className="mt-5 text-base leading-relaxed text-cream/80">Website promosi Madrasah Tsanawiyah untuk orang tua: profil sekolah, program unggulan, fasilitas, galeri, prestasi, dan berita sekolah.</p>
+            <p className="mt-5 text-base leading-relaxed text-cream/80">Website promosi MTs Nurul Falah Serpong untuk orang tua: profil sekolah, program unggulan, fasilitas, galeri, prestasi, dan berita sekolah.</p>
           </div>
 
           <nav aria-label="Menu footer">
@@ -87,7 +87,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 flex flex-col items-center justify-between gap-3 border-t border-cream/20 pt-6 text-center sm:flex-row sm:text-left">
-          <p className="text-sm text-cream/70">© 2026 Madrasah Tsanawiyah. Seluruh hak cipta dilindungi.</p>
+          <p className="text-sm text-cream/70">© 2026 MTs Nurul Falah Serpong. Seluruh hak cipta dilindungi.</p>
           <p className="text-sm text-cream/70">Profil, program, fasilitas, dan prestasi sekolah.</p>
         </div>
       </div>

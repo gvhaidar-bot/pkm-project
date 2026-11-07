@@ -3,7 +3,7 @@ import { tambahKegiatan } from "../actions";
 
 export const metadata = {
   title: "Tambah Kegiatan — Panel Admin",
-  description: "Tambah kegiatan baru Madrasah Tsanawiyah.",
+  description: "Tambah kegiatan baru MTs Nurul Falah Serpong.",
 };
 
 export default function TambahKegiatanPage() {

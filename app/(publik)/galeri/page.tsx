@@ -3,8 +3,8 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Galeri — Madrasah Tsanawiyah",
-  description: "Dokumentasi foto kegiatan Madrasah Tsanawiyah.",
+  title: "Galeri",
+  description: "Dokumentasi foto kegiatan MTs Nurul Falah Serpong.",
 };
 
 function formatTanggal(tanggal: Date) {

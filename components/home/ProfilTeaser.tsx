@@ -25,12 +25,12 @@ export default function ProfilTeaser() {
         <div className="order-1 lg:order-2">
           <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Tentang Kami</p>
           <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-ink md:text-4xl">
-            Profil Madrasah Tsanawiyah
+            Profil MTs Nurul Falah Serpong
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted">
-            Madrasah Tsanawiyah adalah sekolah menengah pertama berbasis Islam yang memadukan pendidikan
-            akademik dan pembinaan karakter, agar putra-putri Anda tumbuh menjadi generasi yang cerdas dan
-            berakhlak mulia.
+            Berdiri sejak 2001 dan terakreditasi B, MTs Nurul Falah Serpong adalah madrasah tsanawiyah
+            swasta di Lengkong Gudang, Serpong, yang memadukan pendidikan akademik dan pembinaan
+            karakter, agar putra-putri Anda tumbuh menjadi generasi yang cerdas dan berakhlak mulia.
           </p>
           <ul className="mt-6 space-y-3">
             {daftar.map((item) => (

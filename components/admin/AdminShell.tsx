@@ -68,10 +68,10 @@ function IsiSidebar({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <div className="flex h-full flex-col">
       <Link href="/admin" onClick={onNavigate} className="flex items-center gap-3 px-5 pt-6 pb-5">
-        <Image src="/logo.svg" alt="Logo Madrasah Tsanawiyah" width={40} height={40} className="h-10 w-10" />
+        <Image src="/logo.svg" alt="Logo MTs Nurul Falah Serpong" width={40} height={40} className="h-10 w-10" />
         <span className="flex flex-col leading-tight">
           <span className="text-[15px] font-extrabold tracking-tight text-cream">
-            Madrasah Tsanawiyah
+            MTs Nurul Falah
           </span>
           <span className="text-[10px] font-bold tracking-[0.14em] text-accent uppercase">
             Panel Admin

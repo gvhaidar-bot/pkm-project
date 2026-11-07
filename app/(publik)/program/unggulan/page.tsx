@@ -2,8 +2,8 @@ import { LuCheck, LuGlobe, LuHeart, LuMedal, LuTrophy } from "react-icons/lu";
 import type { IconType } from "react-icons";
 
 export const metadata = {
-  title: "Program Unggulan — Madrasah Tsanawiyah",
-  description: "Program unggulan Madrasah Tsanawiyah.",
+  title: "Program Unggulan",
+  description: "Program unggulan MTs Nurul Falah Serpong.",
 };
 
 type Program = {

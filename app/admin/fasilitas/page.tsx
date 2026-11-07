@@ -8,7 +8,7 @@ import { hapusFasilitas } from "./actions";
 
 export const metadata = {
   title: "Kelola Fasilitas — Panel Admin",
-  description: "Tambah, ubah, dan hapus fasilitas Madrasah Tsanawiyah.",
+  description: "Tambah, ubah, dan hapus fasilitas MTs Nurul Falah Serpong.",
 };
 
 async function TabelFasilitas() {

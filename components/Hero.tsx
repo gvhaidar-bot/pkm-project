@@ -11,8 +11,8 @@ const Hero = () => {
             <span className="">Website Promosi Sekolah</span>
           </div>
 
-          <h1 className="mt-6 max-w-3xl text-4xl leading-tight font-extrabold tracking-tight md:text-[2.75rem] md:leading-[1.15]">Mengenal Madrasah Tsanawiyah, Sekolah untuk Buah Hati Anda</h1>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">Kenali profil sekolah, program unggulan, fasilitas, dan prestasi kami — semua informasi yang orang tua butuhkan, dalam satu tempat.</p>
+          <h1 className="mt-6 max-w-3xl text-4xl leading-tight font-extrabold tracking-tight md:text-[2.75rem] md:leading-[1.15]">Mengenal MTs Nurul Falah Serpong, Sekolah untuk Buah Hati Anda</h1>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">Kenali profil MTs Nurul Falah Serpong, program unggulan, fasilitas, dan prestasi kami — semua informasi yang orang tua butuhkan, dalam satu tempat.</p>
           <HeroActions />
         </div>
         <HeroStack />

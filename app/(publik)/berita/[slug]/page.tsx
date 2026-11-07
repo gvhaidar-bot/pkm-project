@@ -7,8 +7,8 @@ import { prisma } from "@/lib/prisma";
 import IsiArtikel from "@/components/berita/IsiArtikel";
 
 export const metadata = {
-  title: "Berita — Madrasah Tsanawiyah",
-  description: "Baca berita Madrasah Tsanawiyah.",
+  title: "Berita",
+  description: "Baca berita MTs Nurul Falah Serpong.",
 };
 
 function formatTanggal(t: Date | null) {

@@ -3,8 +3,8 @@ import Image from "next/image";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
-  title: "Staff & Guru — Madrasah Tsanawiyah",
-  description: "Staff dan guru Madrasah Tsanawiyah.",
+  title: "Staff & Guru",
+  description: "Staff dan guru MTs Nurul Falah Serpong.",
 };
 
 async function DaftarGuru() {

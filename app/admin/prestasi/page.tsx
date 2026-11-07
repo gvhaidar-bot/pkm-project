@@ -8,7 +8,7 @@ import { hapusPrestasi } from "./actions";
 
 export const metadata = {
   title: "Kelola Prestasi — Panel Admin",
-  description: "Tambah, ubah, dan hapus prestasi Madrasah Tsanawiyah.",
+  description: "Tambah, ubah, dan hapus prestasi MTs Nurul Falah Serpong.",
 };
 
 async function TabelPrestasi() {

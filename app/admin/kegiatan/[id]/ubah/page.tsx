@@ -7,7 +7,7 @@ import { ubahKegiatan } from "../../actions";
 
 export const metadata = {
   title: "Ubah Kegiatan — Panel Admin",
-  description: "Ubah kegiatan Madrasah Tsanawiyah.",
+  description: "Ubah kegiatan MTs Nurul Falah Serpong.",
 };
 
 function keTanggalLokal(tanggal: Date) {

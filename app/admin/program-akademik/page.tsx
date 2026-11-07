@@ -8,7 +8,7 @@ import { hapusProgramAkademik } from "./actions";
 
 export const metadata = {
   title: "Kelola Program Akademik — Panel Admin",
-  description: "Tambah, ubah, dan hapus program akademik Madrasah Tsanawiyah.",
+  description: "Tambah, ubah, dan hapus program akademik MTs Nurul Falah Serpong.",
 };
 
 async function TabelProgram() {
