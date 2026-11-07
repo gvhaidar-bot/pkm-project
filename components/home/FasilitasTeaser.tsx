@@ -47,12 +47,12 @@ export default async function FasilitasTeaser() {
                   className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl bg-primary-soft"
                   aria-hidden="true"
                 >
-                  <span className="px-6 text-center text-base font-bold break-words text-primary">
+                  <span className="px-6 text-center font-serif text-base font-bold break-words text-primary">
                     {fasilitas.nama}
                   </span>
                 </div>
               )}
-              <p className="mt-3 text-center text-base font-bold break-words text-ink">{fasilitas.nama}</p>
+              <p className="mt-3 text-center font-serif text-base font-bold break-words text-ink">{fasilitas.nama}</p>
             </div>
           ))}
         </div>

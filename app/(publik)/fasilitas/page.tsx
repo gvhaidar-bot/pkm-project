@@ -44,7 +44,7 @@ async function DaftarFasilitas() {
               className="flex aspect-[4/3] w-full items-center justify-center bg-primary-soft"
               aria-hidden="true"
             >
-              <span className="px-6 text-center text-base font-bold text-primary">{fasilitas.nama}</span>
+              <span className="px-6 text-center font-serif text-base font-bold text-primary">{fasilitas.nama}</span>
             </div>
           )}
           <div className="p-5">
