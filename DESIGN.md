@@ -198,7 +198,7 @@ Aturan pakai warna:
 Pasangan font "Modern Islamic School" (2026-11-07): **Lora** (serif) untuk semua judul (H1–H6, via aturan global di `globals.css`) dan kutipan elegan (kelas `font-serif`, mis. kutipan visi di footer) — modern, elegan, dan profesional; **Plus Jakarta Sans** untuk isi, menu, tombol, dan seluruh UI — modern, ramah, dan terbaca jelas oleh orang tua di layar HP kecil.
 
 - **H1 ({typography.h1}):** Hanya satu H1 per halaman, yaitu headline hero atau judul halaman. Di HP ukurannya turun menjadi 2rem. Tidak pernah memakai huruf kapital semua.
-- **H2 ({typography.h2}):** Judul section. Selalu didahului label-caps emas/hijau kecil, contoh: `PROGRAM UNGGULAN`, lalu H2, lalu satu kalimat penjelasan di bawahnya.
+- **H2 ({typography.h2}):** Judul section. Selalu didahului label-caps emas/hijau kecil, contoh: `PROGRAM UNGGULAN`, lalu H2, lalu satu kalimat penjelasan di bawahnya. Pengecualian (2026-11-07): judul 'Profil MTs Nurul Falah Serpong' di ProfilTeaser memakai `text-primary` (hijau utama), bukan `text-ink`, karena Haidar menilai ink terlihat hitam dan jelek.
 - **H3 ({typography.h3}):** Judul kartu (nama program, nama fasilitas, judul berita).
 - **Body ({typography.body-md} dan {typography.body-lg}):** Ukuran minimum teks isi adalah 16px dengan line-height 1.7. Orang tua tidak boleh perlu memperbesar layar untuk membaca. Paragraf maksimal sekitar 3 baris sebelum diberi jarak.
 - **Label Caps ({typography.label-caps}):** Huruf kapital kecil berjarak untuk label section dan badge. Hanya untuk teks pendek, maksimal 3 kata.
