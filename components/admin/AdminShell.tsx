@@ -13,6 +13,7 @@ import {
   LuLogOut,
   LuMenu,
   LuNewspaper,
+  LuSettings,
   LuShapes,
   LuTrophy,
   LuUsers,
@@ -20,7 +21,10 @@ import {
 } from "react-icons/lu";
 import { logout } from "@/app/admin/actions";
 
-const menuUtama = [{ label: "Dasbor", href: "/admin", icon: LuLayoutDashboard }];
+const menuUtama = [
+  { label: "Dasbor", href: "/admin", icon: LuLayoutDashboard },
+  { label: "Pengaturan", href: "/admin/pengaturan", icon: LuSettings },
+];
 
 const menuKonten = [
   { label: "Berita", href: "/admin/berita", icon: LuNewspaper },

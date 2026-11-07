@@ -25,6 +25,14 @@ async function main() {
   });
 
   console.log(`Akun admin siap: ${admin.email}`);
+
+  await prisma.pengaturan.upsert({
+    where: { kunci: "tampilkanBeritaFooter" },
+    update: {},
+    create: { kunci: "tampilkanBeritaFooter", nilai: "true" },
+  });
+
+  console.log("Pengaturan awal siap: tampilkanBeritaFooter = true");
 }
 
 main()

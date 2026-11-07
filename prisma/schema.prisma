@@ -174,3 +174,10 @@ model Ekstrakurikuler {
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 }
+
+model Pengaturan {
+  id        Int      @id @default(autoincrement())
+  kunci     String   @unique
+  nilai     String
+  updatedAt DateTime @updatedAt
+}
