@@ -10,7 +10,7 @@ export default function PemuatBeranda() {
   const [hilang, setHilang] = useState(sudahTampil);
 
   useEffect(() => {
-    if (sudahTampil) return;
+    if (hilang) return;
     sudahTampil = true;
 
     let timerMaks: ReturnType<typeof setTimeout> | undefined;
@@ -32,7 +32,7 @@ export default function PemuatBeranda() {
       clearTimeout(timerMaks);
       clearTimeout(timerTunda);
     };
-  }, []);
+  }, [hilang]);
 
   useEffect(() => {
     if (!selesai) return;
