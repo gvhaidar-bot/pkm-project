@@ -24,7 +24,7 @@ export default function ProfilTeaser() {
         </div>
         <div className="order-1 lg:order-2">
           <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Tentang Kami</p>
-          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-ink md:text-4xl">
+          <h2 className="mt-2 text-3xl font-extrabold tracking-tight text-primary md:text-4xl">
             Profil MTs Nurul Falah Serpong
           </h2>
           <p className="mt-4 text-base leading-relaxed text-muted">
