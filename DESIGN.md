@@ -1,7 +1,7 @@
 ---
 version: alpha
 name: MTS Promosi — Islami Modern
-description: Sistem desain website promosi Madrasah Tsanawiyah (MTS) untuk orang tua. Next.js, SEO-first, mobile-first. Referensi struktur utama MTs YPPMI, ritme warna Starbucks, kartu foto Airbnb, hero Apple. TANPA PPDB.
+description: Sistem desain website promosi MTs Nurul Falah Serpong untuk orang tua. Next.js, SEO-first, mobile-first. Referensi struktur utama MTs YPPMI, ritme warna Starbucks, kartu foto Airbnb, hero Apple. TANPA PPDB.
 colors:
   primary: "#0B5B3E"
   primary-dark: "#1E3932"
@@ -148,7 +148,7 @@ components:
 
 ## Overview
 
-Website promosi Madrasah Tsanawiyah (MTS) — bukan website administrasi, bukan portal siswa, dan **bukan website PPDB**.
+Website promosi **MTs Nurul Falah Serpong** (Lengkong Gudang, Kec. Serpong, Kota Tangerang Selatan, Banten 15310; NPSN 20623052; berdiri 16 November 2001; akreditasi B) — bukan website administrasi, bukan portal siswa, dan **bukan website PPDB**.
 
 Satu kalimat penuntun untuk semua keputusan desain:
 
@@ -294,6 +294,14 @@ Satu section Primary Dark sebelum footer: satu H2 ajakan yang bersifat informati
 ### Footer
 
 Latar Primary Dark, teks Text on Dark. Empat kolom di desktop (bertumpuk di HP): identitas sekolah + alamat, menu, program unggulan, dan kontak (telepon, WhatsApp, email, jam layanan) + peta lokasi tertanam atau tautan Google Maps. Baris bawah: hak cipta dan nama sekolah.
+
+## SEO
+
+- Data sekolah terpusat di `lib/site.ts` (nama, tagline, deskripsi, alamat, media sosial). Domain resmi (`site.url`) masih kosong — **wajib diisi saat website di-hosting**, karena sitemap, robots, dan canonical URL bergantung padanya.
+- Judul halaman memakai template `%s | MTs Nurul Falah Serpong` (di `app/layout.tsx`); H1 tiap halaman memuat nama sekolah.
+- Schema `School` (JSON-LD) dipasang sekali di layout via `components/JsonLd.tsx`: nama, deskripsi, alamat, dan akun media sosial resmi. Tidak ada nomor telepon/email di schema karena belum ada data resmi yang bukan data personal.
+- `app/sitemap.ts` memuat 12 halaman publik; `app/robots.ts` mengizinkan semua bot dan memblokir `/admin`, `/login`, `/api/`. Keduanya kosong/tanpa sitemap sampai `site.url` diisi.
+- Hanya data publik yang wajib tampil yang dimasukkan ke web. **Jangan masukkan data sensitif/personal**: nomor HP pribadi, nama kepala madrasah, nama operator, dan data siswa/guru yang sudah usang. Telepon/email/WhatsApp/jam layanan tetap placeholder sampai pihak sekolah memberikan data resminya.
 
 ## Do's and Don'ts
 
