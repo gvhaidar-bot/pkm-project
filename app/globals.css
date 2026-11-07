@@ -12,6 +12,7 @@
   --color-muted: #5a6b64;
   --color-line: #dde3dd;
   --font-sans: var(--font-plus-jakarta), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-lora), Georgia, serif;
   --font-arabic: var(--font-amiri), serif;
 }
 
@@ -19,4 +20,13 @@ body {
   background-color: var(--color-cream);
   color: var(--color-ink);
   font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
 }

@@ -17,19 +17,19 @@ colors:
   border: "#DDE3DD"
 typography:
   h1:
-    fontFamily: "Plus Jakarta Sans"
+    fontFamily: "Lora"
     fontSize: 2.75rem
-    fontWeight: 800
+    fontWeight: 700
     lineHeight: 1.15
     letterSpacing: -0.02em
   h2:
-    fontFamily: "Plus Jakarta Sans"
+    fontFamily: "Lora"
     fontSize: 2rem
     fontWeight: 700
     lineHeight: 1.25
     letterSpacing: -0.01em
   h3:
-    fontFamily: "Plus Jakarta Sans"
+    fontFamily: "Lora"
     fontSize: 1.25rem
     fontWeight: 700
     lineHeight: 1.4
@@ -195,7 +195,7 @@ Aturan pakai warna:
 
 ## Typography
 
-Satu keluarga font Latin untuk semuanya: **Plus Jakarta Sans**. Font ini modern, ramah, dan terbaca jelas oleh orang tua di layar HP kecil.
+Pasangan font "Modern Islamic School" (2026-11-07): **Lora** (serif) untuk semua judul (H1–H6, via aturan global di `globals.css`) dan kutipan elegan (kelas `font-serif`, mis. kutipan visi di footer) — modern, elegan, dan profesional; **Plus Jakarta Sans** untuk isi, menu, tombol, dan seluruh UI — modern, ramah, dan terbaca jelas oleh orang tua di layar HP kecil.
 
 - **H1 ({typography.h1}):** Hanya satu H1 per halaman, yaitu headline hero atau judul halaman. Di HP ukurannya turun menjadi 2rem. Tidak pernah memakai huruf kapital semua.
 - **H2 ({typography.h2}):** Judul section. Selalu didahului label-caps emas/hijau kecil, contoh: `PROGRAM UNGGULAN`, lalu H2, lalu satu kalimat penjelasan di bawahnya.

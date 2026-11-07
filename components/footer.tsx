@@ -60,10 +60,10 @@ export default async function Footer() {
                 <span className="text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">Serpong, Tangerang Selatan</span>
               </span>
             </Link>
-            <p className="mt-5 text-base leading-relaxed text-cream/80 italic">
+            <p className="mt-5 font-serif text-base leading-relaxed text-cream/80 italic">
               &ldquo;Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah.&rdquo;
             </p>
-            <p className="mt-4 text-sm leading-relaxed text-cream/60 italic">
+            <p className="mt-4 font-serif text-sm leading-relaxed text-cream/60 italic">
               &ldquo;Ing ngarsa sung tulada, ing madya mangun karsa, tut wuri handayani.&rdquo;
               <span className="mt-1 block font-semibold text-cream/70 not-italic">— Ki Hadjar Dewantara</span>
             </p>
