@@ -1,5 +1,7 @@
 import { Suspense } from "react";
 import Hero from "@/components/Hero";
+import PemuatBeranda from "@/components/PemuatBeranda";
+import TampilSaatScroll from "@/components/TampilSaatScroll";
 import Statistik from "@/components/home/Statistik";
 import KenapaMemilihKami from "@/components/home/KenapaMemilihKami";
 import ProfilTeaser from "@/components/home/ProfilTeaser";
@@ -31,25 +33,44 @@ function KerangkaPita() {
 export default function Home() {
   return (
     <div>
-      <Hero />
+      <PemuatBeranda />
+      <TampilSaatScroll>
+        <Hero />
+      </TampilSaatScroll>
       <Suspense fallback={<KerangkaPita />}>
-        <Statistik />
+        <TampilSaatScroll>
+          <Statistik />
+        </TampilSaatScroll>
       </Suspense>
-      <KenapaMemilihKami />
-      <ProfilTeaser />
+      <TampilSaatScroll>
+        <KenapaMemilihKami />
+      </TampilSaatScroll>
+      <TampilSaatScroll>
+        <ProfilTeaser />
+      </TampilSaatScroll>
       <Suspense fallback={<KerangkaKartu />}>
-        <BeritaTeaser />
+        <TampilSaatScroll>
+          <BeritaTeaser />
+        </TampilSaatScroll>
       </Suspense>
       <Suspense fallback={<KerangkaKartu />}>
-        <FasilitasTeaser />
+        <TampilSaatScroll>
+          <FasilitasTeaser />
+        </TampilSaatScroll>
       </Suspense>
       <Suspense fallback={<KerangkaKartu />}>
-        <GaleriTeaser />
+        <TampilSaatScroll>
+          <GaleriTeaser />
+        </TampilSaatScroll>
       </Suspense>
       <Suspense fallback={<KerangkaKartu />}>
-        <PrestasiTeaser />
+        <TampilSaatScroll>
+          <PrestasiTeaser />
+        </TampilSaatScroll>
       </Suspense>
-      <CtaPenutup />
+      <TampilSaatScroll>
+        <CtaPenutup />
+      </TampilSaatScroll>
     </div>
   );
 }
