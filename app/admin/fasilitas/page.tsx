@@ -63,6 +63,11 @@ async function TabelFasilitas() {
                 >
                   {fasilitas.aktif ? "Aktif" : "Nonaktif"}
                 </span>
+                {fasilitas.unggulan && (
+                  <span className="mt-1.5 block w-fit rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
+                    Unggulan
+                  </span>
+                )}
               </td>
               <td className="px-6 py-3">
                 <div className="flex items-center justify-end gap-1">
@@ -104,7 +109,7 @@ export default function DaftarFasilitasPage() {
           <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Kelola Konten</p>
           <h1 className="mt-2 text-3xl font-extrabold tracking-tight text-ink">Fasilitas</h1>
           <p className="mt-2 text-base text-muted">
-            Tambah, ubah, atau hapus fasilitas yang tampil di halaman Fasilitas.
+            Tambah, ubah, atau hapus fasilitas. Tandai sebagai Unggulan agar tampil di Beranda.
           </p>
         </div>
         <Link

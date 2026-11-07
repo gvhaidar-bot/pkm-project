@@ -54,6 +54,7 @@ model Fasilitas {
   gambarUrl String?
   urutan    Int             @default(0)
   aktif     Boolean         @default(true)
+  unggulan  Boolean         @default(false)
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
 

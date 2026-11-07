@@ -1,0 +1,1 @@
+ALTER TABLE "Fasilitas" ADD COLUMN "unggulan" BOOLEAN NOT NULL DEFAULT false;

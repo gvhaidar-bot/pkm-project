@@ -13,6 +13,7 @@ export type DataFasilitas = {
   gambarUrl: string | null;
   urutan: number;
   aktif: boolean;
+  unggulan: boolean;
 };
 
 type AksiForm = (sebelumnya: HasilAksi, formData: FormData) => Promise<HasilAksi>;
@@ -102,6 +103,25 @@ export default function FormFasilitas({ fasilitas, aksi }: { fasilitas?: DataFas
             Tampilkan di website
           </label>
         </div>
+      </div>
+
+      <div>
+        <div className="flex items-center pb-1">
+          <label htmlFor="unggulan" className="flex min-h-11 cursor-pointer items-center gap-3 text-base font-medium text-ink">
+            <input
+              id="unggulan"
+              name="unggulan"
+              type="checkbox"
+              defaultChecked={fasilitas?.unggulan ?? false}
+              className="h-5 w-5 accent-[#0B5B3E]"
+            />
+            Tampilkan di Beranda
+          </label>
+        </div>
+        <p className="text-sm text-muted">
+          Fasilitas yang ditandai tampil di bagian Fasilitas pada halaman utama. Maksimal 6 fasilitas, diurutkan
+          sesuai Urutan tampil.
+        </p>
       </div>
 
       {hasil?.error && (

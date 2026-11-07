@@ -22,6 +22,7 @@ export async function tambahFasilitas(_sebelumnya: HasilAksi, formData: FormData
   const deskripsi = (formData.get("deskripsi") as string | null)?.trim();
   const urutan = Number(formData.get("urutan") ?? 0) || 0;
   const aktif = formData.get("aktif") === "on";
+  const unggulan = formData.get("unggulan") === "on";
 
   if (!nama || !deskripsi) return { error: "Nama dan deskripsi wajib diisi." };
 
@@ -31,7 +32,7 @@ export async function tambahFasilitas(_sebelumnya: HasilAksi, formData: FormData
   let fotoUrl: string | null = null;
   try {
     fotoUrl = await simpanFoto(formData.get("foto"), "fasilitas");
-    await prisma.fasilitas.create({ data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif } });
+    await prisma.fasilitas.create({ data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif, unggulan } });
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "fasilitas");
     console.error(e);
@@ -49,6 +50,7 @@ export async function ubahFasilitas(_sebelumnya: HasilAksi, formData: FormData):
   const deskripsi = (formData.get("deskripsi") as string | null)?.trim();
   const urutan = Number(formData.get("urutan") ?? 0) || 0;
   const aktif = formData.get("aktif") === "on";
+  const unggulan = formData.get("unggulan") === "on";
 
   if (!id) return { error: "ID fasilitas tidak valid." };
   if (!nama || !deskripsi) return { error: "Nama dan deskripsi wajib diisi." };
@@ -66,7 +68,7 @@ export async function ubahFasilitas(_sebelumnya: HasilAksi, formData: FormData):
       fotoUrl = baru;
       await hapusBerkas(lama.gambarUrl, "fasilitas");
     }
-    await prisma.fasilitas.update({ where: { id }, data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif } });
+    await prisma.fasilitas.update({ where: { id }, data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif, unggulan } });
   } catch (e) {
     console.error(e);
     return { error: "Gagal mengubah fasilitas." };

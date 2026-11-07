@@ -222,7 +222,7 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
   3. Kenapa Orang Tua Memilih Kami (4 kartu)
   4. Profil Sekolah (teaser tentang kami → /profil)
   5. Berita Terbaru (kartu utama besar + 2 kartu samping; berita Unggulan didahulukan, sisanya berita terbaru → /berita)
-  6. Fasilitas (4 kartu live → /fasilitas)
+  6. Fasilitas Sekolah (grid 6 foto live, Unggulan didahulukan → /fasilitas)
   7. Galeri (6 foto live → /galeri)
   8. Prestasi (4 item live)
   9. CTA penutup (→ /profil + /program; JANGAN ke /kontak karena masih 404)
@@ -274,7 +274,7 @@ Latar Primary, empat angka maksimal, angka besar berwarna putih dan label kecil 
 
 ### Kartu Fasilitas & Galeri
 
-Foto sebagai elemen terbesar (pola Airbnb): foto 4:3 memenuhi bagian atas kartu, judul dan satu baris keterangan di bawahnya. Galeri memakai grid foto yang rapi dengan jarak {spacing.md}. Tidak ada teks panjang di dalam galeri.
+Fasilitas (gaya SMAN 7): grid 3 kolom × 2 baris (maks 6), foto 16:10 tanpa kartu, nama fasilitas sebagai keterangan tebal di bawah foto. Fasilitas Unggulan (checkbox "Tampilkan di Beranda" di form admin) tampil lebih dulu, sisanya diisi fasilitas aktif lain sesuai urutan. Galeri memakai grid foto yang rapi dengan jarak {spacing.md}. Tidak ada teks panjang di dalam galeri.
 
 ### Kartu Berita
 

@@ -43,6 +43,7 @@ export type FasilitasMinAggregateOutputType = {
   gambarUrl: string | null
   urutan: number | null
   aktif: boolean | null
+  unggulan: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,6 +55,7 @@ export type FasilitasMaxAggregateOutputType = {
   gambarUrl: string | null
   urutan: number | null
   aktif: boolean | null
+  unggulan: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -65,6 +67,7 @@ export type FasilitasCountAggregateOutputType = {
   gambarUrl: number
   urutan: number
   aktif: number
+  unggulan: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -88,6 +91,7 @@ export type FasilitasMinAggregateInputType = {
   gambarUrl?: true
   urutan?: true
   aktif?: true
+  unggulan?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -99,6 +103,7 @@ export type FasilitasMaxAggregateInputType = {
   gambarUrl?: true
   urutan?: true
   aktif?: true
+  unggulan?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -110,6 +115,7 @@ export type FasilitasCountAggregateInputType = {
   gambarUrl?: true
   urutan?: true
   aktif?: true
+  unggulan?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -208,6 +214,7 @@ export type FasilitasGroupByOutputType = {
   gambarUrl: string | null
   urutan: number
   aktif: boolean
+  unggulan: boolean
   createdAt: Date
   updatedAt: Date
   _count: FasilitasCountAggregateOutputType | null
@@ -242,6 +249,7 @@ export type FasilitasWhereInput = {
   gambarUrl?: Prisma.StringNullableFilter<"Fasilitas"> | string | null
   urutan?: Prisma.IntFilter<"Fasilitas"> | number
   aktif?: Prisma.BoolFilter<"Fasilitas"> | boolean
+  unggulan?: Prisma.BoolFilter<"Fasilitas"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Fasilitas"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Fasilitas"> | Date | string
   foto?: Prisma.FasilitasFotoListRelationFilter
@@ -254,6 +262,7 @@ export type FasilitasOrderByWithRelationInput = {
   gambarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   urutan?: Prisma.SortOrder
   aktif?: Prisma.SortOrder
+  unggulan?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   foto?: Prisma.FasilitasFotoOrderByRelationAggregateInput
@@ -269,6 +278,7 @@ export type FasilitasWhereUniqueInput = Prisma.AtLeast<{
   gambarUrl?: Prisma.StringNullableFilter<"Fasilitas"> | string | null
   urutan?: Prisma.IntFilter<"Fasilitas"> | number
   aktif?: Prisma.BoolFilter<"Fasilitas"> | boolean
+  unggulan?: Prisma.BoolFilter<"Fasilitas"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Fasilitas"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Fasilitas"> | Date | string
   foto?: Prisma.FasilitasFotoListRelationFilter
@@ -281,6 +291,7 @@ export type FasilitasOrderByWithAggregationInput = {
   gambarUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   urutan?: Prisma.SortOrder
   aktif?: Prisma.SortOrder
+  unggulan?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.FasilitasCountOrderByAggregateInput
@@ -300,6 +311,7 @@ export type FasilitasScalarWhereWithAggregatesInput = {
   gambarUrl?: Prisma.StringNullableWithAggregatesFilter<"Fasilitas"> | string | null
   urutan?: Prisma.IntWithAggregatesFilter<"Fasilitas"> | number
   aktif?: Prisma.BoolWithAggregatesFilter<"Fasilitas"> | boolean
+  unggulan?: Prisma.BoolWithAggregatesFilter<"Fasilitas"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Fasilitas"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Fasilitas"> | Date | string
 }
@@ -310,6 +322,7 @@ export type FasilitasCreateInput = {
   gambarUrl?: string | null
   urutan?: number
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   foto?: Prisma.FasilitasFotoCreateNestedManyWithoutFasilitasInput
@@ -322,6 +335,7 @@ export type FasilitasUncheckedCreateInput = {
   gambarUrl?: string | null
   urutan?: number
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   foto?: Prisma.FasilitasFotoUncheckedCreateNestedManyWithoutFasilitasInput
@@ -333,6 +347,7 @@ export type FasilitasUpdateInput = {
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urutan?: Prisma.IntFieldUpdateOperationsInput | number
   aktif?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foto?: Prisma.FasilitasFotoUpdateManyWithoutFasilitasNestedInput
@@ -345,6 +360,7 @@ export type FasilitasUncheckedUpdateInput = {
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urutan?: Prisma.IntFieldUpdateOperationsInput | number
   aktif?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   foto?: Prisma.FasilitasFotoUncheckedUpdateManyWithoutFasilitasNestedInput
@@ -357,6 +373,7 @@ export type FasilitasCreateManyInput = {
   gambarUrl?: string | null
   urutan?: number
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -367,6 +384,7 @@ export type FasilitasUpdateManyMutationInput = {
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urutan?: Prisma.IntFieldUpdateOperationsInput | number
   aktif?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -378,6 +396,7 @@ export type FasilitasUncheckedUpdateManyInput = {
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urutan?: Prisma.IntFieldUpdateOperationsInput | number
   aktif?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -389,6 +408,7 @@ export type FasilitasCountOrderByAggregateInput = {
   gambarUrl?: Prisma.SortOrder
   urutan?: Prisma.SortOrder
   aktif?: Prisma.SortOrder
+  unggulan?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -405,6 +425,7 @@ export type FasilitasMaxOrderByAggregateInput = {
   gambarUrl?: Prisma.SortOrder
   urutan?: Prisma.SortOrder
   aktif?: Prisma.SortOrder
+  unggulan?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -416,6 +437,7 @@ export type FasilitasMinOrderByAggregateInput = {
   gambarUrl?: Prisma.SortOrder
   urutan?: Prisma.SortOrder
   aktif?: Prisma.SortOrder
+  unggulan?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -450,6 +472,7 @@ export type FasilitasCreateWithoutFotoInput = {
   gambarUrl?: string | null
   urutan?: number
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -461,6 +484,7 @@ export type FasilitasUncheckedCreateWithoutFotoInput = {
   gambarUrl?: string | null
   urutan?: number
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -487,6 +511,7 @@ export type FasilitasUpdateWithoutFotoInput = {
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urutan?: Prisma.IntFieldUpdateOperationsInput | number
   aktif?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -498,6 +523,7 @@ export type FasilitasUncheckedUpdateWithoutFotoInput = {
   gambarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   urutan?: Prisma.IntFieldUpdateOperationsInput | number
   aktif?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  unggulan?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -540,6 +566,7 @@ export type FasilitasSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   gambarUrl?: boolean
   urutan?: boolean
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   foto?: boolean | Prisma.Fasilitas$fotoArgs<ExtArgs>
@@ -553,6 +580,7 @@ export type FasilitasSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   gambarUrl?: boolean
   urutan?: boolean
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["fasilitas"]>
@@ -564,6 +592,7 @@ export type FasilitasSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   gambarUrl?: boolean
   urutan?: boolean
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["fasilitas"]>
@@ -575,11 +604,13 @@ export type FasilitasSelectScalar = {
   gambarUrl?: boolean
   urutan?: boolean
   aktif?: boolean
+  unggulan?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
 export type FasilitasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "deskripsi" | "gambarUrl" | "urutan" | "aktif" | "createdAt" | "updatedAt", ExtArgs["result"]["fasilitas"]>
+export type FasilitasOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "nama" | "deskripsi" | "gambarUrl" | "urutan" | "unggulan" | "createdAt" | "updatedAt", ExtArgs["result"]["fasilitas"]>
 export type FasilitasInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   foto?: boolean | Prisma.Fasilitas$fotoArgs<ExtArgs>
   _count?: boolean | Prisma.FasilitasCountOutputTypeDefaultArgs<ExtArgs>
@@ -599,6 +630,7 @@ export type $FasilitasPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     gambarUrl: string | null
     urutan: number
     aktif: boolean
+    unggulan: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["fasilitas"]>
@@ -1031,6 +1063,7 @@ export interface FasilitasFieldRefs {
   readonly gambarUrl: Prisma.FieldRef<"Fasilitas", 'String'>
   readonly urutan: Prisma.FieldRef<"Fasilitas", 'Int'>
   readonly aktif: Prisma.FieldRef<"Fasilitas", 'Boolean'>
+  readonly unggulan: Prisma.FieldRef<"Fasilitas", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Fasilitas", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Fasilitas", 'DateTime'>
 }

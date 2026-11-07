@@ -5,11 +5,21 @@ import { prisma } from "@/lib/prisma";
 import JudulBagian from "./JudulBagian";
 
 export default async function FasilitasTeaser() {
-  const daftar = await prisma.fasilitas.findMany({
-    where: { aktif: true },
+  const unggulan = await prisma.fasilitas.findMany({
+    where: { aktif: true, unggulan: true },
     orderBy: [{ urutan: "asc" }, { nama: "asc" }],
-    take: 4,
+    take: 6,
   });
+
+  let daftar = unggulan;
+  if (daftar.length < 6) {
+    const tambahan = await prisma.fasilitas.findMany({
+      where: { aktif: true, id: { notIn: daftar.map((f) => f.id) } },
+      orderBy: [{ urutan: "asc" }, { nama: "asc" }],
+      take: 6 - daftar.length,
+    });
+    daftar = [...daftar, ...tambahan];
+  }
 
   if (daftar.length === 0) return null;
 
@@ -18,38 +28,32 @@ export default async function FasilitasTeaser() {
       <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
         <JudulBagian
           label="Sarana Madrasah"
-          judul="Fasilitas"
-          deskripsi="Sarana dan prasarana yang mendukung kenyamanan belajar putra-putri Anda."
+          judul="Fasilitas Sekolah"
+          deskripsi="Sarana dan prasarana pendukung kegiatan belajar mengajar."
         />
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid grid-cols-1 gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-3">
           {daftar.map((fasilitas) => (
-            <article
-              key={fasilitas.id}
-              className="overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
-            >
+            <div key={fasilitas.id}>
               {fasilitas.gambarUrl ? (
                 <Image
                   src={fasilitas.gambarUrl}
                   alt={`Foto ${fasilitas.nama}`}
                   width={600}
-                  height={450}
-                  className="aspect-[4/3] w-full object-cover"
+                  height={375}
+                  className="aspect-[16/10] w-full rounded-2xl object-cover"
                 />
               ) : (
                 <div
-                  className="flex aspect-[4/3] w-full items-center justify-center bg-primary-soft"
+                  className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl bg-primary-soft"
                   aria-hidden="true"
                 >
-                  <span className="px-6 text-center text-base font-bold text-primary">{fasilitas.nama}</span>
+                  <span className="px-6 text-center text-base font-bold break-words text-primary">
+                    {fasilitas.nama}
+                  </span>
                 </div>
               )}
-              <div className="p-5">
-                <h3 className="text-lg font-bold tracking-tight text-ink">{fasilitas.nama}</h3>
-                <p className="mt-2 line-clamp-2 text-[15px] leading-relaxed text-muted">
-                  {fasilitas.deskripsi}
-                </p>
-              </div>
-            </article>
+              <p className="mt-3 text-center text-base font-bold break-words text-ink">{fasilitas.nama}</p>
+            </div>
           ))}
         </div>
         <div className="mt-10 text-center">
