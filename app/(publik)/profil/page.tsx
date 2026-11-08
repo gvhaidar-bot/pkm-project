@@ -107,7 +107,7 @@ export default function ProfilPage() {
         <aside>
           <nav
             aria-label="Navigasi profil"
-            className="overflow-hidden rounded-2xl border border-line bg-white lg:sticky lg:top-24"
+            className="overflow-hidden rounded-none border border-line bg-white lg:sticky lg:top-24"
           >
             <ul>
               {menu.map((item) => (
@@ -128,7 +128,7 @@ export default function ProfilPage() {
         <div>
           <section id="identitas" aria-label="Identitas madrasah" className="scroll-mt-28">
             <h2 className="text-2xl font-extrabold tracking-tight text-ink">Identitas</h2>
-            <dl className="mt-4 overflow-hidden rounded-2xl border border-line bg-white">
+            <dl className="mt-4 overflow-hidden rounded-none border border-line bg-white">
               {identitas.map((item, i) => (
                 <div
                   key={item.label}
@@ -191,7 +191,7 @@ export default function ProfilPage() {
             className="mt-12 scroll-mt-28"
           >
             <h2 className="text-2xl font-extrabold tracking-tight text-ink">Struktur Organisasi</h2>
-            <div className="mt-4 rounded-2xl border-2 border-dashed border-line bg-white px-6 py-8">
+            <div className="mt-4 rounded-none border-2 border-dashed border-line bg-white px-6 py-8">
               <p className="text-base leading-relaxed text-muted">
                 Bagan struktur organisasi MTs Nurul Falah Serpong akan ditampilkan di sini setelah pihak
                 sekolah memberikan gambarnya.

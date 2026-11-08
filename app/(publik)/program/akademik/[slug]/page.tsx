@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft, LuClock, LuLayoutGrid, LuPencil, LuStar, LuUsers } from "react-icons/lu";
+import { LuArrowLeft, LuClock, LuLayoutGrid, LuStar, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import IsiProgram from "@/components/program/IsiProgram";
 
@@ -42,17 +42,17 @@ async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
               width={1200}
               height={750}
               priority
-              className="aspect-[16/10] w-full rounded-2xl object-cover"
+              className="aspect-[16/10] w-full rounded-none object-cover"
             />
           ) : (
-            <div className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl bg-primary-soft">
+            <div className="flex aspect-[16/10] w-full items-center justify-center rounded-none bg-primary-soft">
               <span className="px-6 text-center font-serif text-xl font-bold break-words text-primary">
                 {program.judul}
               </span>
             </div>
           )}
 
-          <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)] sm:p-8">
+          <div className="mt-6 rounded-none bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)] sm:p-8">
             <h1 className="text-2xl font-extrabold tracking-tight break-words text-primary sm:text-3xl">
               {program.judul}
             </h1>
@@ -62,7 +62,7 @@ async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
         </div>
 
         <aside className="lg:sticky lg:top-24">
-          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
+          <div className="rounded-none bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
             <ul className="space-y-5">
               {info.map((item) => (
                 <li key={item.label} className="flex items-start gap-3">
@@ -78,17 +78,16 @@ async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
             </ul>
           </div>
 
-          <div className="mt-6 rounded-2xl bg-[#F97316] p-6 text-center">
+          <div className="mt-6 rounded-none bg-accent-soft p-6 text-center">
             <h2 className="text-lg font-extrabold text-white">Tertarik Bergabung?</h2>
             <p className="mt-2 text-sm leading-relaxed text-white/90">
               Daftarkan diri Anda sekarang untuk mengikuti program akademik unggulan kami
             </p>
             <Link
               href="/kontak"
-              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-6 text-base font-bold text-[#EA580C] transition-colors hover:bg-cream"
+              className="mt-5 inline-flex min-h-11 items-center justify-center gap-1.5 bg-white px-6 py-3 text-base font-bold text-accent-soft transition-colors hover:bg-cream"
             >
-              <LuPencil className="h-4 w-4" aria-hidden="true" />
-              Hubungi Kami
+                            Hubungi Kami →
             </Link>
           </div>
         </aside>
@@ -103,10 +102,10 @@ function Kerangka() {
       <div className="h-6 w-44 rounded-full bg-white" />
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
         <div>
-          <div className="aspect-[16/10] w-full rounded-2xl bg-white" />
-          <div className="mt-6 h-96 rounded-2xl bg-white" />
+          <div className="aspect-[16/10] w-full rounded-none bg-white" />
+          <div className="mt-6 h-96 rounded-none bg-white" />
         </div>
-        <div className="h-64 rounded-2xl bg-white" />
+        <div className="h-64 rounded-none bg-white" />
       </div>
     </div>
   );

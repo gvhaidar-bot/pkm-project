@@ -1,7 +1,6 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 
 export const metadata = {
@@ -17,7 +16,7 @@ async function DaftarProgram() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-3xl bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
         <p className="text-lg font-bold text-ink">Belum ada program akademik</p>
         <p className="mt-2 text-base text-muted">
           Program akademik sedang disiapkan oleh pihak madrasah.
@@ -31,7 +30,7 @@ async function DaftarProgram() {
       {daftar.map((program) => (
         <article
           key={program.id}
-          className="group flex flex-col overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+          className="group flex flex-col overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
         >
           <div className="relative">
             {program.gambarUrl ? (
@@ -53,7 +52,7 @@ async function DaftarProgram() {
               </div>
             )}
             {program.unggulan && (
-              <span className="absolute top-4 left-4 rounded-full bg-accent px-4 py-1.5 text-sm font-bold text-primary-dark shadow">
+              <span className="absolute top-4 left-4 bg-accent px-4 py-1.5 text-sm font-bold text-primary-dark shadow">
                 Unggulan
               </span>
             )}
@@ -63,10 +62,9 @@ async function DaftarProgram() {
             <p className="mt-3 flex-1 text-[15px] leading-relaxed text-muted">{program.ringkasan}</p>
             <Link
               href={`/program/akademik/${program.slug}`}
-              className="mt-5 inline-flex min-h-11 w-fit items-center gap-1.5 rounded-full bg-primary px-6 text-base font-bold text-white transition-colors hover:bg-primary-dark"
+              className="mt-5 inline-flex min-h-11 w-fit items-center gap-1.5 bg-accent px-6 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft"
             >
-              Selengkapnya
-              <LuArrowRight className="h-5 w-5" aria-hidden="true" />
+              Selengkapnya →
             </Link>
           </div>
         </article>
@@ -79,7 +77,7 @@ function Kerangka() {
   return (
     <div className="mt-10 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="h-96 rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
+        <div key={i} className="h-96 rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
       ))}
     </div>
   );

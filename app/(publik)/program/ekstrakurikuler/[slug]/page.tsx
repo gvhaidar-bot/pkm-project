@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft, LuCheck, LuInfo, LuPencil, LuTag, LuUsers } from "react-icons/lu";
+import { LuArrowLeft, LuCheck, LuInfo, LuTag, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler, IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 import { parseIsiBerita } from "@/lib/isiBerita";
@@ -16,7 +16,7 @@ export const metadata = {
 function ButirDaftar({ teks }: { teks: string }) {
   return (
     <li className="flex items-start gap-2.5 text-base leading-relaxed text-ink">
-      <LuCheck className="mt-1 h-5 w-5 shrink-0 text-[#F97316]" aria-hidden="true" />
+      <LuCheck className="mt-1 h-5 w-5 shrink-0 text-accent-soft" aria-hidden="true" />
       <span>
         <Teks teks={teks} />
       </span>
@@ -89,13 +89,13 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
           width={1200}
           height={675}
           priority
-          className="mt-6 aspect-video w-full rounded-3xl object-cover"
+          className="mt-6 aspect-video w-full rounded-none object-cover"
         />
       )}
 
-      <div className="mt-6 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
+      <div className="mt-6 rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
         <div className="flex items-start gap-5">
-          <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-[#F97316]">
+          <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-accent-soft">
             <IkonEkstrakurikuler ikon={item.ikon} className="h-10 w-10 text-white" />
           </span>
           <div className="min-w-0">
@@ -131,7 +131,7 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
       </div>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-start">
-        <div className="rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
+        <div className="rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
           <h2 className="text-2xl font-extrabold tracking-tight break-words text-ink">Tentang Kegiatan Ini</h2>
           <div className="mt-4">
             <TeksBerformat teks={item.deskripsi} kelasTeks="text-base leading-relaxed text-muted" />
@@ -142,21 +142,20 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
         </div>
 
         <aside className="lg:sticky lg:top-24">
-          <div className="rounded-2xl bg-[#F97316] p-6 text-center">
+          <div className="rounded-none bg-accent-soft p-6 text-center">
             <h2 className="text-xl font-extrabold text-white">Bergabunglah!</h2>
             <p className="mt-2 text-sm leading-relaxed text-white/90">
               Jadilah bagian dari keluarga besar {item.nama}
             </p>
             <Link
               href="/kontak"
-              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-6 text-base font-bold text-[#EA580C] transition-colors hover:bg-cream"
+              className="mt-5 inline-flex min-h-11 items-center justify-center gap-1.5 bg-white px-6 py-3 text-base font-bold text-accent-soft transition-colors hover:bg-cream"
             >
-              <LuPencil className="h-4 w-4" aria-hidden="true" />
-              Daftar Sekarang
+                            Daftar Sekarang →
             </Link>
           </div>
 
-          <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
+          <div className="mt-6 rounded-none bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
             <h2 className="flex items-center gap-2 text-lg font-bold text-primary">
               <LuInfo className="h-5 w-5" aria-hidden="true" />
               Informasi Penting
@@ -180,11 +179,11 @@ function Kerangka() {
   return (
     <div className="animate-pulse">
       <div className="h-6 w-52 rounded-full bg-white" />
-      <div className="mt-6 aspect-video w-full rounded-3xl bg-white" />
-      <div className="mt-6 h-40 rounded-3xl bg-white" />
+      <div className="mt-6 aspect-video w-full rounded-none bg-white" />
+      <div className="mt-6 h-40 rounded-none bg-white" />
       <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div className="h-96 rounded-3xl bg-white" />
-        <div className="h-64 rounded-2xl bg-white" />
+        <div className="h-96 rounded-none bg-white" />
+        <div className="h-64 rounded-none bg-white" />
       </div>
     </div>
   );

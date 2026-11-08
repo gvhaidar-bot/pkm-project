@@ -3,19 +3,20 @@ import HeroStack from "./hero/HeroStack";
 
 const Hero = () => {
   return (
-    <section className="relative overflow-hidden bg-cream text-ink">
-      <div className="relative mx-auto grid w-full max-w-300 grid-cols-1 items-center gap-12 px-5 py-24 lg:grid-cols-2 lg:px-6">
-        <div>
-          <div className=" items-center inline-flex rounded-full bg-primary-soft px-3.5 py-1.5 text-xs font-bold tracking-[0.12em] text-primary uppercase gap-2 duration-300">
-            <span className="w-3 h-3 rounded-full bg-green-500 animate-pulse" />
-            <span className="">Website Promosi Sekolah</span>
-          </div>
-
-          <h1 className="mt-6 max-w-3xl text-4xl leading-tight font-extrabold tracking-tight md:text-[2.75rem] md:leading-[1.15]">Mengenal MTs Nurul Falah Serpong, Sekolah untuk Buah Hati Anda</h1>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-muted md:text-lg">Kenali profil MTs Nurul Falah Serpong, program unggulan, fasilitas, dan prestasi kami — semua informasi yang orang tua butuhkan, dalam satu tempat.</p>
-          <HeroActions />
-        </div>
+    <section className="bg-white text-ink">
+      <div className="mx-auto w-full max-w-300 px-5 pt-6 lg:px-6">
         <HeroStack />
+      </div>
+      <div className="mx-auto max-w-3xl px-5 py-16 text-center lg:px-6">
+        <h1 className="text-4xl leading-[1.1] font-black tracking-tight md:text-6xl">
+          Mengenal MTs Nurul Falah Serpong, Sekolah untuk Buah Hati Anda
+        </h1>
+        <span className="mx-auto mt-6 block h-1 w-16 bg-accent" aria-hidden="true" />
+        <p className="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
+          Kenali profil MTs Nurul Falah Serpong, program unggulan, fasilitas, dan prestasi kami — semua informasi yang
+          orang tua butuhkan, dalam satu tempat.
+        </p>
+        <HeroActions />
       </div>
     </section>
   );

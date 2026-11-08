@@ -1,32 +1,32 @@
 ---
 version: alpha
-name: MTS Promosi — Islami Modern
-description: Sistem desain website promosi MTs Nurul Falah Serpong untuk orang tua. Next.js, SEO-first, mobile-first. Referensi struktur utama MTs YPPMI, ritme warna Starbucks, kartu foto Airbnb, hero Apple. TANPA PPDB.
+name: MTS Promosi — Hijau Emas Orisinal
+description: Sistem desain website promosi MTs Nurul Falah Serpong untuk orang tua. Next.js, SEO-first, mobile-first. Gaya orisinal: hijau tua + emas (terinspirasi sekolah internasional, BUKAN tiruan satu website — warna, judul, hero, dan CTA dibuat berbeda), judul serif tebal satu baris + garis emas, sudut tajam, CTA tombol isi. TANPA PPDB.
 colors:
-  primary: "#0B5B3E"
-  primary-dark: "#1E3932"
-  primary-soft: "#E7F0EB"
-  accent: "#C9A227"
-  accent-soft: "#CBA258"
-  background: "#F7F3EA"
+  primary: "#0b4f3a"
+  primary-dark: "#07382a"
+  primary-soft: "#e4efe8"
+  accent: "#c19a3d"
+  accent-soft: "#8a6d25"
+  background: "#F2F2F2"
   surface: "#FFFFFF"
-  surface-warm: "#F2F0EB"
-  text-primary: "#0B5B3E"
+  surface-warm: "#EDEDED"
+  text-primary: "#0b4f3a"
   text-secondary: "#5A6B64"
-  text-on-dark: "#F7F3EA"
-  border: "#DDE3DD"
+  text-on-dark: "#FFFFFF"
+  border: "#E5E5E5"
 typography:
   h1:
     fontFamily: "Lora"
-    fontSize: 2.75rem
-    fontWeight: 700
-    lineHeight: 1.15
+    fontSize: 3.75rem
+    fontWeight: 900
+    lineHeight: 1.05
     letterSpacing: -0.02em
   h2:
     fontFamily: "Lora"
-    fontSize: 2rem
-    fontWeight: 700
-    lineHeight: 1.25
+    fontSize: 3rem
+    fontWeight: 900
+    lineHeight: 1.05
     letterSpacing: -0.01em
   h3:
     fontFamily: "Lora"
@@ -60,9 +60,9 @@ typography:
     fontWeight: 400
     lineHeight: 2
 rounded:
-  sm: 8px
-  md: 16px
-  lg: 24px
+  sm: 0px
+  md: 0px
+  lg: 0px
   full: 999px
 spacing:
   xs: 4px
@@ -78,57 +78,57 @@ components:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.surface}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.full}"
+    rounded: 0px
     padding: 14px 28px
   button-primary-hover:
     backgroundColor: "{colors.primary-dark}"
     textColor: "{colors.surface}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.full}"
+    rounded: 0px
     padding: 14px 28px
   button-secondary:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.primary}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.full}"
+    rounded: 0px
     padding: 14px 28px
   button-gold:
     backgroundColor: "{colors.accent}"
     textColor: "{colors.primary-dark}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.full}"
+    rounded: 0px
     padding: 14px 28px
   card-program:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text-primary}"
-    rounded: "{rounded.lg}"
+    rounded: 0px
     padding: 24px
   card-testimoni:
     backgroundColor: "{colors.surface-warm}"
     textColor: "{colors.text-primary}"
-    rounded: "{rounded.lg}"
+    rounded: 0px
     padding: 24px
   navbar:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.text-primary}"
     height: 72px
   hero:
-    backgroundColor: "{colors.primary-dark}"
-    textColor: "{colors.text-on-dark}"
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.text-primary}"
     padding: 96px 24px
   stats-band:
     backgroundColor: "{colors.primary}"
     textColor: "{colors.surface}"
     padding: 48px 24px
   footer:
-    backgroundColor: "{colors.primary-dark}"
+    backgroundColor: "{colors.primary}"
     textColor: "{colors.text-on-dark}"
     padding: 64px 24px
   chip-eyebrow:
     backgroundColor: "{colors.primary-soft}"
     textColor: "{colors.primary}"
     typography: "{typography.label-caps}"
-    rounded: "{rounded.full}"
+    rounded: 0px
     padding: 6px 14px
   stats-number:
     backgroundColor: "{colors.primary}"
@@ -138,7 +138,7 @@ components:
     backgroundColor: "{colors.accent-soft}"
     textColor: "{colors.primary-dark}"
     typography: "{typography.body-md}"
-    rounded: "{rounded.full}"
+    rounded: 0px
     padding: 14px 28px
   card-description:
     backgroundColor: "{colors.surface}"
@@ -152,18 +152,17 @@ Website promosi **MTs Nurul Falah Serpong** (Lengkong Gudang, Kec. Serpong, Kota
 
 Satu kalimat penuntun untuk semua keputusan desain:
 
-> Madrasah modern yang hangat dan terpercaya — hijau yang teduh, emas seperlunya, foto asli suasana belajar, dan informasi yang bisa ditemukan orang tua dalam hitungan detik.
+> Madrasah modern yang teduh dan berwibawa — hijau tua dan emas, judul serif tebal dengan garis emas, foto asli suasana belajar, dan informasi yang bisa ditemukan orang tua dalam hitungan detik.
 
 Audiens utama adalah **orang tua usia kurang lebih 30–50 tahun** yang sedang membandingkan sekolah untuk anaknya yang lulus SD/MI. Mereka membuka website dari HP, sering lewat tautan yang dibagikan di WhatsApp, dan mereka memutuskan percaya atau tidak dari kesan pertama: apakah sekolah ini rapi, Islami, jelas programnya, dan mudah dihubungi.
 
 Tujuan website hanya satu: **memperkenalkan dan mempromosikan sekolah** — profil, program unggulan, fasilitas, prestasi, galeri, berita, dan testimoni — sampai orang tua yakin untuk menghubungi atau mengunjungi sekolah.
 
-Referensi yang mengikat:
+Referensi yang mengikat (2026-11-08, branch `newest`):
 
+- **Gaya orisinal (terinspirasi sekolah internasional, BUKAN tiruan):** Haidar awalnya meminta mengikuti gaya American School of Bombay, lalu menegaskan **hindari plagiat** — jadi desain ini mengambil arah umumnya saja (hijau tua + emas, serif elegan, layout rapi) dan dibuat berbeda: nilai warna digeser dari ASB (`#0b4f3a` / `#c19a3d`, bukan `#0b4f3a` / `#c19a3d`), judul satu baris tebal + garis emas pendek (bukan dua baris tipis/tebal khas ASB), hero foto full-bleed tanpa bingkai hijau tebal, CTA berupa tombol isi bersudut tajam (bukan tautan bergaris bawah). Jangan meniru satu website mana pun secara harfiah.
 - **Struktur: MTs YPPMI** — program unggulan dibuat kartu yang jelas, berita dan agenda teratur, informasi dipisah per kebutuhan pengunjung. Abaikan seluruh bagian SPMB/PPDB dari referensi ini.
-- **Warna dan ritme halaman: Starbucks** — hijau tua, krem hangat, pita hijau tua di antara section krem dan putih, tombol berbentuk pill.
-- **Kartu foto: Airbnb** — foto adalah bintang utama pada kartu fasilitas, galeri, dan testimoni. Warna asli Airbnb (pink/merah) tidak dipakai, diganti hijau MTS.
-- **Hero: Apple** — satu foto full-width, satu headline besar, dua tombol. Tidak lebih.
+- **Halaman: SMAN 7 Jakarta** — anatomi halaman profil, footer, dan detail berita.
 
 Website ini dibangun dengan **Next.js (App Router)**. Konten homepage ada di `app/page.js`. Navbar dan Footer adalah komponen reusable yang dipasang satu kali di `app/layout.js` dan tampil di semua halaman.
 
@@ -173,22 +172,22 @@ File ini adalah aturan desain yang **wajib** diikuti setiap AI/agent yang menger
 
 Palet ini terkunci. Agent tidak boleh memperkenalkan warna baru.
 
-- **Primary ({colors.primary}, #0B5B3E):** Hijau MTS. Warna utama merek — tombol utama, judul aksen, ikon, tautan, dan elemen interaktif utama.
-- **Primary Dark ({colors.primary-dark}, #1E3932):** Hijau sangat tua. Hero memakai krem sejak 2026-11-05 (agar tidak sama dengan footer); pita statistik boleh memakai Primary, dan Footer selalu memakai warna ini.
-- **Primary Soft ({colors.primary-soft}, #E7F0EB):** Hijau sangat muda. Untuk latar chip, badge, dan kartu yang dipilih/aktif. Bukan untuk latar section besar.
-- **Accent ({colors.accent}, #C9A227):** Emas. Hanya untuk aksen kecil yang penting — garis pembatas pendek, ikon bintang/geometris, label-caps di atas judul, angka statistik, dan tombol emas khusus di atas latar hijau tua. Emas **tidak pernah** dipakai untuk teks isi, dan tidak pernah untuk teks kecil di atas latar putih/krem karena kontrasnya tidak cukup.
-- **Accent Soft ({colors.accent-soft}, #CBA258):** Emas lembut untuk hover aksen dan detail pola geometris.
-- **Background ({colors.background}, #F7F3EA):** Krem/gading hangat. Latar dasar halaman, bergantian dengan Surface.
+- **Primary ({colors.primary}, #0b4f3a):** Hijau tua. Warna utama merek — pita statistik, footer, judul, ikon, tautan, dan elemen interaktif utama.
+- **Primary Dark ({colors.primary-dark}, #07382a):** Hijau paling tua. Untuk hover tombol utama dan gradasi bawah foto hero. Footer memakai Primary (bukan Primary Dark).
+- **Primary Soft ({colors.primary-soft}, #e4efe8):** Hijau sangat muda. Untuk latar chip, badge, dan kartu yang dipilih/aktif. Bukan untuk latar section besar.
+- **Accent ({colors.accent}, #c19a3d):** Emas. Untuk tombol CTA emas, garis emas di bawah judul section, label angka statistik, badge Unggulan, dan aksen di atas latar hijau tua. Emas **tidak pernah** dipakai untuk teks isi panjang.
+- **Accent Soft ({colors.accent-soft}, #8a6d25):** Emas gelap. Untuk pita ProfilTeaser (latar emas + teks putih) dan kartu CTA di halaman detail program. Juga warna hover tombol emas.
+- **Background ({colors.background}, #F2F2F2):** Abu sangat muda. Latar dasar halaman, bergantian dengan Surface (putih).
 - **Surface ({colors.surface}, #FFFFFF):** Putih bersih untuk kartu dan section selingan.
-- **Surface Warm ({colors.surface-warm}, #F2F0EB):** Krem sedikit lebih gelap untuk kartu testimoni dan section yang ingin terasa hangat.
-- **Text Primary ({colors.text-primary}, #0B5B3E):** Hijau utama. Semua judul dan teks utama. (Diubah 2026-11-08 dari #2E4A3F ke #0B5B3E — sama seperti warna primary — atas permintaan Haidar "ganti semua yang memakai warna font tersebut"; sebelumnya diubah 2026-11-07 dari #1A2E28 karena Haidar menilai warna lama terlihat hitam. Catatan: `text-ink` dan `text-primary` kini bernilai sama.)
+- **Surface Warm ({colors.surface-warm}, #EDEDED):** Abu sedikit lebih gelap untuk kartu dan avatar placeholder.
+- **Text Primary ({colors.text-primary}, #0b4f3a):** Hijau utama. Semua judul dan teks utama. (Riwayat: diubah 2026-11-08 dari #2E4A3F ke #0B5B3E atas permintaan Haidar "ganti semua yang memakai warna font tersebut"; 2026-11-08 malam digeser ke #0b4f3a sebagai bagian dari desain orisinal anti-plagiat. Catatan: `text-ink` dan `text-primary` kini bernilai sama.)
 - **Text Secondary ({colors.text-secondary}, #5A6B64):** Abu kehijauan. Untuk deskripsi, caption, dan metadata. Tidak untuk teks penting yang harus dibaca cepat.
-- **Text on Dark ({colors.text-on-dark}, #F7F3EA):** Krem terang untuk teks di atas Primary Dark.
-- **Border ({colors.border}, #DDE3DD):** Garis tipis kartu dan pembatas section di latar terang.
+- **Text on Dark ({colors.text-on-dark}, #FFFFFF):** Putih untuk teks di atas Primary.
+- **Border ({colors.border}, #E5E5E5):** Garis tipis kartu dan pembatas section di latar terang.
 
 Aturan pakai warna:
 
-- Perbandingan latar dalam satu halaman kurang lebih: 60% krem/putih, 30% hijau, 10% emas sebagai aksen.
+- Perbandingan latar dalam satu halaman kurang lebih: 60% abu muda/putih, 30% hijau, 10% emas sebagai aksen.
 - Satu section = satu warna latar. Jangan mencampur dua warna latar dalam satu section.
 - Gradasi (gradient) dilarang, kecuali overlay hitam/hijau tua transparan di atas foto hero agar teks terbaca. Gradasi ungu, biru, pink, atau pelangi dilarang total.
 - Mode gelap (dark mode) tidak dibuat.
@@ -197,8 +196,8 @@ Aturan pakai warna:
 
 Pasangan font "Modern Islamic School" (2026-11-07): **Lora** (serif) untuk semua judul (H1–H6, via aturan global di `globals.css`) dan kutipan elegan (kelas `font-serif`, mis. kutipan visi di footer) — modern, elegan, dan profesional; **Plus Jakarta Sans** untuk isi, menu, tombol, dan seluruh UI — modern, ramah, dan terbaca jelas oleh orang tua di layar HP kecil.
 
-- **H1 ({typography.h1}):** Hanya satu H1 per halaman, yaitu headline hero atau judul halaman. Di HP ukurannya turun menjadi 2rem. Tidak pernah memakai huruf kapital semua.
-- **H2 ({typography.h2}):** Judul section. Selalu didahului label-caps emas/hijau kecil, contoh: `PROGRAM UNGGULAN`, lalu H2, lalu satu kalimat penjelasan di bawahnya. Pengecualian (2026-11-07): judul 'Profil MTs Nurul Falah Serpong' di ProfilTeaser memakai `text-primary` (hijau utama), bukan `text-ink`, karena Haidar menilai ink terlihat hitam dan jelek.
+- **H1 ({typography.h1}):** Hanya satu H1 per halaman, yaitu headline hero atau judul halaman. Judul **satu baris tebal** (`font-black`) dengan garis emas pendek di bawahnya. Di HP ukurannya turun. Tidak pernah memakai huruf kapital semua.
+- **H2 ({typography.h2}):** Judul section. **Satu baris tebal** (`font-black`) + garis emas pendek di bawahnya, lalu satu kalimat penjelasan. **Tidak ada label-caps kecil di atas judul** (judulnya sendiri adalah pernyataan section). `components/home/JudulBagian.tsx` merender pola ini.
 - **H3 ({typography.h3}):** Judul kartu (nama program, nama fasilitas, judul berita).
 - **Body ({typography.body-md} dan {typography.body-lg}):** Ukuran minimum teks isi adalah 16px dengan line-height 1.7. Orang tua tidak boleh perlu memperbesar layar untuk membaca. Paragraf maksimal sekitar 3 baris sebelum diberi jarak.
 - **Label Caps ({typography.label-caps}):** Huruf kapital kecil berjarak untuk label section dan badge. Hanya untuk teks pendek, maksimal 3 kata.
@@ -211,9 +210,9 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
 - **Mobile-first.** Rancang untuk lebar 360px dulu, baru tablet, baru desktop. Mayoritas pengunjung adalah orang tua di HP.
 - Lebar konten maksimal **1200px**, dengan padding samping 20px di HP dan 24px di desktop. Konten tidak pernah menempel ke tepi layar.
 - Grid desktop 12 kolom. Kartu program/fasilitas: **3 kolom di desktop, 2 kolom di tablet, 1 kolom di HP.** Tidak pernah 4 kolom untuk kartu berisi teks.
-- Jarak antar-section adalah {spacing.section} (96px) di desktop dan 64px di HP. Ritme latar section homepage harus bergantian:
+- Jarak antar-section adalah {spacing.section} (96px) di desktop dan 64px di HP. Ritme latar section homepage harus bergantian (hijau/emas/abu/putih):
 
-  `Hero (krem + foto) → Pita Statistik (hijau) → Krem (kartu putih) → CTA (hijau tua) → Footer (hijau tua)`
+  `Hero (putih, foto full-bleed) → Pita Statistik (hijau) → Kenapa Memilih Kami (abu muda) → ProfilTeaser (pita emas) → Berita (putih) → Fasilitas (abu muda) → Galeri (putih) → Prestasi (abu muda) → CTA Penutup (hijau) → Footer (hijau)`
 
 - Urutan section homepage (diperbarui 2026-11-05 atas perintah Haidar, mengikuti pola SMAN 19 & SMAN 7 Jakarta; setiap section teaser mengarah ke halaman lengkapnya. Testimoni dihapus 2026-11-05; Program Akademik diganti Berita di posisi yang sama):
 
@@ -228,11 +227,11 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
   9. CTA penutup (→ /profil + /program; JANGAN ke /kontak karena masih 404)
   10. Footer
 
-- **Detail ekstrakurikuler** `/program/ekstrakurikuler/[slug]` (dirombak 2026-11-08 mengikuti referensi yang dikirim Haidar): spanduk foto lebar 16:9 di atas (hanya bila ada foto — pembeda dari halaman program akademik yang fotonya 16:10 di kolom kiri); kartu header (lingkaran ikon oranye `#F97316` + nama hijau + deskripsi + baris Anggota/Kategori); grid 2 kolom — kiri kartu putih 'Tentang Kegiatan Ini' + deskripsi + Tujuan/Kegiatan Rutin/Fasilitas (daftar centang oranye); kanan sidebar lengket: kartu CTA oranye 'Bergabunglah!' (tombol putih 'Daftar Sekarang' → `/kontak`) + kartu 'Informasi Penting' (Jadwal/Lokasi/Biaya/Pembimbing DIISI ADMIN — kolom opsional di form, tampil placeholder `[…]` bila kosong; migrasi `20261108230000_tambah_info_penting_ekstrakurikuler`). Judul sub-bagian (Tujuan/Kegiatan Rutin/Fasilitas) berwarna hijau `text-primary`, sama seperti judul nama ekstrakurikuler. Foto per ekstrakurikuler: kolom `gambarUrl` (migrasi `20261108160000_tambah_gambar_ekstrakurikuler`) + unggah foto di form admin (MasukanFoto, maks 2 MB, hapus otomatis saat diganti/dihapus).
-- **Detail program akademik** `/program/akademik/[slug]` (dirombak 2026-11-08 mengikuti referensi yang dikirim Haidar): tautan 'Kembali ke Program' + grid 2 kolom — kiri foto (16:10) lalu kartu putih berisi judul hijau + ringkasan + isi (mini-markdown via `components/program/IsiProgram.tsx`: `## ` jadi subjudul hijau, `- ` jadi daftar centang emas, `1. ` jadi daftar bernomor); kanan sidebar lengket berisi kartu info (Tipe Program = judul, Durasi = `[Durasi]`, Peserta = `[Peserta]`, Status = Unggulan/Aktif) + kartu CTA oranye `#F97316` ('Tertarik Bergabung?' + tombol putih 'Hubungi Kami' → `/kontak`). Oranye CTA adalah pengecualian palet (sesuai referensi). Form admin program akademik punya toolbar format yang sama dengan form berita.
+- **Detail ekstrakurikuler** `/program/ekstrakurikuler/[slug]` (dirombak 2026-11-08; 2026-11-08 malam oranye diganti emas gelap sebagai bagian dari desain orisinal): spanduk foto lebar 16:9 di atas (hanya bila ada foto — pembeda dari halaman program akademik yang fotonya 16:10 di kolom kiri); kartu header (lingkaran ikon emas gelap `accent-soft` + nama hijau + deskripsi + baris Anggota/Kategori); grid 2 kolom — kiri kartu putih 'Tentang Kegiatan Ini' + deskripsi + Tujuan/Kegiatan Rutin/Fasilitas (daftar centang emas gelap); kanan sidebar lengket: kartu CTA emas gelap 'Bergabunglah!' (tautan putih bergaris bawah 'Daftar Sekarang' → `/kontak`) + kartu 'Informasi Penting' (Jadwal/Lokasi/Biaya/Pembimbing DIISI ADMIN — kolom opsional di form, tampil placeholder `[…]` bila kosong; migrasi `20261108230000_tambah_info_penting_ekstrakurikuler`). Judul sub-bagian (Tujuan/Kegiatan Rutin/Fasilitas) berwarna hijau `text-primary`, sama seperti judul nama ekstrakurikuler. Foto per ekstrakurikuler: kolom `gambarUrl` (migrasi `20261108160000_tambah_gambar_ekstrakurikuler`) + unggah foto di form admin (MasukanFoto, maks 2 MB, hapus otomatis saat diganti/dihapus).
+- **Detail program akademik** `/program/akademik/[slug]` (dirombak 2026-11-08; 2026-11-08 malam oranye diganti emas gelap sebagai bagian dari desain orisinal): tautan 'Kembali ke Program' + grid 2 kolom — kiri foto (16:10) lalu kartu putih berisi judul hijau + ringkasan + isi (mini-markdown via `components/program/IsiProgram.tsx`: `## ` jadi subjudul hijau, `- ` jadi daftar centang emas, `1. ` jadi daftar bernomor); kanan sidebar lengket berisi kartu info (Tipe Program = judul, Durasi = `[Durasi]`, Peserta = `[Peserta]`, Status = Unggulan/Aktif) + kartu CTA emas gelap `accent-soft` ('Tertarik Bergabung?' + tautan putih bergaris bawah 'Hubungi Kami' → `/kontak`). Form admin program akademik punya toolbar format yang sama dengan form berita.
 - Menu utama terkunci, tujuh item ini: **Beranda, Tentang, Program, Fasilitas, Galeri, Berita, Kontak.** Item **Tentang** berupa dropdown berisi **Profil Sekolah** (`/profil`), **Visi & Misi** (`/visi-misi`), dan **Staff & Guru** (`/guru`). Item **Program** berupa dropdown berisi **Akademik** (`/program/akademik`), **Ekstrakurikuler** (`/program/ekstrakurikuler`), dan **Program Unggulan** (`/program/unggulan`); halaman `/program` sendiri menjadi indeks ketiga program tersebut. Tidak ada menu lain di navbar. (Perubahan 2026-11-04 atas perintah pemilik project: "Profil" sebagai item tunggal diganti dropdown "Tentang"; halaman Profil Sekolah dan Staff & Guru dipisah; "Program" dijadikan dropdown mengikuti pola Tentang.)
 - Halaman **Profil Sekolah** (`/profil`) mengikuti pola SMAN 7 Jakarta (2026-11-07): banner foto + judul H1 "Profil MTs Nurul Falah Serpong", breadcrumb Home › Profil Sekolah, sidebar lengket (Identitas, Sejarah, Visi Misi, Struktur Organisasi — tautan jangkar), lalu konten: tabel Identitas, Sejarah per tahun (2001, 2013, 2015, 2019), Visi Misi Dan Tujuan (visi + 6 misi + 6 tujuan, ikon centang emas), dan Struktur Organisasi (placeholder gambar bagan sampai pihak sekolah memberikannya). Tabel Identitas TIDAK memuat Kepala Sekolah dan Telepon (data personal).
-- **Footer** gaya SMAN 7 (2026-11-07): latar hijau tua, 5 kolom — (1) logo + nama + slogan dari visi ("Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah.") + kutipan Ki Hadjar Dewantara; (2) Links Internal (Profil Sekolah, Akademik, Visi Misi, Ekstrakurikuler, Berita); (3) Berita Terbaru (3 berita terbit terbaru + tanggal, tautan "Lihat Semua Berita"); (4) Hubungi Kami (alamat asli + Instagram + TikTok resmi, TANPA telepon/email — belum ada data); (5) Lokasi (iframe Google Maps, query nama sekolah). Bilah bawah: © 2026 + tagline "Membentuk Generasi yang Berakhlakul Karimah." Kolom Berita Terbaru bisa disembunyikan admin lewat **/admin/pengaturan** (model `Pengaturan`, kunci `tampilkanBeritaFooter`, default true; Footer async + Suspense di layout publik). CSP `next.config.ts` mengizinkan `frame-src` Google Maps. Tombol kembali ke atas (lingkaran emas, muncul setelah scroll 400px) di `components/TombolKeAtas.tsx`. Slogan sekolah: TIDAK ada slogan resmi terpisah dari visi (pencarian 2026-11-07) — jangan pakai slogan Nurul Falah lain.
+- **Footer** (2026-11-08, branch `newest`; sebelumnya SMAN 7): latar hijau Primary `#0b4f3a`, dibuka pernyataan serif besar putih dari visi ("Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah."), lalu 5 kolom — (1) logo + nama + kutipan Ki Hadjar Dewantara; (2) Links Internal (Profil Sekolah, Akademik, Visi Misi, Ekstrakurikuler, Berita); (3) Berita Terbaru (3 berita terbit terbaru + tanggal, tautan "Lihat Semua Berita"); (4) Hubungi Kami (alamat asli + Instagram + TikTok resmi, TANPA telepon/email — belum ada data; tombol "Hubungi Kami" berupa tautan emas bergaris bawah); (5) Lokasi (iframe Google Maps, query nama sekolah, sudut tajam). Bilah bawah: © 2026 + tagline "Membentuk Generasi yang Berakhlakul Karimah." Kolom Berita Terbaru bisa disembunyikan admin lewat **/admin/pengaturan** (model `Pengaturan`, kunci `tampilkanBeritaFooter`, default true; Footer async + Suspense di layout publik). CSP `next.config.ts` mengizinkan `frame-src` Google Maps. Tombol kembali ke atas (lingkaran emas, muncul setelah scroll 400px) di `components/TombolKeAtas.tsx`. Slogan sekolah: TIDAK ada slogan resmi terpisah dari visi (pencarian 2026-11-07) — jangan pakai slogan Nurul Falah lain.
 - **Animasi beranda** (2026-11-07): layar loading `components/PemuatBeranda.tsx` (overlay hijau tua + logo + spinner emas; hilang saat `load` atau maksimal 3 detik, minimal tampil 500 ms, lalu fade 500 ms; hanya tampil sekali per sesi — navigasi client-side tidak memunculkan lagi) dan animasi reveal `components/TampilSaatScroll.tsx` (IntersectionObserver, threshold 0,1; konten mulai `opacity-0 translate-y-8`, muncul jadi `opacity-100 translate-y-0` selama 700 ms saat masuk viewport, sekali saja). Semua section beranda dibungkus TampilSaatScroll di `app/(publik)/page.tsx` (di luar Suspense).
 - Semua target sentuh (tombol, menu, tautan kartu) minimal setinggi **44px**.
 - Foto memakai komponen `next/image`, rasio konsisten dalam satu baris kartu (4:3 untuk fasilitas/program, 16:9 untuk hero dan berita), dan selalu memiliki teks alt yang menjelaskan isi foto — bukan "gambar1" dan bukan teks yang sama dengan judul.
@@ -241,15 +240,15 @@ Hierarki judul HTML wajib mengikuti hierarki visual: H1 → H2 → H3, tanpa mel
 
 Desain ini datar dan tenang. Kedalaman hanya dari bayangan yang sangat lembut dan dari perbedaan warna latar section.
 
-- Bayangan kartu standar: `0 4px 24px rgba(11, 91, 62, 0.08)`.
-- Bayangan kartu saat hover (desktop saja): `0 8px 32px rgba(11, 91, 62, 0.14)`, dan kartu naik maksimal 4px. Tidak ada animasi memantul, berputar, atau membesar berlebihan.
+- Bayangan kartu standar: `0 4px 24px rgba(11, 79, 58, 0.08)`.
+- Bayangan kartu saat hover (desktop saja): `0 8px 32px rgba(11, 79, 58, 0.14)`, dan kartu naik maksimal 4px. Tidak ada animasi memantul, berputar, atau membesar berlebihan.
 - Tidak ada bayangan keras, tidak ada efek kaca (glassmorphism), tidak ada neumorphism.
 - Pola geometris bintang segi delapan Islami boleh dipakai hanya sebagai tekstur sangat tipis (opacity 4–6%) di latar hero, pita statistik, dan footer. Pola tidak pernah diletakkan di belakang teks isi dan tidak pernah lebih mencolok daripada konten.
 
 ## Shapes
 
-- **Tombol selalu berbentuk pill** ({rounded.full}), mengikuti ritme Starbucks.
-- Kartu memakai sudut {rounded.lg} (24px). Kartu kecil dan chip memakai {rounded.md} (16px) atau pill.
+- **Sudut tajam (radius 0) di semua kartu, foto, panel, dan tombol.** Tidak ada sudut membulat pada kartu/foto/panel publik. Pengecualian: lingkaran penuh (`rounded-full`) hanya untuk elemen yang memang bundar — lingkaran ikon, avatar, indikator, dan tombol kembali ke atas.
+- **CTA publik berupa tombol isi bersudut tajam** (bukan pill, bukan tautan bergaris bawah): tombol emas (`bg-accent`, teks putih) untuk aksi utama, tombol hijau (`bg-primary`) atau putih (`bg-white`) untuk aksi kedua. Contoh: "Lihat Semua Berita", "Baca Selengkapnya".
 - **Lengkung mihrab** adalah ciri khas bentuk di website ini: foto utama pada kartu program unggulan dan foto profil sekolah boleh memakai lengkung atas penuh — sudut atas dibuat setengah lingkaran (`border-radius: 999px 999px 24px 24px`). Dipakai hemat, maksimal untuk satu jenis kartu per halaman, bukan untuk semua elemen.
 - Ikon memakai satu set ikon garis (line icon) yang konsisten, warna Primary atau Accent, ukuran 24px di dalam lingkaran Primary Soft. Tidak mencampur ikon garis, ikon penuh warna, emoji, dan ilustrasi dalam satu halaman. **Emoji tidak dipakai sebagai ikon.**
 - Foto selalu asli: suasana belajar, guru, siswa, gedung, dan kegiatan sekolah. Foto stok orang asing, kartun, dan ilustrasi 3D dilarang.
@@ -258,16 +257,16 @@ Desain ini datar dan tenang. Kedalaman hanya dari bayangan yang sangat lembut da
 
 ### Navbar
 
-Tinggi 72px, latar Surface, menempel di atas (sticky) dengan bayangan sangat tipis saat halaman digulir. Isi dari kiri ke kanan: logo + nama MTS, menu tujuh item, dan satu tombol pill Primary bertuliskan **Hubungi Kami** yang menuju halaman Kontak / WhatsApp. Item **Tentang** membuka dropdown saat di-hover (desktop) atau di-tap (HP). Di HP, menu menjadi hamburger. Tidak ada tombol lain di navbar.
+Tinggi 72px, latar Surface, menempel di atas (sticky) dengan bayangan sangat tipis saat halaman digulir. Isi dari kiri ke kanan: logo + nama MTS, menu tujuh item (huruf kapital, tebal, berjarak — `text-sm font-bold tracking-[0.12em] uppercase`), dan satu tombol kotak tajam Primary bertuliskan **Hubungi Kami** yang menuju halaman Kontak. Item **Tentang** membuka dropdown saat di-hover (desktop) atau di-tap (HP); panel dropdown bersudut tajam. Di HP, menu menjadi hamburger kotak (tombol persegi berbingkai). Tidak ada tombol lain di navbar. Di atas navbar ada TopBar: bilah pengumuman tipis hijau Primary berisi alamat sekolah (teks putih kecil di tengah).
 
 ### Hero
 
-Foto full-width suasana sekolah dengan overlay Primary Dark transparan. Isi maksimal: satu label-caps, satu H1, satu paragraf maksimal dua baris, dan tepat dua tombol:
+Foto full-bleed suasana sekolah (slideshow 3 foto Unsplash sementara, autoplay 10 detik, tombol panah kotak di kanan bawah), tanpa bingkai dan tanpa teks di atas foto, dengan gradasi hijau tua di bawah foto. Di bawah foto: H1 satu baris tebal di tengah, garis emas pendek, satu paragraf penjelasan, dan dua tombol isi:
 
-1. **Lihat Program Unggulan** — tombol emas ({components.button-gold}) di atas foto.
-2. **Lihat Fasilitas** — tombol sekunder terang.
+1. **Lihat Program Unggulan** — tombol emas.
+2. **Lihat Fasilitas** — tombol hijau.
 
-Tidak ada tombol ketiga, tidak ada slider/carousel hero, tidak ada video autoplay, dan tidak ada teks berjalan.
+Tidak ada tombol ketiga, tidak ada video autoplay, dan tidak ada teks berjalan.
 
 ### Kartu Program Unggulan
 
@@ -275,7 +274,7 @@ Mengikuti pola MTs YPPMI: tepat **tiga kartu** di homepage — contoh pola isiny
 
 ### Pita Statistik
 
-Latar Primary, empat angka maksimal, angka besar berwarna putih dan label kecil berwarna Accent Soft di bawahnya. **Angka diambil LIVE dari database** (jumlah Guru, Program Akademik, Ekstrakurikuler, dan Fasilitas yang aktif); stat yang masih 0 disembunyikan otomatis. **Agent tidak boleh mengarang angka** — jumlah siswa/alumni tidak ditampilkan karena tidak ada di database.
+Latar Primary, empat angka maksimal, angka besar **serif tebal** (`font-serif font-black`, putih) dan label kecil **emas huruf kapital berjarak** (`text-accent uppercase tracking-[0.14em]`) di bawahnya. **Angka diambil LIVE dari database** (jumlah Guru, Program Akademik, Ekstrakurikuler, dan Fasilitas yang aktif); stat yang masih 0 disembunyikan otomatis. **Agent tidak boleh mengarang angka** — jumlah siswa/alumni tidak ditampilkan karena tidak ada di database.
 
 ### Kartu Fasilitas & Galeri
 
@@ -294,11 +293,11 @@ Kartu Surface Warm. Isi: kutipan orang tua maksimal tiga baris, nama, dan ketera
 
 ### CTA Penutup
 
-Satu section Primary Dark sebelum footer: satu H2 ajakan yang bersifat informatif, contoh pola: "Ingin Mengenal Sekolah Kami Lebih Dekat?" dan dua tombol: **Hubungi via WhatsApp** dan **Lihat Lokasi di Google Maps**. Ini adalah ajakan untuk bertanya dan berkunjung, bukan ajakan mendaftar.
+Satu section Primary penuh sebelum footer: H2 satu baris tebal putih di tengah, contoh: "Kenali MTs Nurul Falah Serpong Lebih Dekat", garis emas pendek, satu paragraf, dan dua tombol isi — **Lihat Profil Sekolah** (emas) dan **Jelajahi Program** (putih). Ini adalah ajakan untuk bertanya dan berkunjung, bukan ajakan mendaftar.
 
 ### Footer
 
-Latar Primary Dark, teks Text on Dark. Empat kolom di desktop (bertumpuk di HP): identitas sekolah + alamat, menu, program unggulan, dan kontak (telepon, WhatsApp, email, jam layanan) + peta lokasi tertanam atau tautan Google Maps. Baris bawah: hak cipta dan nama sekolah.
+Latar Primary `#0b4f3a`, teks putih. Dibuka pernyataan serif besar putih (visi sekolah), lalu 5 kolom di desktop (bertumpuk di HP) — lihat bagian Layout. Baris bawah: hak cipta dan tagline.
 
 ## SEO
 
@@ -322,8 +321,9 @@ Latar Primary Dark, teks Text on Dark. Empat kolom di desktop (bertumpuk di HP):
 ### Don't — Aturan Keras
 
 - **JANGAN tambahkan PPDB dalam bentuk apa pun.** Dilarang: halaman PPDB, menu PPDB, section PPDB, banner/pengumuman penerimaan siswa baru, timeline pendaftaran, syarat pendaftaran, formulir pendaftaran, tombol "Daftar PPDB" / "Daftar Sekarang" / "Daftar Siswa Baru", FAQ pendaftaran, popup pendaftaran, dan hitung mundur pendaftaran. Jika referensi seperti MTs YPPMI memuat bagian PPDB/SPMB, bagian itu **wajib diabaikan**. Website ini promosi profil sekolah, bukan pendaftaran.
-- **JANGAN memakai warna di luar palet.** Dilarang khususnya: pink/merah Airbnb (#FF385C), ungu Stripe, biru generik template, hijau WhatsApp terang sebagai warna merek, dan hitam murni (#000000) untuk teks atau latar.
+- **JANGAN memakai warna di luar palet.** Dilarang khususnya: pink/merah Airbnb (#FF385C), ungu Stripe, biru generik template, hijau WhatsApp terang sebagai warna merek, oranye (#F97316 — sudah diganti emas gelap, 2026-11-08), dan hitam murni (#000000) untuk teks atau latar.
 - **JANGAN mengganti font**, menambah keluarga font Latin kedua, atau memakai font dekoratif untuk teks isi.
+- **JANGAN meniru desain satu website secara harfiah.** Boleh terinspirasi arah gayanya (mis. sekolah internasional: hijau tua + emas, serif elegan), tetapi warna, judul, hero, dan CTA harus dibuat berbeda — jangan menyalin nilai hex, pola judul, bingkai, atau gaya tombol website lain apa adanya.
 - **JANGAN menambah halaman, section, menu, atau komponen baru** yang tidak ada di file ini tanpa persetujuan pemilik project. Kreatif di dalam aturan, bukan menambah aturan sendiri.
 - **JANGAN mengarang data sekolah:** nama sekolah, alamat, angka statistik, nama guru, prestasi, program, harga/biaya, dan testimoni harus berasal dari pemilik project. Jika belum ada datanya, pakai placeholder.
 - **JANGAN memakai klaim superlatif tanpa data**, seperti "terbaik se-Indonesia", "nomor satu", atau "dijamin masuk". Promosi harus meyakinkan lewat fakta dan foto, bukan lewat klaim kosong.

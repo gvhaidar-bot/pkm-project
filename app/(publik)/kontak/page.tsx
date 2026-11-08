@@ -36,7 +36,7 @@ export default function KontakPage() {
           {daftar.map((item) => (
             <div
               key={item.label}
-              className="rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
+              className="rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
             >
               <span className="flex h-12 w-12 items-center justify-center rounded-full bg-primary-soft text-primary">
                 <item.Icon className="h-6 w-6" aria-hidden="true" />

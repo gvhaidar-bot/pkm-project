@@ -22,8 +22,8 @@ export default async function Statistik() {
       <div className="mx-auto grid w-full max-w-[1200px] grid-cols-2 gap-8 px-5 py-12 lg:grid-cols-4 lg:px-6">
         {data.map((item) => (
           <div key={item.label} className="text-center">
-            <p className="text-4xl font-extrabold tracking-tight text-white md:text-5xl">{item.angka}</p>
-            <p className="mt-2 text-sm font-semibold text-cream/80 md:text-base">{item.label}</p>
+            <p className="font-serif text-5xl font-black tracking-tight text-white md:text-6xl">{item.angka}</p>
+            <p className="mt-3 text-xs font-bold tracking-[0.14em] text-accent uppercase md:text-sm">{item.label}</p>
           </div>
         ))}
       </div>

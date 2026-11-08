@@ -25,7 +25,7 @@ async function IsiGaleri() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-3xl bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
         <p className="text-lg font-bold text-ink">Galeri foto belum tersedia</p>
         <p className="mt-2 text-base text-muted">
           Dokumentasi kegiatan sedang disiapkan oleh pihak madrasah.
@@ -54,7 +54,7 @@ async function IsiGaleri() {
             </div>
             <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {semuaFoto.map((foto) => (
-                <figure key={foto.id} className="overflow-hidden rounded-2xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+                <figure key={foto.id} className="overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
                   <Image
                     src={foto.url}
                     alt={foto.caption || `Foto ${kegiatan.judul}`}
@@ -83,7 +83,7 @@ function Kerangka() {
           <div className="h-8 w-64 rounded-full bg-white" />
           <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
             {[0, 1, 2, 3].map((j) => (
-              <div key={j} className="aspect-[4/3] rounded-2xl bg-white" />
+              <div key={j} className="aspect-[4/3] rounded-none bg-white" />
             ))}
           </div>
         </div>

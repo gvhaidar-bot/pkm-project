@@ -47,7 +47,7 @@ export default function LoginForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           placeholder="admin@sekolah.sch.id"
-          className="flex min-h-11 w-full items-center rounded-2xl border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
+          className="flex min-h-11 w-full items-center rounded-none border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
         />
       </div>
 
@@ -63,7 +63,7 @@ export default function LoginForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           placeholder="••••••••"
-          className="flex min-h-11 w-full items-center rounded-2xl border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
+          className="flex min-h-11 w-full items-center rounded-none border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
         />
       </div>
 
@@ -76,7 +76,7 @@ export default function LoginForm() {
       <button
         type="submit"
         disabled={loading}
-        className="flex min-h-11 w-full items-center justify-center rounded-full bg-primary px-6 text-base font-semibold text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
+        className="flex min-h-11 w-full items-center justify-center bg-primary px-6 text-sm font-bold tracking-[0.12em] text-white uppercase transition-colors hover:bg-primary-dark disabled:opacity-60"
       >
         {loading ? "Memeriksa..." : "Masuk"}
       </button>

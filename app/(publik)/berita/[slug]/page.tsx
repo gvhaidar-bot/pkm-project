@@ -84,7 +84,7 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
           {berita.unggulan && (
             <div>
               <p className="text-xs font-semibold text-muted">Status</p>
-              <p className="mt-1.5 inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
+              <p className="mt-1.5 inline-flex items-center gap-1.5 bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
                 <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
                 Unggulan
               </p>
@@ -121,14 +121,14 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
                 alt={foto.caption || `Foto galeri ${berita.judul}`}
                 width={400}
                 height={267}
-                className="aspect-[3/2] w-full rounded-2xl object-cover"
+                className="aspect-[3/2] w-full rounded-none object-cover"
               />
             ))}
           </div>
         </div>
       )}
 
-      <div className="mx-auto mt-12 max-w-3xl rounded-2xl border border-line bg-white p-6">
+      <div className="mx-auto mt-12 max-w-3xl rounded-none border border-line bg-white p-6">
         <div className="flex items-center gap-4">
           <span
             className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-surface-warm text-2xl font-extrabold text-primary"
@@ -151,7 +151,7 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
               <Link
                 key={item.id}
                 href={`/berita/${item.slug}`}
-                className="group overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+                className="group overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
               >
                 {item.gambarUrl ? (
                   <Image
@@ -192,10 +192,10 @@ function Kerangka() {
   return (
     <div className="mx-auto max-w-3xl animate-pulse">
       <div className="h-11 w-40 rounded-full bg-surface-warm" />
-      <div className="mt-8 h-10 w-3/4 rounded-2xl bg-surface-warm" />
-      <div className="mt-6 h-16 w-full rounded-2xl bg-surface-warm" />
-      <div className="mt-8 h-24 w-full rounded-2xl bg-surface-warm" />
-      <div className="mt-10 aspect-video w-full rounded-3xl bg-surface-warm" />
+      <div className="mt-8 h-10 w-3/4 rounded-none bg-surface-warm" />
+      <div className="mt-6 h-16 w-full rounded-none bg-surface-warm" />
+      <div className="mt-8 h-24 w-full rounded-none bg-surface-warm" />
+      <div className="mt-10 aspect-video w-full rounded-none bg-surface-warm" />
       <div className="mt-10 space-y-4">
         {[0, 1, 2].map((i) => (
           <div key={i} className="h-5 w-full rounded-full bg-surface-warm" />

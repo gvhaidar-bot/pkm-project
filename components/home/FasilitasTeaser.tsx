@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import JudulBagian from "./JudulBagian";
 
@@ -40,11 +39,11 @@ export default async function FasilitasTeaser() {
                   alt={`Foto ${fasilitas.nama}`}
                   width={600}
                   height={375}
-                  className="aspect-[16/10] w-full rounded-2xl object-cover"
+                  className="aspect-[16/10] w-full rounded-none object-cover"
                 />
               ) : (
                 <div
-                  className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl bg-primary-soft"
+                  className="flex aspect-[16/10] w-full items-center justify-center rounded-none bg-primary-soft"
                   aria-hidden="true"
                 >
                   <span className="px-6 text-center font-serif text-base font-bold break-words text-primary">
@@ -59,10 +58,10 @@ export default async function FasilitasTeaser() {
         <div className="mt-10 text-center">
           <Link
             href="/fasilitas"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-accent px-7 text-base font-bold text-primary-dark transition-colors hover:bg-accent-soft"
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 bg-accent px-7 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft"
           >
             Lihat Semua Fasilitas
-            <LuArrowRight className="h-5 w-5" aria-hidden="true" />
+            →
           </Link>
         </div>
       </div>

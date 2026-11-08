@@ -34,24 +34,24 @@ export default function VisiMisiPage() {
 
         <section
           aria-label="Visi madrasah"
-          className="mt-10 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
+          className="mt-10 rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
         >
           <h2 className="text-2xl font-extrabold tracking-tight text-ink">Visi</h2>
-          <p className="mt-4 rounded-2xl bg-primary-soft px-6 py-8 text-center text-xl leading-relaxed font-bold text-primary-dark">
+          <p className="mt-4 rounded-none bg-primary-soft px-6 py-8 text-center text-xl leading-relaxed font-bold text-primary-dark">
             &ldquo;Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah&rdquo;
           </p>
         </section>
 
         <section
           aria-label="Misi madrasah"
-          className="mt-6 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
+          className="mt-6 rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
         >
           <h2 className="text-2xl font-extrabold tracking-tight text-ink">Misi</h2>
           <ul className="mt-4 space-y-3">
             {misi.map((item, i) => (
               <li
                 key={item}
-                className="flex items-start gap-4 rounded-2xl bg-cream px-5 py-4"
+                className="flex items-start gap-4 rounded-none bg-cream px-5 py-4"
               >
                 <span
                   className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-primary-soft text-base font-extrabold text-primary"
@@ -67,7 +67,7 @@ export default function VisiMisiPage() {
 
         <section
           aria-label="Tujuan madrasah"
-          className="mt-6 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
+          className="mt-6 rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8"
         >
           <h2 className="text-2xl font-extrabold tracking-tight text-ink">Tujuan</h2>
           <ul className="mt-4 list-disc space-y-2 pl-6 text-base leading-relaxed text-muted">

@@ -17,7 +17,7 @@ const Navbar = () => {
 
         <NavLink />
 
-        <Link href="/kontak" className="hidden h-11 shrink-0 items-center rounded-full bg-primary px-6 text-base font-semibold text-white transition-colors hover:bg-primary-dark lg:inline-flex">
+        <Link href="/kontak" className="hidden h-11 shrink-0 items-center bg-primary px-6 text-sm font-bold tracking-[0.12em] text-white uppercase transition-colors hover:bg-primary-dark lg:inline-flex">
           Hubungi Kami
         </Link>
       </div>

@@ -54,7 +54,7 @@ export default function UnggulanPage() {
           {daftarProgram.map((program) => (
             <article
               key={program.nama}
-              className="rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
+              className="rounded-none bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
             >
               <div className="flex items-center gap-3">
                 <program.Icon className="h-8 w-8 text-accent" aria-hidden="true" />

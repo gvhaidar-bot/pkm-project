@@ -40,7 +40,7 @@ export default function ProgramPage() {
             <Link
               key={item.href}
               href={item.href}
-              className="group flex flex-col rounded-3xl bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+              className="group flex flex-col rounded-none bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
             >
               <h2 className="text-2xl font-extrabold tracking-tight text-ink">{item.judul}</h2>
               <p className="mt-3 flex-1 text-base leading-relaxed text-muted">{item.deskripsi}</p>

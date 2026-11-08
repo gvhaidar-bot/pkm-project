@@ -18,7 +18,7 @@ function KerangkaKartu() {
         <div className="mx-auto h-8 w-64 animate-pulse rounded-full bg-white" />
         <div className="mt-10 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {[0, 1, 2].map((i) => (
-            <div key={i} className="h-80 rounded-3xl bg-white" />
+            <div key={i} className="h-80 rounded-none bg-white" />
           ))}
         </div>
       </div>

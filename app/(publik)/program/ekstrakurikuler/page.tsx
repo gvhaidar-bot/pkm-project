@@ -1,6 +1,5 @@
 import { Suspense } from "react";
 import Link from "next/link";
-import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler } from "@/components/ekstrakurikuler/ikon";
 
@@ -17,7 +16,7 @@ async function DaftarEkstrakurikuler() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-3xl bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
         <p className="text-lg font-bold text-ink">Belum ada ekstrakurikuler</p>
         <p className="mt-2 text-base text-muted">
           Kegiatan ekstrakurikuler sedang disiapkan oleh pihak madrasah.
@@ -46,7 +45,7 @@ async function DaftarEkstrakurikuler() {
           return (
             <article
               key={item.id}
-              className="flex flex-col items-center rounded-3xl bg-white p-8 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+              className="flex flex-col items-center rounded-none bg-white p-8 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
             >
               <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent">
                 <IkonEkstrakurikuler ikon={item.ikon} className="h-8 w-8 text-white" />
@@ -55,16 +54,15 @@ async function DaftarEkstrakurikuler() {
               <p className="mt-2 flex-1 text-[15px] leading-relaxed text-muted">{item.deskripsi}</p>
               <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
                 {item.jumlahAnggota !== null && (
-                  <span className="inline-flex min-h-11 items-center rounded-full bg-primary-soft px-4 text-sm font-bold text-primary">
+                  <span className="inline-flex min-h-11 items-center bg-primary-soft px-4 text-sm font-bold text-primary">
                     {item.jumlahAnggota} Anggota
                   </span>
                 )}
                 <Link
                   href={`/program/ekstrakurikuler/${item.slug}`}
-                  className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-primary px-6 text-base font-bold text-white transition-colors hover:bg-primary-dark"
+                  className="inline-flex min-h-11 items-center gap-1.5 bg-accent px-6 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft"
                 >
-                  Selengkapnya
-                  <LuArrowRight className="h-5 w-5" aria-hidden="true" />
+                  Selengkapnya →
                 </Link>
               </div>
             </article>
@@ -79,7 +77,7 @@ function Kerangka() {
   return (
     <div className="mt-8 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="h-72 rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
+        <div key={i} className="h-72 rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
       ))}
     </div>
   );

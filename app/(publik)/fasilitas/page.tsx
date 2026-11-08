@@ -16,7 +16,7 @@ async function DaftarFasilitas() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-3xl bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
         <p className="text-lg font-bold text-ink">Data fasilitas belum tersedia</p>
         <p className="mt-2 text-base text-muted">
           Daftar fasilitas sedang disiapkan oleh pihak madrasah.
@@ -30,7 +30,7 @@ async function DaftarFasilitas() {
       {daftar.map((fasilitas) => (
         <article
           key={fasilitas.id}
-          className="overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+          className="overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
         >
           {fasilitas.gambarUrl ? (
             <Image
@@ -64,7 +64,7 @@ function Kerangka() {
   return (
     <div className="mt-10 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="h-72 rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
+        <div key={i} className="h-72 rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
       ))}
     </div>
   );

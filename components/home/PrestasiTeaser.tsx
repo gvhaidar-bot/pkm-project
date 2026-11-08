@@ -23,7 +23,7 @@ export default async function PrestasiTeaser() {
           {daftar.map((prestasi) => (
             <article
               key={prestasi.id}
-              className="flex items-start gap-4 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
+              className="flex items-start gap-4 rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
             >
               <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-accent text-white">
                 <LuTrophy className="h-6 w-6" aria-hidden="true" />

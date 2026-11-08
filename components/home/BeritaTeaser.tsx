@@ -47,7 +47,7 @@ export default async function BeritaTeaser() {
         <div className="mt-10 grid grid-cols-1 gap-5 lg:grid-cols-5">
           <Link
             href={`/berita/${utama.slug}`}
-            className={`group relative block overflow-hidden rounded-3xl shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)] ${
+            className={`group relative block overflow-hidden rounded-none shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)] ${
               lainnya.length > 0 ? "lg:col-span-3" : "lg:col-span-5"
             }`}
           >
@@ -73,7 +73,7 @@ export default async function BeritaTeaser() {
             />
             <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
               {utama.unggulan && (
-                <span className="inline-flex items-center gap-1.5 rounded-full bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
+                <span className="inline-flex items-center gap-1.5 bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
                   <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
                   Unggulan
                 </span>
@@ -89,9 +89,8 @@ export default async function BeritaTeaser() {
               <p className="mt-2 hidden max-w-2xl text-base leading-relaxed break-words text-cream/90 sm:block sm:line-clamp-2">
                 {utama.ringkasan}
               </p>
-              <span className="mt-4 inline-flex min-h-11 items-center gap-1.5 rounded-full bg-white px-5 text-sm font-bold text-primary transition-colors group-hover:bg-accent group-hover:text-primary-dark">
-                Baca Selengkapnya
-                <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
+              <span className="mt-4 inline-flex min-h-11 items-center gap-1.5 bg-white px-5 py-2.5 text-sm font-bold text-primary transition-colors hover:bg-cream">
+                Baca Selengkapnya →
               </span>
             </div>
           </Link>
@@ -102,7 +101,7 @@ export default async function BeritaTeaser() {
                 <Link
                   key={berita.id}
                   href={`/berita/${berita.slug}`}
-                  className="group flex flex-1 gap-4 rounded-3xl bg-white p-4 shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+                  className="group flex flex-1 gap-4 rounded-none bg-white p-4 shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
                 >
                   {berita.gambarUrl ? (
                     <Image
@@ -110,11 +109,11 @@ export default async function BeritaTeaser() {
                       alt={`Sampul ${berita.judul}`}
                       width={160}
                       height={128}
-                      className="h-28 w-32 shrink-0 rounded-2xl object-cover sm:h-32 sm:w-40"
+                      className="h-28 w-32 shrink-0 rounded-none object-cover sm:h-32 sm:w-40"
                     />
                   ) : (
                     <div
-                      className="flex h-28 w-32 shrink-0 items-center justify-center rounded-2xl bg-primary-soft sm:h-32 sm:w-40"
+                      className="flex h-28 w-32 shrink-0 items-center justify-center rounded-none bg-primary-soft sm:h-32 sm:w-40"
                       aria-hidden="true"
                     >
                       <LuNewspaper className="h-8 w-8 text-primary" aria-hidden="true" />
@@ -125,7 +124,7 @@ export default async function BeritaTeaser() {
                       <LuCalendarDays className="h-3.5 w-3.5" aria-hidden="true" />
                       {formatTanggal(berita.publishedAt)}
                       {berita.unggulan && (
-                        <span className="inline-flex items-center gap-1 rounded-full bg-accent px-2 py-0.5 text-[11px] font-bold text-primary-dark">
+                        <span className="inline-flex items-center gap-1 bg-accent px-2 py-0.5 text-[11px] font-bold text-primary-dark">
                           <LuSparkles className="h-3 w-3" aria-hidden="true" />
                           Unggulan
                         </span>
@@ -147,10 +146,10 @@ export default async function BeritaTeaser() {
         <div className="mt-10 text-center">
           <Link
             href="/berita"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-accent px-7 text-base font-bold text-primary-dark transition-colors hover:bg-accent-soft"
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 bg-accent px-7 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft"
           >
             Lihat Semua Berita
-            <LuArrowRight className="h-5 w-5" aria-hidden="true" />
+            →
           </Link>
         </div>
       </div>

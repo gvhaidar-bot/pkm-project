@@ -28,8 +28,8 @@ const links = [
 
 const tautanCls = (aktif: boolean) =>
   clsx(
-    "flex min-h-11 items-center rounded-full px-4 py-2 text-base font-medium whitespace-nowrap transition-colors",
-    aktif ? "bg-primary-soft font-bold text-primary" : "text-ink hover:bg-primary-soft hover:text-primary",
+    "flex min-h-11 items-center px-4 py-2 text-sm font-bold tracking-[0.12em] whitespace-nowrap uppercase transition-colors",
+    aktif ? "bg-primary-soft text-primary" : "text-ink hover:bg-primary-soft hover:text-primary",
   );
 
 const NavLink = () => {
@@ -58,12 +58,12 @@ const NavLink = () => {
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         aria-label={open ? "Tutup menu" : "Buka menu"}
-        className="inline-flex h-11 w-11 items-center justify-center rounded-full text-primary-dark transition-colors hover:bg-primary-soft lg:hidden"
+        className="inline-flex h-11 w-11 items-center justify-center border border-line text-primary-dark transition-colors hover:bg-primary-soft lg:hidden"
       >
         {open ? <IoClose size={26} /> : <IoMenu size={26} />}
       </button>
 
-      <div className={clsx("absolute inset-x-4 top-20 rounded-2xl border border-line bg-white p-3 shadow-[0_16px_40px_rgba(11,91,62,0.14)] lg:static lg:block lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none", { hidden: !open })}>
+      <div className={clsx("absolute inset-x-4 top-20 rounded-none border border-line bg-white p-3 shadow-[0_16px_40px_rgba(11,91,62,0.14)] lg:static lg:block lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none", { hidden: !open })}>
         <ul className="flex flex-col gap-1 lg:flex-row lg:items-center lg:gap-1">
           <li>
             <Link
@@ -89,13 +89,13 @@ const NavLink = () => {
               />
             </button>
             <div className="invisible absolute top-full left-0 z-50 min-w-60 translate-y-2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-              <ul className="overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-[0_16px_40px_rgba(11,91,62,0.14)]">
+              <ul className="overflow-hidden rounded-none border border-line bg-white p-2 shadow-[0_16px_40px_rgba(11,91,62,0.14)]">
                 {tentangAnak.map((anak) => (
                   <li key={anak.href}>
                     <Link
                       href={anak.href}
                       aria-current={isActive(anak.href) ? "page" : undefined}
-                      className="flex min-h-11 items-center rounded-xl px-4 py-2 text-base font-medium whitespace-nowrap text-ink transition-colors hover:bg-primary-soft hover:text-primary"
+                      className="flex min-h-11 items-center rounded-none px-4 py-2 text-base font-medium whitespace-nowrap text-ink transition-colors hover:bg-primary-soft hover:text-primary"
                     >
                       {anak.label}
                     </Link>
@@ -125,7 +125,7 @@ const NavLink = () => {
                     <Link
                       href={anak.href}
                       onClick={tutupSemua}
-                      className="flex min-h-11 items-center rounded-xl px-3 py-2 text-base font-medium text-ink transition-colors hover:bg-primary-soft hover:text-primary"
+                      className="flex min-h-11 items-center rounded-none px-3 py-2 text-base font-medium text-ink transition-colors hover:bg-primary-soft hover:text-primary"
                     >
                       {anak.label}
                     </Link>
@@ -148,13 +148,13 @@ const NavLink = () => {
               />
             </button>
             <div className="invisible absolute top-full left-0 z-50 min-w-60 translate-y-2 pt-2 opacity-0 transition-all duration-200 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:visible group-focus-within:translate-y-0 group-focus-within:opacity-100">
-              <ul className="overflow-hidden rounded-2xl border border-line bg-white p-2 shadow-[0_16px_40px_rgba(11,91,62,0.14)]">
+              <ul className="overflow-hidden rounded-none border border-line bg-white p-2 shadow-[0_16px_40px_rgba(11,91,62,0.14)]">
                 {programAnak.map((anak) => (
                   <li key={anak.href}>
                     <Link
                       href={anak.href}
                       aria-current={isActive(anak.href) ? "page" : undefined}
-                      className="flex min-h-11 items-center rounded-xl px-4 py-2 text-base font-medium whitespace-nowrap text-ink transition-colors hover:bg-primary-soft hover:text-primary"
+                      className="flex min-h-11 items-center rounded-none px-4 py-2 text-base font-medium whitespace-nowrap text-ink transition-colors hover:bg-primary-soft hover:text-primary"
                     >
                       {anak.label}
                     </Link>
@@ -184,7 +184,7 @@ const NavLink = () => {
                     <Link
                       href={anak.href}
                       onClick={tutupSemua}
-                      className="flex min-h-11 items-center rounded-xl px-3 py-2 text-base font-medium text-ink transition-colors hover:bg-primary-soft hover:text-primary"
+                      className="flex min-h-11 items-center rounded-none px-3 py-2 text-base font-medium text-ink transition-colors hover:bg-primary-soft hover:text-primary"
                     >
                       {anak.label}
                     </Link>
@@ -207,7 +207,7 @@ const NavLink = () => {
             </li>
           ))}
           <li className="pt-2 lg:hidden">
-            <Link href="/kontak" onClick={tutupSemua} className="flex min-h-11 items-center justify-center rounded-full bg-primary px-6 text-base font-semibold text-white transition-colors hover:bg-primary-dark">
+            <Link href="/kontak" onClick={tutupSemua} className="flex min-h-11 items-center justify-center bg-primary px-6 text-sm font-bold tracking-[0.12em] text-white uppercase transition-colors hover:bg-primary-dark">
               Hubungi Kami
             </Link>
           </li>

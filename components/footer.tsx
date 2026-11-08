@@ -45,10 +45,13 @@ export default async function Footer() {
   const { tampilkanBerita, berita } = await muatDataFooter();
 
   return (
-    <footer className="bg-primary-dark text-cream">
+    <footer className="bg-primary text-white">
       <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
+        <p className="max-w-3xl font-serif text-3xl leading-tight font-bold md:text-4xl">
+          Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah.
+        </p>
         <div
-          className={`grid grid-cols-1 gap-10 sm:grid-cols-2 ${
+          className={`mt-12 grid grid-cols-1 gap-10 sm:grid-cols-2 ${
             tampilkanBerita ? "lg:grid-cols-3 xl:grid-cols-5" : "lg:grid-cols-2 xl:grid-cols-4"
           }`}
         >
@@ -60,10 +63,7 @@ export default async function Footer() {
                 <span className="text-[11px] font-bold tracking-[0.14em] text-accent-soft uppercase">Serpong, Tangerang Selatan</span>
               </span>
             </Link>
-            <p className="mt-5 font-serif text-base leading-relaxed text-cream/80 italic">
-              &ldquo;Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah.&rdquo;
-            </p>
-            <p className="mt-4 font-serif text-sm leading-relaxed text-cream/60 italic">
+            <p className="mt-5 font-serif text-sm leading-relaxed text-cream/60 italic">
               &ldquo;Ing ngarsa sung tulada, ing madya mangun karsa, tut wuri handayani.&rdquo;
               <span className="mt-1 block font-semibold text-cream/70 not-italic">— Ki Hadjar Dewantara</span>
             </p>
@@ -71,7 +71,7 @@ export default async function Footer() {
 
           <nav aria-label="Tautan internal footer">
             <h2 className="text-xs font-bold tracking-[0.12em] uppercase">Links Internal</h2>
-            <span className="mt-3 block h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
+            <span className="mt-3 block h-1 w-10 bg-accent" aria-hidden="true" />
             <ul className="mt-4">
               {tautanInternal.map((item) => (
                 <li key={item.href}>
@@ -86,7 +86,7 @@ export default async function Footer() {
           {tampilkanBerita && (
             <nav aria-label="Berita terbaru footer">
               <h2 className="text-xs font-bold tracking-[0.12em] uppercase">Berita Terbaru</h2>
-              <span className="mt-3 block h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
+              <span className="mt-3 block h-1 w-10 bg-accent" aria-hidden="true" />
               {berita.length === 0 ? (
                 <p className="mt-4 text-base text-cream/80">Belum ada berita yang terbit.</p>
               ) : (
@@ -111,7 +111,7 @@ export default async function Footer() {
 
           <div>
             <h2 className="text-xs font-bold tracking-[0.12em] uppercase">Hubungi Kami</h2>
-            <span className="mt-3 block h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
+            <span className="mt-3 block h-1 w-10 bg-accent" aria-hidden="true" />
             <ul className="mt-4 space-y-4 text-base text-cream/80">
               <li className="flex items-start gap-3">
                 <LuMapPin className="mt-1 h-5 w-5 shrink-0 text-accent-soft" aria-hidden="true" />
@@ -140,20 +140,20 @@ export default async function Footer() {
                 </a>
               </li>
             </ul>
-            <Link href="/kontak" className="mt-6 inline-flex min-h-11 items-center rounded-full bg-accent px-6 text-base font-semibold text-primary-dark transition-colors hover:bg-accent-soft">
-              Hubungi Kami
+            <Link href="/kontak" className="mt-6 inline-flex min-h-11 items-center justify-center bg-accent px-6 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft">
+              Hubungi Kami →
             </Link>
           </div>
 
           <div>
             <h2 className="text-xs font-bold tracking-[0.12em] uppercase">Lokasi</h2>
-            <span className="mt-3 block h-1 w-10 rounded-full bg-accent" aria-hidden="true" />
+            <span className="mt-3 block h-1 w-10 bg-accent" aria-hidden="true" />
             <iframe
               title="Peta lokasi MTs Nurul Falah Serpong"
               src={petaUrl}
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              className="mt-4 h-44 w-full rounded-2xl border-0"
+              className="mt-4 h-44 w-full border-0"
             />
           </div>
         </div>

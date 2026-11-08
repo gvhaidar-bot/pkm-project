@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import JudulBagian from "./JudulBagian";
 
@@ -30,7 +29,7 @@ export default async function GaleriTeaser() {
           {daftar.map((item) => (
             <figure
               key={item.id}
-              className="overflow-hidden rounded-2xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
+              className="overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]"
             >
               <Image
                 src={item.sampul}
@@ -46,10 +45,10 @@ export default async function GaleriTeaser() {
         <div className="mt-10 text-center">
           <Link
             href="/galeri"
-            className="inline-flex min-h-11 items-center gap-1.5 rounded-full bg-accent px-7 text-base font-bold text-primary-dark transition-colors hover:bg-accent-soft"
+            className="inline-flex min-h-11 items-center justify-center gap-1.5 bg-accent px-7 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft"
           >
             Lihat Semua Galeri
-            <LuArrowRight className="h-5 w-5" aria-hidden="true" />
+            →
           </Link>
         </div>
       </div>

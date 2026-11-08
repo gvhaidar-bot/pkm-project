@@ -26,7 +26,7 @@ async function DaftarBerita() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-3xl bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
+      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
         <p className="text-lg font-bold text-ink">Belum ada berita</p>
         <p className="mt-2 text-base text-muted">Berita terbaru sedang disiapkan oleh pihak madrasah.</p>
       </div>
@@ -39,7 +39,7 @@ async function DaftarBerita() {
         <Link
           key={berita.id}
           href={`/berita/${berita.slug}`}
-          className="group overflow-hidden rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+          className="group overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
         >
           {berita.gambarUrl ? (
             <Image
@@ -75,7 +75,7 @@ function Kerangka() {
   return (
     <div className="mt-10 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="h-80 rounded-3xl bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
+        <div key={i} className="h-80 rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
       ))}
     </div>
   );
