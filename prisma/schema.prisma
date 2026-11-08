@@ -167,6 +167,7 @@ model Ekstrakurikuler {
   tujuan        String   @db.Text
   kegiatanRutin String   @db.Text
   fasilitas     String   @db.Text
+  gambarUrl     String?
   jumlahAnggota Int?
   ikon          String   @default("sains")
   aktif         Boolean  @default(true)

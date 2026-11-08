@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
 import { adminLogin } from "@/lib/admin";
 import { cekPanjang } from "@/lib/validasi";
+import { hapusBerkas, simpanFoto } from "@/lib/upload";
 import { IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 
 export type HasilAksi = { error?: string } | null;
@@ -79,20 +80,28 @@ export async function tambahEkstrakurikuler(
 
   try {
     const slug = await slugUnik(buatSlug(data.slugMasukan || data.nama));
-    await prisma.ekstrakurikuler.create({
-      data: {
-        nama: data.nama,
-        slug,
-        deskripsi: data.deskripsi,
-        tujuan: data.tujuan,
-        kegiatanRutin: data.kegiatanRutin,
-        fasilitas: data.fasilitas,
-        jumlahAnggota: data.jumlahAnggota,
-        ikon: data.ikon,
-        aktif: data.aktif,
-        urutan: data.urutan,
-      },
-    });
+    let fotoUrl: string | null = null;
+    try {
+      fotoUrl = await simpanFoto(formData.get("foto"), "ekstrakurikuler");
+      await prisma.ekstrakurikuler.create({
+        data: {
+          nama: data.nama,
+          slug,
+          deskripsi: data.deskripsi,
+          tujuan: data.tujuan,
+          kegiatanRutin: data.kegiatanRutin,
+          fasilitas: data.fasilitas,
+          gambarUrl: fotoUrl,
+          jumlahAnggota: data.jumlahAnggota,
+          ikon: data.ikon,
+          aktif: data.aktif,
+          urutan: data.urutan,
+        },
+      });
+    } catch (e) {
+      if (fotoUrl) await hapusBerkas(fotoUrl, "ekstrakurikuler");
+      throw e;
+    }
   } catch (e) {
     if (adalahGalatDuplikat(e)) return { error: "Nama sudah dipakai. Coba nama lain." };
     console.error(e);
@@ -129,6 +138,12 @@ export async function ubahEkstrakurikuler(
 
   try {
     const slug = await slugUnik(buatSlug(data.slugMasukan || data.nama), id);
+    let fotoUrl = lama.gambarUrl;
+    const baru = await simpanFoto(formData.get("foto"), "ekstrakurikuler");
+    if (baru) {
+      fotoUrl = baru;
+      await hapusBerkas(lama.gambarUrl, "ekstrakurikuler");
+    }
     await prisma.ekstrakurikuler.update({
       where: { id },
       data: {
@@ -138,6 +153,7 @@ export async function ubahEkstrakurikuler(
         tujuan: data.tujuan,
         kegiatanRutin: data.kegiatanRutin,
         fasilitas: data.fasilitas,
+        gambarUrl: fotoUrl,
         jumlahAnggota: data.jumlahAnggota,
         ikon: data.ikon,
         aktif: data.aktif,
@@ -157,6 +173,7 @@ export async function hapusEkstrakurikuler(id: number): Promise<void> {
   if (!(await adminLogin())) return;
   const ekstrakurikuler = await prisma.ekstrakurikuler.findUnique({ where: { id } });
   if (!ekstrakurikuler) return;
+  await hapusBerkas(ekstrakurikuler.gambarUrl, "ekstrakurikuler");
   await prisma.ekstrakurikuler.delete({ where: { id } });
   muatUlang(ekstrakurikuler.slug);
 }

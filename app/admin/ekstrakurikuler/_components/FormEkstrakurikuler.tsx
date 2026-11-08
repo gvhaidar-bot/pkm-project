@@ -1,10 +1,12 @@
 "use client";
 
 import { useActionState, useRef, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { buatSlug } from "@/lib/slug";
 import { IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 import type { HasilAksi } from "../actions";
+import MasukanFoto from "@/components/admin/MasukanFoto";
 import ToolbarFormat, { PetunjukFormat } from "@/components/admin/ToolbarFormat";
 
 export type DataEkstrakurikuler = {
@@ -15,6 +17,7 @@ export type DataEkstrakurikuler = {
   tujuan: string;
   kegiatanRutin: string;
   fasilitas: string;
+  gambarUrl: string | null;
   jumlahAnggota: number | null;
   ikon: string;
   aktif: boolean;
@@ -103,6 +106,25 @@ export default function FormEkstrakurikuler({
           className={areaCls}
         />
         <PetunjukFormat />
+      </div>
+
+      <div>
+        {ekstrakurikuler?.gambarUrl && (
+          <div className="mb-3">
+            <Image
+              src={ekstrakurikuler.gambarUrl}
+              alt={`Foto ${ekstrakurikuler.nama}`}
+              width={640}
+              height={360}
+              className="aspect-video w-full max-w-md rounded-2xl object-cover"
+            />
+          </div>
+        )}
+        <MasukanFoto
+          label="Foto kegiatan"
+          catatan={ekstrakurikuler ? "(kosongkan jika tidak diganti)" : undefined}
+          teksBantuan="Format gambar, maksimal 2 MB. Foto tampil sebagai spanduk lebar di halaman detail."
+        />
       </div>
 
       <div>
