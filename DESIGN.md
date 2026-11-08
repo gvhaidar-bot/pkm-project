@@ -11,7 +11,7 @@ colors:
   background: "#F7F3EA"
   surface: "#FFFFFF"
   surface-warm: "#F2F0EB"
-  text-primary: "#2E4A3F"
+  text-primary: "#0B5B3E"
   text-secondary: "#5A6B64"
   text-on-dark: "#F7F3EA"
   border: "#DDE3DD"
@@ -181,7 +181,7 @@ Palet ini terkunci. Agent tidak boleh memperkenalkan warna baru.
 - **Background ({colors.background}, #F7F3EA):** Krem/gading hangat. Latar dasar halaman, bergantian dengan Surface.
 - **Surface ({colors.surface}, #FFFFFF):** Putih bersih untuk kartu dan section selingan.
 - **Surface Warm ({colors.surface-warm}, #F2F0EB):** Krem sedikit lebih gelap untuk kartu testimoni dan section yang ingin terasa hangat.
-- **Text Primary ({colors.text-primary}, #2E4A3F):** Hijau gelap. Semua judul dan teks utama. (Diubah 2026-11-07 dari #1A2E28 karena Haidar menilai warna lama terlihat hitam.)
+- **Text Primary ({colors.text-primary}, #0B5B3E):** Hijau utama. Semua judul dan teks utama. (Diubah 2026-11-08 dari #2E4A3F ke #0B5B3E — sama seperti warna primary — atas permintaan Haidar "ganti semua yang memakai warna font tersebut"; sebelumnya diubah 2026-11-07 dari #1A2E28 karena Haidar menilai warna lama terlihat hitam. Catatan: `text-ink` dan `text-primary` kini bernilai sama.)
 - **Text Secondary ({colors.text-secondary}, #5A6B64):** Abu kehijauan. Untuk deskripsi, caption, dan metadata. Tidak untuk teks penting yang harus dibaca cepat.
 - **Text on Dark ({colors.text-on-dark}, #F7F3EA):** Krem terang untuk teks di atas Primary Dark.
 - **Border ({colors.border}, #DDE3DD):** Garis tipis kartu dan pembatas section di latar terang.
