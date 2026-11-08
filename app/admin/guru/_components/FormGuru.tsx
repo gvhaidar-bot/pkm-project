@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { HasilAksi } from "../actions";
 import MasukanFoto from "@/components/admin/MasukanFoto";
+import ToolbarFormat, { PetunjukFormat } from "@/components/admin/ToolbarFormat";
 
 export type DataGuru = {
   id: number;
@@ -20,6 +21,7 @@ type AksiForm = (sebelumnya: HasilAksi, formData: FormData) => Promise<HasilAksi
 
 export default function FormGuru({ guru, aksi }: { guru?: DataGuru; aksi: AksiForm }) {
   const [hasil, jalankan, menunggu] = useActionState(aksi, null);
+  const bioRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <form action={jalankan} className="space-y-5 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
@@ -59,14 +61,17 @@ export default function FormGuru({ guru, aksi }: { guru?: DataGuru; aksi: AksiFo
         <label htmlFor="bio" className="mb-1.5 block text-sm font-semibold text-ink">
           Biodata singkat
         </label>
+        <ToolbarFormat areaRef={bioRef} />
         <textarea
           id="bio"
           name="bio"
           rows={4}
+          ref={bioRef}
           defaultValue={guru?.bio ?? ""}
           placeholder="Latar pendidikan dan pengalaman mengajar (tanpa data sensitif seperti NIP, alamat, atau nomor HP)"
           className="w-full rounded-2xl border border-line bg-white px-4 py-3 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
         />
+        <PetunjukFormat />
       </div>
 
       <div>

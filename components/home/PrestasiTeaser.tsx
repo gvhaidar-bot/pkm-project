@@ -1,6 +1,7 @@
 import { LuTrophy } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import JudulBagian from "./JudulBagian";
+import { CuplikanBerformat } from "@/components/TeksBerformat";
 
 export default async function PrestasiTeaser() {
   const daftar = await prisma.prestasi.findMany({
@@ -30,9 +31,10 @@ export default async function PrestasiTeaser() {
               <div className="min-w-0 flex-1">
                 <h3 className="text-lg font-extrabold tracking-tight text-ink">{prestasi.judul}</h3>
                 {prestasi.deskripsi ? (
-                  <p className="mt-1 line-clamp-2 text-[15px] leading-relaxed text-muted">
-                    {prestasi.deskripsi}
-                  </p>
+                  <CuplikanBerformat
+                    teks={prestasi.deskripsi}
+                    className="mt-1 line-clamp-2 text-[15px] leading-relaxed text-muted"
+                  />
                 ) : null}
                 {prestasi.tingkat ? (
                   <p className="mt-1 text-sm font-semibold text-primary">{prestasi.tingkat}</p>

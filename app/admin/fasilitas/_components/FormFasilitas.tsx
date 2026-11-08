@@ -1,10 +1,11 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { HasilAksi } from "../actions";
 import MasukanFoto from "@/components/admin/MasukanFoto";
+import ToolbarFormat, { PetunjukFormat } from "@/components/admin/ToolbarFormat";
 
 export type DataFasilitas = {
   id: number;
@@ -23,6 +24,7 @@ const inputCls =
 
 export default function FormFasilitas({ fasilitas, aksi }: { fasilitas?: DataFasilitas; aksi: AksiForm }) {
   const [hasil, jalankan, menunggu] = useActionState(aksi, null);
+  const deskripsiRef = useRef<HTMLTextAreaElement>(null);
 
   return (
     <form action={jalankan} className="space-y-5 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
@@ -47,15 +49,18 @@ export default function FormFasilitas({ fasilitas, aksi }: { fasilitas?: DataFas
         <label htmlFor="deskripsi" className="mb-1.5 block text-sm font-semibold text-ink">
           Deskripsi
         </label>
+        <ToolbarFormat areaRef={deskripsiRef} />
         <textarea
           id="deskripsi"
           name="deskripsi"
           rows={5}
           required
+          ref={deskripsiRef}
           defaultValue={fasilitas?.deskripsi ?? ""}
           placeholder="Jelaskan fasilitas ini: fungsi, kapasitas, kondisi"
           className="w-full rounded-2xl border border-line bg-white px-4 py-3 text-base leading-relaxed text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none"
         />
+        <PetunjukFormat />
       </div>
 
       <div>

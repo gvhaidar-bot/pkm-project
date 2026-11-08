@@ -5,6 +5,7 @@ import Link from "next/link";
 import { buatSlug } from "@/lib/slug";
 import { IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 import type { HasilAksi } from "../actions";
+import ToolbarFormat, { PetunjukFormat } from "@/components/admin/ToolbarFormat";
 
 export type DataEkstrakurikuler = {
   id: number;
@@ -38,6 +39,10 @@ export default function FormEkstrakurikuler({
   const [hasil, jalankan, menunggu] = useActionState(aksi, null);
   const [slug, setSlug] = useState(ekstrakurikuler?.slug ?? "");
   const slugManual = useRef(!!ekstrakurikuler);
+  const deskripsiRef = useRef<HTMLTextAreaElement>(null);
+  const tujuanRef = useRef<HTMLTextAreaElement>(null);
+  const kegiatanRutinRef = useRef<HTMLTextAreaElement>(null);
+  const fasilitasRef = useRef<HTMLTextAreaElement>(null);
 
   function saatNamaBerubah(e: React.ChangeEvent<HTMLInputElement>) {
     if (!slugManual.current) setSlug(buatSlug(e.target.value));
@@ -86,15 +91,18 @@ export default function FormEkstrakurikuler({
         <label htmlFor="deskripsi" className="mb-1.5 block text-sm font-semibold text-ink">
           Deskripsi singkat
         </label>
+        <ToolbarFormat areaRef={deskripsiRef} />
         <textarea
           id="deskripsi"
           name="deskripsi"
           rows={2}
           required
+          ref={deskripsiRef}
           defaultValue={ekstrakurikuler?.deskripsi ?? ""}
           placeholder="Satu-dua kalimat yang tampil di kartu"
           className={areaCls}
         />
+        <PetunjukFormat />
       </div>
 
       <div>
@@ -151,48 +159,54 @@ export default function FormEkstrakurikuler({
         <label htmlFor="tujuan" className="mb-1.5 block text-sm font-semibold text-ink">
           Tujuan kegiatan
         </label>
+        <ToolbarFormat areaRef={tujuanRef} />
         <textarea
           id="tujuan"
           name="tujuan"
           rows={5}
           required
+          ref={tujuanRef}
           defaultValue={ekstrakurikuler?.tujuan ?? ""}
           placeholder="Tulis satu tujuan per baris"
           className={`${areaCls} leading-relaxed`}
         />
-        <p className="mt-1.5 text-sm text-muted">Satu tujuan per baris, tampil sebagai daftar.</p>
+        <PetunjukFormat tambahan="Tulis satu tujuan per baris; tiap baris tampil sebagai butir daftar." />
       </div>
 
       <div>
         <label htmlFor="kegiatanRutin" className="mb-1.5 block text-sm font-semibold text-ink">
           Kegiatan rutin
         </label>
+        <ToolbarFormat areaRef={kegiatanRutinRef} />
         <textarea
           id="kegiatanRutin"
           name="kegiatanRutin"
           rows={5}
           required
+          ref={kegiatanRutinRef}
           defaultValue={ekstrakurikuler?.kegiatanRutin ?? ""}
           placeholder="Tulis satu kegiatan per baris"
           className={`${areaCls} leading-relaxed`}
         />
-        <p className="mt-1.5 text-sm text-muted">Satu kegiatan per baris, tampil sebagai daftar.</p>
+        <PetunjukFormat tambahan="Tulis satu kegiatan per baris; tiap baris tampil sebagai butir daftar." />
       </div>
 
       <div>
         <label htmlFor="fasilitas" className="mb-1.5 block text-sm font-semibold text-ink">
           Fasilitas & dukungan
         </label>
+        <ToolbarFormat areaRef={fasilitasRef} />
         <textarea
           id="fasilitas"
           name="fasilitas"
           rows={5}
           required
+          ref={fasilitasRef}
           defaultValue={ekstrakurikuler?.fasilitas ?? ""}
           placeholder="Tulis satu fasilitas per baris"
           className={`${areaCls} leading-relaxed`}
         />
-        <p className="mt-1.5 text-sm text-muted">Satu fasilitas per baris, tampil sebagai daftar.</p>
+        <PetunjukFormat tambahan="Tulis satu fasilitas per baris; tiap baris tampil sebagai butir daftar." />
       </div>
 
       <div className="pb-1">

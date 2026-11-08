@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import Image from "next/image";
 import { prisma } from "@/lib/prisma";
+import TeksBerformat from "@/components/TeksBerformat";
 
 export const metadata = {
   title: "Fasilitas",
@@ -49,7 +50,9 @@ async function DaftarFasilitas() {
           )}
           <div className="p-5">
             <h2 className="text-lg font-bold tracking-tight text-ink">{fasilitas.nama}</h2>
-            <p className="mt-2 text-[15px] leading-relaxed text-muted">{fasilitas.deskripsi}</p>
+            <div className="mt-2">
+              <TeksBerformat teks={fasilitas.deskripsi} kelasTeks="text-[15px] leading-relaxed text-muted" />
+            </div>
           </div>
         </article>
       ))}

@@ -4,36 +4,56 @@ import { notFound } from "next/navigation";
 import { LuArrowLeft, LuCircleCheck } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler } from "@/components/ekstrakurikuler/ikon";
+import { parseIsiBerita } from "@/lib/isiBerita";
+import TeksBerformat, { Teks } from "@/components/TeksBerformat";
 
 export const metadata = {
   title: "Ekstrakurikuler",
   description: "Detail kegiatan ekstrakurikuler MTs Nurul Falah Serpong.",
 };
 
-function daftarPoin(teks: string): string[] {
-  return teks
-    .split("\n")
-    .map((baris) => baris.trim().replace(/^[-•*]\s*/, ""))
-    .filter(Boolean);
+function ButirDaftar({ teks }: { teks: string }) {
+  return (
+    <li className="flex items-start gap-3 text-base leading-relaxed text-ink">
+      <LuCircleCheck className="mt-1 h-5 w-5 shrink-0 text-primary" aria-hidden="true" />
+      <span>
+        <Teks teks={teks} />
+      </span>
+    </li>
+  );
 }
 
 function BagianDaftar({ judul, teks }: { judul: string; teks: string }) {
-  const poin = daftarPoin(teks);
-  if (poin.length === 0) return null;
+  const blok = parseIsiBerita(teks);
+  if (blok.length === 0) return null;
   return (
     <section aria-label={judul} className="mt-10">
       <h2 className="text-2xl font-extrabold tracking-tight text-ink">{judul}</h2>
-      <ul className="mt-4 space-y-3">
-        {poin.map((item, i) => (
-          <li key={i} className="flex items-start gap-3 text-base leading-relaxed text-ink">
-            <LuCircleCheck
-              className="mt-1 h-5 w-5 shrink-0 text-primary"
-              aria-hidden="true"
-            />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
+      <div className="mt-4 space-y-4">
+        {blok.map((b, i) => {
+          if (b.jenis === "judul") {
+            return (
+              <h3 key={i} className="text-lg font-bold break-words text-ink">
+                <Teks teks={b.teks} />
+              </h3>
+            );
+          }
+          if (b.jenis === "daftar") {
+            return (
+              <ul key={i} className="space-y-3">
+                {b.butir.map((item, j) => (
+                  <ButirDaftar key={j} teks={item} />
+                ))}
+              </ul>
+            );
+          }
+          return (
+            <ul key={i} className="space-y-3">
+              <ButirDaftar teks={b.teks} />
+            </ul>
+          );
+        })}
+      </div>
     </section>
   );
 }
@@ -69,9 +89,9 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
 
       <section aria-label="Tentang kegiatan ini" className="mt-10">
         <h2 className="text-2xl font-extrabold tracking-tight text-ink">Tentang Kegiatan Ini</h2>
-        <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink sm:text-lg">
-          {item.deskripsi}
-        </p>
+        <div className="mt-4 max-w-3xl">
+          <TeksBerformat teks={item.deskripsi} />
+        </div>
       </section>
 
       <BagianDaftar judul="Tujuan Kegiatan" teks={item.tujuan} />
