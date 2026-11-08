@@ -2,71 +2,112 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft } from "react-icons/lu";
+import { LuArrowLeft, LuClock, LuLayoutGrid, LuPencil, LuStar, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import IsiProgram from "@/components/program/IsiProgram";
 
 export const metadata = {
   title: "Program Akademik",
   description: "Detail program akademik MTs Nurul Falah Serpong.",
 };
 
-async function IsiProgram({ params }: { params: Promise<{ slug: string }> }) {
+async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const program = await prisma.programAkademik.findUnique({ where: { slug } });
   if (!program || !program.aktif) notFound();
 
-  const paragraf = program.isi.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+  const info = [
+    { ikon: LuLayoutGrid, label: "Tipe Program", nilai: program.judul },
+    { ikon: LuClock, label: "Durasi", nilai: "[Durasi]" },
+    { ikon: LuUsers, label: "Peserta", nilai: "[Peserta]" },
+    { ikon: LuStar, label: "Status", nilai: program.unggulan ? "Program Unggulan" : "Program Aktif" },
+  ];
 
   return (
-    <article>
+    <div>
       <Link
         href="/program/akademik"
-        className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white px-5 text-base font-semibold text-primary transition-colors hover:bg-primary-soft"
+        className="inline-flex min-h-11 items-center gap-2 text-base font-semibold text-primary transition-colors hover:text-primary-dark"
       >
         <LuArrowLeft className="h-5 w-5" aria-hidden="true" />
-        Semua program
+        Kembali ke Program
       </Link>
 
-      <h1 className="mt-8 max-w-3xl text-3xl font-extrabold tracking-tight text-ink sm:text-4xl">
-        {program.judul}
-      </h1>
-      {program.unggulan && (
-        <p className="mt-3">
-          <span className="inline-block rounded-full bg-accent px-4 py-1.5 text-sm font-bold text-primary-dark">
-            Unggulan
-          </span>
-        </p>
-      )}
-      <p className="mt-4 max-w-3xl text-lg leading-relaxed text-muted">{program.ringkasan}</p>
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-start">
+        <div>
+          {program.gambarUrl ? (
+            <Image
+              src={program.gambarUrl}
+              alt={`Foto ${program.judul}`}
+              width={1200}
+              height={750}
+              priority
+              className="aspect-[16/10] w-full rounded-2xl object-cover"
+            />
+          ) : (
+            <div className="flex aspect-[16/10] w-full items-center justify-center rounded-2xl bg-primary-soft">
+              <span className="px-6 text-center font-serif text-xl font-bold break-words text-primary">
+                {program.judul}
+              </span>
+            </div>
+          )}
 
-      {program.gambarUrl && (
-        <Image
-          src={program.gambarUrl}
-          alt={`Sampul ${program.judul}`}
-          width={1200}
-          height={900}
-          priority
-          className="mt-8 aspect-[4/3] w-full rounded-3xl object-cover"
-        />
-      )}
+          <div className="mt-6 rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)] sm:p-8">
+            <h1 className="text-2xl font-extrabold tracking-tight break-words text-primary sm:text-3xl">
+              {program.judul}
+            </h1>
+            <p className="mt-3 text-base leading-relaxed text-muted">{program.ringkasan}</p>
+            <IsiProgram isi={program.isi} />
+          </div>
+        </div>
 
-      <div className="mt-8 max-w-3xl space-y-5">
-        {paragraf.map((p, i) => (
-          <p key={i} className="text-base leading-relaxed text-ink sm:text-lg">
-            {p}
-          </p>
-        ))}
+        <aside className="lg:sticky lg:top-24">
+          <div className="rounded-2xl bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
+            <ul className="space-y-5">
+              {info.map((item) => (
+                <li key={item.label} className="flex items-start gap-3">
+                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white">
+                    <item.ikon className="h-5 w-5" aria-hidden="true" />
+                  </span>
+                  <span className="min-w-0">
+                    <span className="block text-xs font-semibold text-muted">{item.label}</span>
+                    <span className="mt-0.5 block text-sm font-bold break-words text-ink">{item.nilai}</span>
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 rounded-2xl bg-[#F97316] p-6 text-center">
+            <h2 className="text-lg font-extrabold text-white">Tertarik Bergabung?</h2>
+            <p className="mt-2 text-sm leading-relaxed text-white/90">
+              Daftarkan diri Anda sekarang untuk mengikuti program akademik unggulan kami
+            </p>
+            <Link
+              href="/kontak"
+              className="mt-5 inline-flex min-h-11 items-center gap-2 rounded-full bg-white px-6 text-base font-bold text-[#EA580C] transition-colors hover:bg-cream"
+            >
+              <LuPencil className="h-4 w-4" aria-hidden="true" />
+              Hubungi Kami
+            </Link>
+          </div>
+        </aside>
       </div>
-    </article>
+    </div>
   );
 }
 
 function Kerangka() {
   return (
     <div className="animate-pulse">
-      <div className="h-11 w-44 rounded-full bg-white" />
-      <div className="mt-8 h-10 w-3/4 rounded-2xl bg-white" />
-      <div className="mt-8 aspect-[4/3] w-full rounded-3xl bg-white" />
+      <div className="h-6 w-44 rounded-full bg-white" />
+      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
+        <div>
+          <div className="aspect-[16/10] w-full rounded-2xl bg-white" />
+          <div className="mt-6 h-96 rounded-2xl bg-white" />
+        </div>
+        <div className="h-64 rounded-2xl bg-white" />
+      </div>
     </div>
   );
 }
@@ -76,7 +117,7 @@ export default function DetailProgramAkademikPage({ params }: { params: Promise<
     <div className="bg-cream">
       <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
         <Suspense fallback={<Kerangka />}>
-          <IsiProgram params={params} />
+          <IsiDetail params={params} />
         </Suspense>
       </div>
     </div>
