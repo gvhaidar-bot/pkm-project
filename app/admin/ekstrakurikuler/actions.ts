@@ -33,6 +33,10 @@ function bacaForm(formData: FormData) {
   const jumlahMentah = (formData.get("jumlahAnggota") as string | null)?.trim();
   const jumlahAnggota = jumlahMentah ? Number(jumlahMentah) : null;
   const slugMasukan = (formData.get("slug") as string | null)?.trim();
+  const jadwal = (formData.get("jadwal") as string | null)?.trim() || null;
+  const lokasi = (formData.get("lokasi") as string | null)?.trim() || null;
+  const biaya = (formData.get("biaya") as string | null)?.trim() || null;
+  const pembimbing = (formData.get("pembimbing") as string | null)?.trim() || null;
 
   return {
     nama,
@@ -40,6 +44,10 @@ function bacaForm(formData: FormData) {
     tujuan,
     kegiatanRutin,
     fasilitas,
+    jadwal,
+    lokasi,
+    biaya,
+    pembimbing,
     ikon: IKON_EKSTRAKURIKULER[ikon] ? ikon : "sains",
     aktif,
     urutan,
@@ -75,7 +83,11 @@ export async function tambahEkstrakurikuler(
     cekPanjang("Deskripsi", data.deskripsi, 5000) ??
     cekPanjang("Tujuan", data.tujuan, 5000) ??
     cekPanjang("Kegiatan rutin", data.kegiatanRutin, 5000) ??
-    cekPanjang("Fasilitas", data.fasilitas, 5000);
+    cekPanjang("Fasilitas", data.fasilitas, 5000) ??
+    cekPanjang("Jadwal", data.jadwal ?? "", 200) ??
+    cekPanjang("Lokasi", data.lokasi ?? "", 200) ??
+    cekPanjang("Biaya", data.biaya ?? "", 200) ??
+    cekPanjang("Pembimbing", data.pembimbing ?? "", 200);
   if (batas) return { error: batas };
 
   try {
@@ -92,6 +104,10 @@ export async function tambahEkstrakurikuler(
           kegiatanRutin: data.kegiatanRutin,
           fasilitas: data.fasilitas,
           gambarUrl: fotoUrl,
+          jadwal: data.jadwal,
+          lokasi: data.lokasi,
+          biaya: data.biaya,
+          pembimbing: data.pembimbing,
           jumlahAnggota: data.jumlahAnggota,
           ikon: data.ikon,
           aktif: data.aktif,
@@ -130,7 +146,11 @@ export async function ubahEkstrakurikuler(
     cekPanjang("Deskripsi", data.deskripsi, 5000) ??
     cekPanjang("Tujuan", data.tujuan, 5000) ??
     cekPanjang("Kegiatan rutin", data.kegiatanRutin, 5000) ??
-    cekPanjang("Fasilitas", data.fasilitas, 5000);
+    cekPanjang("Fasilitas", data.fasilitas, 5000) ??
+    cekPanjang("Jadwal", data.jadwal ?? "", 200) ??
+    cekPanjang("Lokasi", data.lokasi ?? "", 200) ??
+    cekPanjang("Biaya", data.biaya ?? "", 200) ??
+    cekPanjang("Pembimbing", data.pembimbing ?? "", 200);
   if (batas) return { error: batas };
 
   const lama = await prisma.ekstrakurikuler.findUnique({ where: { id } });
@@ -154,6 +174,10 @@ export async function ubahEkstrakurikuler(
         kegiatanRutin: data.kegiatanRutin,
         fasilitas: data.fasilitas,
         gambarUrl: fotoUrl,
+        jadwal: data.jadwal,
+        lokasi: data.lokasi,
+        biaya: data.biaya,
+        pembimbing: data.pembimbing,
         jumlahAnggota: data.jumlahAnggota,
         ikon: data.ikon,
         aktif: data.aktif,

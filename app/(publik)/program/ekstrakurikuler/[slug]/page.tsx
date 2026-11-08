@@ -29,7 +29,7 @@ function BagianDaftar({ judul, teks }: { judul: string; teks: string }) {
   if (blok.length === 0) return null;
   return (
     <section aria-label={judul} className="mt-8">
-      <h3 className="text-xl font-bold break-words text-ink">{judul}</h3>
+      <h3 className="text-xl font-bold break-words text-primary">{judul}</h3>
       <div className="mt-4 space-y-4">
         {blok.map((b, i) => {
           if (b.jenis === "judul") {
@@ -66,10 +66,10 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
 
   const kategori = IKON_EKSTRAKURIKULER[item.ikon]?.label ?? "Ekstrakurikuler";
   const infoPenting = [
-    { label: "Jadwal", nilai: "[Jadwal]" },
-    { label: "Lokasi", nilai: "[Lokasi]" },
-    { label: "Biaya", nilai: "[Biaya]" },
-    { label: "Pembimbing", nilai: "[Pembimbing]" },
+    { label: "Jadwal", nilai: item.jadwal ?? "[Jadwal]" },
+    { label: "Lokasi", nilai: item.lokasi ?? "[Lokasi]" },
+    { label: "Biaya", nilai: item.biaya ?? "[Biaya]" },
+    { label: "Pembimbing", nilai: item.pembimbing ?? "[Pembimbing]" },
   ];
 
   return (

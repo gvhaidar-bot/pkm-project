@@ -18,6 +18,10 @@ export type DataEkstrakurikuler = {
   kegiatanRutin: string;
   fasilitas: string;
   gambarUrl: string | null;
+  jadwal: string | null;
+  lokasi: string | null;
+  biaya: string | null;
+  pembimbing: string | null;
   jumlahAnggota: number | null;
   ikon: string;
   aktif: boolean;
@@ -230,6 +234,67 @@ export default function FormEkstrakurikuler({
         />
         <PetunjukFormat tambahan="Tulis satu fasilitas per baris; tiap baris tampil sebagai butir daftar." />
       </div>
+
+      <fieldset className="rounded-2xl border border-line bg-cream/60 p-5">
+        <legend className="px-2 text-sm font-bold text-ink">Informasi Penting (opsional)</legend>
+        <p className="mb-4 text-sm leading-relaxed text-muted">
+          Tampil di kartu &ldquo;Informasi Penting&rdquo; halaman detail. Kosongkan bila belum ada datanya.
+        </p>
+        <div className="space-y-4">
+          <div>
+            <label htmlFor="jadwal" className="mb-1.5 block text-sm font-semibold text-ink">
+              Jadwal
+            </label>
+            <input
+              id="jadwal"
+              name="jadwal"
+              type="text"
+              defaultValue={ekstrakurikuler?.jadwal ?? ""}
+              placeholder="Contoh: Setiap Sabtu, 08.00–10.00 WIB"
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label htmlFor="lokasi" className="mb-1.5 block text-sm font-semibold text-ink">
+              Lokasi
+            </label>
+            <input
+              id="lokasi"
+              name="lokasi"
+              type="text"
+              defaultValue={ekstrakurikuler?.lokasi ?? ""}
+              placeholder="Contoh: Lapangan madrasah"
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label htmlFor="biaya" className="mb-1.5 block text-sm font-semibold text-ink">
+              Biaya
+            </label>
+            <input
+              id="biaya"
+              name="biaya"
+              type="text"
+              defaultValue={ekstrakurikuler?.biaya ?? ""}
+              placeholder="Contoh: Gratis / Rp25.000 per bulan"
+              className={inputCls}
+            />
+          </div>
+          <div>
+            <label htmlFor="pembimbing" className="mb-1.5 block text-sm font-semibold text-ink">
+              Pembimbing
+            </label>
+            <input
+              id="pembimbing"
+              name="pembimbing"
+              type="text"
+              defaultValue={ekstrakurikuler?.pembimbing ?? ""}
+              placeholder="Contoh: Nama pembimbing"
+              className={inputCls}
+            />
+          </div>
+        </div>
+      </fieldset>
 
       <div className="pb-1">
         <label htmlFor="aktif" className="flex min-h-11 cursor-pointer items-center gap-3 text-base font-medium text-ink">
