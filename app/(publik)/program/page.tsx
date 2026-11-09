@@ -1,57 +1,138 @@
 import Link from "next/link";
-import { LuArrowRight } from "react-icons/lu";
+import { LuArrowRight, LuBookOpen, LuCheck, LuChevronRight, LuCompass, LuSparkles, LuTrophy } from "react-icons/lu";
 
 export const metadata = {
   title: "Program",
-  description: "Program akademik, ekstrakurikuler, dan program unggulan MTs Nurul Falah Serpong.",
+  description: "Program pendidikan MTs Nurul Falah Serpong: program akademik, ekstrakurikuler, dan program unggulan madrasah.",
 };
 
-const daftar = [
+const pilarProgram = [
   {
-    judul: "Akademik",
+    judul: "Program Akademik",
+    tag: "Kurikulum Intrakurikuler",
     href: "/program/akademik",
-    deskripsi: "Kurikulum dan program pembelajaran intrakurikuler madrasah.",
+    deskripsi:
+      "Perpaduan kurikulum nasional dan kurikulum Kementerian Agama yang dirancang sistematis untuk membangun fondasi literasi, numerasi, sains, dan ilmu syar'i.",
+    poin: [
+      "Kurikulum Kemenag & Nasional terintegrasi",
+      "Pembelajaran interaktif di kelas yang kondusif",
+      "Evaluasi belajar berkala dan pendampingan siswa",
+    ],
+    cta: "Jelajahi Program Akademik",
+    ikon: LuBookOpen,
   },
   {
-    judul: "Ekstrakurikuler",
+    judul: "Kegiatan Ekstrakurikuler",
+    tag: "Pengembangan Minat & Bakat",
     href: "/program/ekstrakurikuler",
-    deskripsi: "Wadah minat dan bakat siswa di luar jam pelajaran.",
+    deskripsi:
+      "Ruang aktualisasi diri di luar jam pelajaran untuk mengasah kepemimpinan, sportivitas, kreativitas seni, dan keterampilan sosial siswa.",
+    poin: [
+      "Pramuka, Paskibra, dan Kepanduan",
+      "Olahraga (Futsal, Bulu Tangkis, Beladiri)",
+      "Seni Islami, Marawis, dan Keterampilan",
+    ],
+    cta: "Lihat Ekstrakurikuler",
+    ikon: LuCompass,
   },
   {
     judul: "Program Unggulan",
+    tag: "Kekhasan Madrasah",
     href: "/program/unggulan",
-    deskripsi: "Program khas yang menjadi ciri khas madrasah kami.",
+    deskripsi:
+      "Program-program prioritas yang menjadi identitas dan kebanggaan madrasah dalam memperkuat karakter Islami dan kesiapan siswa ke jenjang berikutnya.",
+    poin: [
+      "Pembiasaan Ibadah dan Tahsin Al-Qur'an",
+      "Penguatan Karakter & Akhlakul Karimah",
+      "Bimbingan Persiapan Lanjutan Studi",
+    ],
+    cta: "Pelajari Program Unggulan",
+    ikon: LuTrophy,
   },
 ];
 
 export default function ProgramPage() {
   return (
     <div className="bg-cream">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
-        <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Penawaran Kami</p>
-        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">Program</h1>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          Tiga pilar program yang dirancang untuk mengembangkan potensi putra-putri Anda secara
-          maksimal.
-        </p>
+      {/* Editorial Header Banner */}
+      <section className="border-b border-primary-dark/30 bg-primary-dark text-white py-16 lg:py-20">
+        <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
+          <div className="inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1 text-xs font-bold tracking-[0.16em] text-accent uppercase">
+            <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Struktur Kurikulum & Pembinaan</span>
+          </div>
+          <h1 className="mt-4 font-serif text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Program Pendidikan Madrasah
+          </h1>
+          <div className="mt-4 flex items-center gap-2" aria-hidden="true">
+            <span className="h-0.5 w-12 bg-accent" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
+          </div>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Tiga pilar program yang dirancang terpadu untuk mengembangkan potensi akademik, kepribadian Islami,
+            dan kecakapan hidup putra-putri Anda.
+          </p>
+        </div>
+      </section>
 
-        <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {daftar.map((item) => (
-            <Link
+      {/* Breadcrumbs */}
+      <nav aria-label="Breadcrumb" className="border-b border-line bg-white shadow-xs">
+        <div className="mx-auto flex w-full max-w-300 items-center gap-2 px-5 py-3 text-xs font-medium lg:px-6">
+          <Link href="/" className="text-primary hover:text-primary-dark hover:underline">
+            Beranda
+          </Link>
+          <LuChevronRight className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+          <span className="font-semibold text-primary-dark" aria-current="page">
+            Program
+          </span>
+        </div>
+      </nav>
+
+      {/* Main 3 Pillar Cards */}
+      <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
+        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+          {pilarProgram.map((item) => (
+            <article
               key={item.href}
-              href={item.href}
-              className="group flex flex-col rounded-none bg-white p-8 shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+              className="group flex flex-col justify-between border border-line bg-white p-8 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_16px_40px_rgba(11,79,58,0.14)]"
             >
-              <h2 className="text-2xl font-extrabold tracking-tight text-ink">{item.judul}</h2>
-              <p className="mt-3 flex-1 text-base leading-relaxed text-muted">{item.deskripsi}</p>
-              <span className="mt-6 inline-flex items-center gap-1.5 text-base font-bold text-primary">
-                Selengkapnya
-                <LuArrowRight
-                  className="h-5 w-5 transition-transform group-hover:translate-x-1"
-                  aria-hidden="true"
-                />
-              </span>
-            </Link>
+              <div>
+                <div className="flex items-center justify-between border-b border-line pb-5">
+                  <span className="flex h-12 w-12 items-center justify-center border border-accent/40 bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                    <item.ikon className="h-6 w-6" aria-hidden="true" />
+                  </span>
+                  <span className="text-[11px] font-bold tracking-[0.14em] text-accent uppercase">
+                    {item.tag}
+                  </span>
+                </div>
+
+                <h2 className="mt-6 font-serif text-2xl font-bold tracking-tight text-primary-dark">
+                  {item.judul}
+                </h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted">
+                  {item.deskripsi}
+                </p>
+
+                <ul className="mt-6 space-y-2.5 border-t border-line/60 pt-5">
+                  {item.poin.map((p) => (
+                    <li key={p} className="flex items-start gap-2.5 text-xs font-medium text-muted">
+                      <LuCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mt-8 pt-5">
+                <Link
+                  href={item.href}
+                  className="group/btn inline-flex min-h-11 w-full items-center justify-center gap-2 border border-primary bg-primary px-6 py-3 text-xs font-bold tracking-wider text-white uppercase transition-all duration-200 group-hover:bg-accent group-hover:border-accent group-hover:text-primary-dark"
+                >
+                  <span>{item.cta}</span>
+                  <LuArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" aria-hidden="true" />
+                </Link>
+              </div>
+            </article>
           ))}
         </div>
       </div>

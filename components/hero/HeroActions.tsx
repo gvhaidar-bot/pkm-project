@@ -1,19 +1,22 @@
 import Link from "next/link";
+import { LuArrowRight } from "react-icons/lu";
 
 const HeroActions = () => {
   return (
     <div className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row">
       <Link
-        href="/program"
-        className="inline-flex min-h-11 items-center justify-center bg-accent px-7 py-3.5 text-base font-bold text-white transition-colors hover:bg-accent-soft"
+        href="/program/unggulan"
+        className="group inline-flex min-h-12 items-center justify-center gap-2 border border-accent bg-accent px-8 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-all duration-200 hover:bg-accent-soft hover:shadow-md"
       >
-        Lihat Program Unggulan
+        <span>Lihat Program Unggulan</span>
+        <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
       </Link>
       <Link
         href="/fasilitas"
-        className="inline-flex min-h-11 items-center justify-center bg-primary px-7 py-3.5 text-base font-bold text-white transition-colors hover:bg-primary-dark"
+        className="group inline-flex min-h-12 items-center justify-center gap-2 border border-primary bg-primary px-8 py-3.5 text-sm font-bold tracking-wide text-white uppercase transition-all duration-200 hover:bg-primary-dark hover:shadow-md"
       >
-        Lihat Fasilitas
+        <span>Jelajahi Fasilitas</span>
+        <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
       </Link>
     </div>
   );

@@ -1,11 +1,12 @@
 import { Suspense } from "react";
 import Link from "next/link";
+import { LuArrowRight, LuChevronRight, LuCompass, LuSparkles, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler } from "@/components/ekstrakurikuler/ikon";
 
 export const metadata = {
   title: "Ekstrakurikuler",
-  description: "Kegiatan ekstrakurikuler MTs Nurul Falah Serpong.",
+  description: "Ragam kegiatan ekstrakurikuler MTs Nurul Falah Serpong: wadah minat, bakat, kepemimpinan, dan kreativitas siswa.",
 };
 
 async function DaftarEkstrakurikuler() {
@@ -16,10 +17,13 @@ async function DaftarEkstrakurikuler() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
-        <p className="text-lg font-bold text-ink">Belum ada ekstrakurikuler</p>
-        <p className="mt-2 text-base text-muted">
-          Kegiatan ekstrakurikuler sedang disiapkan oleh pihak madrasah.
+      <div className="border border-line bg-white p-12 text-center shadow-xs">
+        <LuCompass className="mx-auto h-12 w-12 text-accent" aria-hidden="true" />
+        <h3 className="mt-4 font-serif text-xl font-bold text-primary-dark">
+          Kegiatan Ekstrakurikuler Sedang Disiapkan
+        </h3>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted">
+          Daftar kegiatan pengembangan minat dan bakat sedang diselaraskan oleh pembina madrasah.
         </p>
       </div>
     );
@@ -29,40 +33,53 @@ async function DaftarEkstrakurikuler() {
 
   return (
     <>
-      <div className="mt-8 flex flex-wrap gap-8">
-        <div className="text-center">
-          <p className="text-3xl font-extrabold tracking-tight text-primary-dark">{daftar.length}</p>
-          <p className="mt-1 text-sm font-semibold tracking-wide text-muted uppercase">Kegiatan</p>
+      {/* Metric Highlights */}
+      <div className="mb-10 flex flex-wrap items-center gap-8 border-b border-line pb-8">
+        <div className="border-l-4 border-accent pl-4">
+          <p className="font-serif text-3xl font-black text-primary-dark">{daftar.length}</p>
+          <p className="text-xs font-bold tracking-wider text-muted uppercase">Pilihan Kegiatan</p>
         </div>
-        <div className="text-center">
-          <p className="text-3xl font-extrabold tracking-tight text-primary-dark">{totalAnggota}</p>
-          <p className="mt-1 text-sm font-semibold tracking-wide text-muted uppercase">Anggota</p>
+        <div className="border-l-4 border-accent pl-4">
+          <p className="font-serif text-3xl font-black text-primary-dark">{totalAnggota}</p>
+          <p className="text-xs font-bold tracking-wider text-muted uppercase">Siswa Terbina</p>
         </div>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {daftar.map((item) => {
           return (
             <article
               key={item.id}
-              className="flex flex-col items-center rounded-none bg-white p-8 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+              className="group flex flex-col justify-between border border-line bg-white p-8 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_16px_40px_rgba(11,79,58,0.12)] text-center sm:text-left"
             >
-              <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent">
-                <IkonEkstrakurikuler ikon={item.ikon} className="h-8 w-8 text-white" />
-              </span>
-              <h2 className="mt-5 text-xl font-extrabold tracking-tight text-primary">{item.nama}</h2>
-              <p className="mt-2 flex-1 text-[15px] leading-relaxed text-muted">{item.deskripsi}</p>
-              <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
-                {item.jumlahAnggota !== null && (
-                  <span className="inline-flex min-h-11 items-center bg-primary-soft px-4 text-sm font-bold text-primary">
-                    {item.jumlahAnggota} Anggota
+              <div>
+                <div className="flex items-center justify-between">
+                  <span className="flex h-14 w-14 items-center justify-center border border-accent/40 bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                    <IkonEkstrakurikuler ikon={item.ikon} className="h-7 w-7 text-accent" />
                   </span>
-                )}
+                  {item.jumlahAnggota !== null && (
+                    <span className="inline-flex items-center gap-1 border border-line bg-cream px-3 py-1 text-xs font-bold text-primary-dark">
+                      <LuUsers className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+                      <span>{item.jumlahAnggota} Anggota</span>
+                    </span>
+                  )}
+                </div>
+
+                <h2 className="mt-6 font-serif text-xl font-bold tracking-tight text-primary-dark">
+                  {item.nama}
+                </h2>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted line-clamp-3">
+                  {item.deskripsi}
+                </p>
+              </div>
+
+              <div className="mt-8 pt-4 border-t border-line/60">
                 <Link
                   href={`/program/ekstrakurikuler/${item.slug}`}
-                  className="inline-flex min-h-11 items-center gap-1.5 bg-accent px-6 py-3 text-base font-bold text-white transition-colors hover:bg-accent-soft"
+                  className="group/btn inline-flex min-h-11 w-full items-center justify-center gap-2 border border-primary bg-primary px-6 py-2.5 text-xs font-bold tracking-wider text-white uppercase transition-all duration-200 group-hover:bg-accent group-hover:border-accent group-hover:text-primary-dark"
                 >
-                  Selengkapnya →
+                  <span>Rincian Kegiatan</span>
+                  <LuArrowRight className="h-4 w-4 transition-transform group-hover/btn:translate-x-1" aria-hidden="true" />
                 </Link>
               </div>
             </article>
@@ -75,9 +92,14 @@ async function DaftarEkstrakurikuler() {
 
 function Kerangka() {
   return (
-    <div className="mt-8 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+    <div className="grid animate-pulse grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {[0, 1, 2, 3, 4, 5].map((i) => (
-        <div key={i} className="h-72 rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
+        <div key={i} className="border border-line bg-white p-8 space-y-4">
+          <div className="h-12 w-12 bg-line/60" />
+          <div className="h-6 w-40 bg-line/80" />
+          <div className="h-16 w-full bg-line/40" />
+          <div className="h-10 w-full bg-line/60" />
+        </div>
       ))}
     </div>
   );
@@ -86,17 +108,46 @@ function Kerangka() {
 export default function EkstrakurikulerPage() {
   return (
     <div className="bg-cream">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
-        <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">
-          Program Pengembangan
-        </p>
-        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">
-          Kegiatan Ekstrakurikuler
-        </h1>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          Berbagai pilihan kegiatan untuk mengembangkan bakat, minat, dan karakter siswa.
-        </p>
+      {/* Editorial Header Banner */}
+      <section className="border-b border-primary-dark/30 bg-primary-dark text-white py-16 lg:py-20">
+        <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
+          <div className="inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1 text-xs font-bold tracking-[0.16em] text-accent uppercase">
+            <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Pengembangan Minat &amp; Bakat</span>
+          </div>
+          <h1 className="mt-4 font-serif text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Kegiatan Ekstrakurikuler
+          </h1>
+          <div className="mt-4 flex items-center gap-2" aria-hidden="true">
+            <span className="h-0.5 w-12 bg-accent" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
+          </div>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Menyediakan wadah positif bagi siswa untuk melatih kepemimpinan, sportivitas,
+            kekompakan, dan kreativitas di luar jam pembelajaran kelas.
+          </p>
+        </div>
+      </section>
 
+      {/* Breadcrumbs */}
+      <nav aria-label="Breadcrumb" className="border-b border-line bg-white shadow-xs">
+        <div className="mx-auto flex w-full max-w-300 items-center gap-2 px-5 py-3 text-xs font-medium lg:px-6">
+          <Link href="/" className="text-primary hover:text-primary-dark hover:underline">
+            Beranda
+          </Link>
+          <LuChevronRight className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+          <Link href="/program" className="text-primary hover:text-primary-dark hover:underline">
+            Program
+          </Link>
+          <LuChevronRight className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+          <span className="font-semibold text-primary-dark" aria-current="page">
+            Ekstrakurikuler
+          </span>
+        </div>
+      </nav>
+
+      {/* Main Grid */}
+      <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
         <Suspense fallback={<Kerangka />}>
           <DaftarEkstrakurikuler />
         </Suspense>

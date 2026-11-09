@@ -20,9 +20,9 @@ export default function TombolKeAtas() {
       type="button"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Kembali ke atas"
-      className="fixed right-5 bottom-5 z-40 flex h-12 w-12 items-center justify-center rounded-full bg-accent text-primary-dark shadow-lg transition-colors hover:bg-accent-soft"
+      className="fixed right-6 bottom-6 z-40 flex h-12 w-12 items-center justify-center rounded-full border border-white/50 bg-accent text-white shadow-xl transition-all duration-200 hover:-translate-y-1 hover:bg-accent-soft hover:shadow-2xl"
     >
-      <LuArrowUp className="h-6 w-6" aria-hidden="true" />
+      <LuArrowUp className="h-5 w-5" aria-hidden="true" />
     </button>
   );
 }

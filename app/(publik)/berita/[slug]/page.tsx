@@ -2,13 +2,13 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft, LuArrowRight, LuSparkles } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuCalendarDays, LuClock, LuSparkles, LuUser } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import IsiArtikel from "@/components/berita/IsiArtikel";
 
 export const metadata = {
   title: "Berita",
-  description: "Baca berita MTs Nurul Falah Serpong.",
+  description: "Warta dan pengumuman resmi MTs Nurul Falah Serpong.",
 };
 
 function formatTanggal(t: Date | null) {
@@ -58,45 +58,46 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
       <div className="mx-auto max-w-3xl">
         <Link
           href="/berita"
-          className="inline-flex min-h-11 items-center gap-2 rounded-full border border-line bg-white px-5 text-base font-semibold text-primary transition-colors hover:bg-primary-soft"
+          className="group inline-flex min-h-10 items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase transition-colors hover:text-primary-dark"
         >
-          <LuArrowLeft className="h-5 w-5" aria-hidden="true" />
-          Semua berita
+          <LuArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
+          <span>Kembali ke Berita</span>
         </Link>
 
-        <h1 className="mt-8 text-3xl font-extrabold tracking-tight break-words text-ink sm:text-4xl">
+        <h1 className="mt-6 font-serif text-3xl font-black tracking-tight text-primary-dark sm:text-4xl lg:text-5xl">
           {berita.judul}
         </h1>
 
-        <div className="mt-6 flex flex-wrap gap-x-8 gap-y-3 border-y border-line py-4">
-          <div>
-            <p className="text-xs font-semibold text-muted">Ditulis oleh</p>
-            <p className="mt-0.5 text-base font-bold break-words text-ink">{berita.author?.nama ?? "Administrator"}</p>
+        <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-3 border-y border-line py-4 text-xs">
+          <div className="flex items-center gap-1.5 text-muted">
+            <LuUser className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            <span>Oleh <strong className="text-primary-dark">{berita.author?.nama ?? "Humas Madrasah"}</strong></span>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-muted">Tanggal</p>
-            <p className="mt-0.5 text-base font-bold text-ink">{formatTanggalLengkap(berita.publishedAt)}</p>
+          <div className="flex items-center gap-1.5 text-muted">
+            <LuCalendarDays className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            <span>{formatTanggalLengkap(berita.publishedAt)}</span>
           </div>
-          <div>
-            <p className="text-xs font-semibold text-muted">Waktu baca</p>
-            <p className="mt-0.5 text-base font-bold text-ink">{menitBaca} menit</p>
+          <div className="flex items-center gap-1.5 text-muted">
+            <LuClock className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
+            <span>{menitBaca} menit baca</span>
           </div>
           {berita.unggulan && (
-            <div>
-              <p className="text-xs font-semibold text-muted">Status</p>
-              <p className="mt-1.5 inline-flex items-center gap-1.5 bg-accent px-3 py-1 text-xs font-bold text-primary-dark">
-                <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
-                Unggulan
-              </p>
-            </div>
+            <span className="inline-flex items-center gap-1 bg-accent px-2.5 py-0.5 text-[11px] font-bold text-primary-dark">
+              <LuSparkles className="h-3 w-3" aria-hidden="true" />
+              Unggulan
+            </span>
           )}
         </div>
 
-        <p className="mt-8 text-xl leading-relaxed font-bold break-words text-ink">{berita.ringkasan}</p>
+        {berita.ringkasan && (
+          <p className="mt-6 font-serif text-lg font-medium leading-relaxed text-primary-dark/90 sm:text-xl border-l-4 border-accent pl-4">
+            {berita.ringkasan}
+          </p>
+        )}
       </div>
 
       {berita.gambarUrl && (
-        <div className="mx-auto mt-10 max-w-4xl">
+        <div className="mx-auto mt-10 max-w-4xl border border-line bg-cream p-2 shadow-xs">
           <Image
             src={berita.gambarUrl}
             alt={`Sampul ${berita.judul}`}
@@ -108,76 +109,106 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
         </div>
       )}
 
-      <IsiArtikel isi={berita.isi} />
+      <div className="mx-auto max-w-3xl">
+        <IsiArtikel isi={berita.isi} />
+      </div>
 
       {berita.foto.length > 0 && (
-        <div className="mx-auto mt-12 max-w-4xl">
-          <h2 className="text-xl font-bold tracking-tight text-ink">Galeri Foto</h2>
-          <div className="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+        <div className="mx-auto mt-14 max-w-4xl border-t border-line pt-10">
+          <h2 className="font-serif text-xl font-bold text-primary-dark">Dokumentasi Terkait</h2>
+          <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3">
             {berita.foto.map((foto) => (
-              <Image
-                key={foto.id}
-                src={foto.url}
-                alt={foto.caption || `Foto galeri ${berita.judul}`}
-                width={400}
-                height={267}
-                className="aspect-[3/2] w-full rounded-none object-cover"
-              />
+              <figure key={foto.id} className="overflow-hidden border border-line bg-primary-dark">
+                <Image
+                  src={foto.url}
+                  alt={foto.caption || `Foto ${berita.judul}`}
+                  width={400}
+                  height={267}
+                  className="aspect-[3/2] w-full object-cover transition-transform duration-300 hover:scale-105"
+                />
+                {foto.caption && (
+                  <figcaption className="bg-white p-2.5 text-xs text-muted">
+                    {foto.caption}
+                  </figcaption>
+                )}
+              </figure>
             ))}
           </div>
         </div>
       )}
 
-      <div className="mx-auto mt-12 max-w-3xl rounded-none border border-line bg-white p-6">
+      {/* Author Card */}
+      <div className="mx-auto mt-14 max-w-3xl border border-line bg-cream/50 p-6 shadow-xs">
         <div className="flex items-center gap-4">
           <span
-            className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-surface-warm text-2xl font-extrabold text-primary"
+            className="flex h-14 w-14 shrink-0 items-center justify-center border border-accent/40 bg-primary font-serif text-2xl font-bold text-accent"
             aria-hidden="true"
           >
-            {(berita.author?.nama ?? "A").charAt(0).toUpperCase()}
+            {(berita.author?.nama ?? "H").charAt(0).toUpperCase()}
           </span>
           <div>
-            <p className="text-xs font-bold tracking-wide text-muted uppercase">Penulis</p>
-            <p className="text-lg font-extrabold break-words text-ink">{berita.author?.nama ?? "Administrator"}</p>
+            <p className="text-[11px] font-bold tracking-wider text-muted uppercase">Diterbitkan Oleh</p>
+            <p className="font-serif text-base font-bold text-primary-dark">
+              {berita.author?.nama ?? "Tim Humas MTs Nurul Falah"}
+            </p>
+            <p className="text-xs text-muted">MTs Nurul Falah Serpong, Tangerang Selatan</p>
           </div>
         </div>
       </div>
 
+      {/* Related News */}
       {terkait.length > 0 && (
-        <div className="mx-auto mt-16 max-w-4xl border-t border-line pt-10">
-          <h2 className="text-2xl font-extrabold tracking-tight text-ink">Berita Terkait</h2>
-          <div className="mt-6 grid grid-cols-1 gap-5 sm:grid-cols-3">
+        <div className="mx-auto mt-16 max-w-4xl border-t-2 border-primary-dark pt-12">
+          <div className="flex items-center justify-between">
+            <h2 className="font-serif text-2xl font-bold text-primary-dark">Kabar Pilihan Lainnya</h2>
+            <Link
+              href="/berita"
+              className="inline-flex items-center gap-1 text-xs font-bold text-accent uppercase tracking-wider hover:text-accent-soft"
+            >
+              <span>Semua Berita</span>
+              <LuArrowRight className="h-3.5 w-3.5" aria-hidden="true" />
+            </Link>
+          </div>
+
+          <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-3">
             {terkait.map((item) => (
               <Link
                 key={item.id}
                 href={`/berita/${item.slug}`}
-                className="group overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+                className="group flex flex-col justify-between border border-line bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-md"
               >
-                {item.gambarUrl ? (
-                  <Image
-                    src={item.gambarUrl}
-                    alt={`Sampul ${item.judul}`}
-                    width={400}
-                    height={225}
-                    className="aspect-video w-full object-cover"
-                  />
-                ) : (
-                  <div
-                    className="flex aspect-video w-full items-center justify-center bg-primary-soft"
-                    aria-hidden="true"
-                  >
-                    <span className="px-4 text-center text-sm font-bold break-words text-primary">{item.judul}</span>
+                <div>
+                  {item.gambarUrl ? (
+                    <Image
+                      src={item.gambarUrl}
+                      alt={`Sampul ${item.judul}`}
+                      width={400}
+                      height={225}
+                      className="aspect-video w-full object-cover"
+                    />
+                  ) : (
+                    <div
+                      className="flex aspect-video w-full items-center justify-center bg-primary"
+                      aria-hidden="true"
+                    >
+                      <span className="px-4 text-center font-serif text-sm font-bold text-white line-clamp-2">
+                        {item.judul}
+                      </span>
+                    </div>
+                  )}
+                  <div className="p-5">
+                    <p className="text-xs text-muted">{formatTanggal(item.publishedAt)}</p>
+                    <h3 className="mt-1.5 font-serif text-base font-bold text-primary-dark line-clamp-2 transition-colors group-hover:text-primary">
+                      {item.judul}
+                    </h3>
                   </div>
-                )}
-                <div className="p-4">
-                  <p className="text-xs font-semibold text-muted">{formatTanggal(item.publishedAt)}</p>
-                  <h3 className="mt-1.5 line-clamp-2 text-base font-bold tracking-tight break-words text-ink transition-colors group-hover:text-primary">
-                    {item.judul}
-                  </h3>
-                  <p className="mt-2 inline-flex items-center gap-1 text-sm font-bold text-primary">
-                    Baca selengkapnya
-                    <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
-                  </p>
+                </div>
+
+                <div className="px-5 pb-5 pt-0">
+                  <span className="inline-flex items-center gap-1 text-xs font-bold text-accent uppercase tracking-wider">
+                    <span>Baca</span>
+                    <LuArrowRight className="h-3 w-3 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                  </span>
                 </div>
               </Link>
             ))}
@@ -190,16 +221,15 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
 
 function Kerangka() {
   return (
-    <div className="mx-auto max-w-3xl animate-pulse">
-      <div className="h-11 w-40 rounded-full bg-surface-warm" />
-      <div className="mt-8 h-10 w-3/4 rounded-none bg-surface-warm" />
-      <div className="mt-6 h-16 w-full rounded-none bg-surface-warm" />
-      <div className="mt-8 h-24 w-full rounded-none bg-surface-warm" />
-      <div className="mt-10 aspect-video w-full rounded-none bg-surface-warm" />
-      <div className="mt-10 space-y-4">
-        {[0, 1, 2].map((i) => (
-          <div key={i} className="h-5 w-full rounded-full bg-surface-warm" />
-        ))}
+    <div className="mx-auto max-w-3xl animate-pulse space-y-6">
+      <div className="h-5 w-32 bg-line/80" />
+      <div className="h-10 w-full bg-line/80" />
+      <div className="h-6 w-3/4 bg-line/60" />
+      <div className="aspect-video w-full bg-line/40" />
+      <div className="space-y-3 pt-6">
+        <div className="h-4 w-full bg-line/60" />
+        <div className="h-4 w-full bg-line/60" />
+        <div className="h-4 w-2/3 bg-line/60" />
       </div>
     </div>
   );
@@ -207,8 +237,8 @@ function Kerangka() {
 
 export default function DetailBeritaPage({ params }: { params: Promise<{ slug: string }> }) {
   return (
-    <div className="bg-white">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
+    <div className="bg-white py-14">
+      <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
         <Suspense fallback={<Kerangka />}>
           <IsiBerita params={params} />
         </Suspense>

@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft, LuCheck, LuInfo, LuTag, LuUsers } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuCheck, LuInfo, LuTag, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import { IkonEkstrakurikuler, IKON_EKSTRAKURIKULER } from "@/components/ekstrakurikuler/ikon";
 import { parseIsiBerita } from "@/lib/isiBerita";
@@ -10,13 +10,13 @@ import TeksBerformat, { CuplikanBerformat, Teks } from "@/components/TeksBerform
 
 export const metadata = {
   title: "Ekstrakurikuler",
-  description: "Detail kegiatan ekstrakurikuler MTs Nurul Falah Serpong.",
+  description: "Rincian kegiatan ekstrakurikuler MTs Nurul Falah Serpong.",
 };
 
 function ButirDaftar({ teks }: { teks: string }) {
   return (
-    <li className="flex items-start gap-2.5 text-base leading-relaxed text-ink">
-      <LuCheck className="mt-1 h-5 w-5 shrink-0 text-accent-soft" aria-hidden="true" />
+    <li className="flex items-start gap-3 text-sm leading-relaxed text-muted">
+      <LuCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
       <span>
         <Teks teks={teks} />
       </span>
@@ -28,20 +28,20 @@ function BagianDaftar({ judul, teks }: { judul: string; teks: string }) {
   const blok = parseIsiBerita(teks);
   if (blok.length === 0) return null;
   return (
-    <section aria-label={judul} className="mt-8">
-      <h3 className="text-xl font-bold break-words text-primary">{judul}</h3>
-      <div className="mt-4 space-y-4">
+    <section aria-label={judul} className="mt-8 border-t border-line/60 pt-6">
+      <h3 className="font-serif text-lg font-bold text-primary-dark">{judul}</h3>
+      <div className="mt-4 space-y-3">
         {blok.map((b, i) => {
           if (b.jenis === "judul") {
             return (
-              <h4 key={i} className="text-lg font-bold break-words text-ink">
+              <h4 key={i} className="font-serif text-base font-bold text-primary-dark pt-1">
                 <Teks teks={b.teks} />
               </h4>
             );
           }
           if (b.jenis === "daftar") {
             return (
-              <ul key={i} className="space-y-3">
+              <ul key={i} className="space-y-2.5">
                 {b.butir.map((item, j) => (
                   <ButirDaftar key={j} teks={item} />
                 ))}
@@ -49,7 +49,7 @@ function BagianDaftar({ judul, teks }: { judul: string; teks: string }) {
             );
           }
           return (
-            <ul key={i} className="space-y-3">
+            <ul key={i} className="space-y-2.5">
               <ButirDaftar teks={b.teks} />
             </ul>
           );
@@ -66,105 +66,132 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
 
   const kategori = IKON_EKSTRAKURIKULER[item.ikon]?.label ?? "Ekstrakurikuler";
   const infoPenting = [
-    { label: "Jadwal", nilai: item.jadwal ?? "[Jadwal]" },
-    { label: "Lokasi", nilai: item.lokasi ?? "[Lokasi]" },
-    { label: "Biaya", nilai: item.biaya ?? "[Biaya]" },
-    { label: "Pembimbing", nilai: item.pembimbing ?? "[Pembimbing]" },
+    { label: "Jadwal Latihan", nilai: item.jadwal ?? "[Jadwal Kegiatan]" },
+    { label: "Lokasi Latihan", nilai: item.lokasi ?? "Lingkungan Madrasah" },
+    { label: "Biaya / Iuran", nilai: item.biaya ?? "Termasuk Fasilitas Siswa" },
+    { label: "Guru Pembimbing", nilai: item.pembimbing ?? "Pembina Ekstrakurikuler" },
   ];
 
   return (
     <div>
       <Link
         href="/program/ekstrakurikuler"
-        className="inline-flex min-h-11 items-center gap-2 text-base font-semibold text-primary transition-colors hover:text-primary-dark"
+        className="group inline-flex min-h-10 items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase transition-colors hover:text-primary-dark"
       >
-        <LuArrowLeft className="h-5 w-5" aria-hidden="true" />
-        Kembali ke Ekstrakurikuler
+        <LuArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
+        <span>Kembali ke Ekstrakurikuler</span>
       </Link>
 
       {item.gambarUrl && (
-        <Image
-          src={item.gambarUrl}
-          alt={`Foto ${item.nama}`}
-          width={1200}
-          height={675}
-          priority
-          className="mt-6 aspect-video w-full rounded-none object-cover"
-        />
+        <div className="mt-6 overflow-hidden border border-line bg-primary-dark shadow-xs">
+          <Image
+            src={item.gambarUrl}
+            alt={`Foto kegiatan ${item.nama}`}
+            width={1200}
+            height={675}
+            priority
+            className="aspect-video w-full object-cover"
+          />
+        </div>
       )}
 
-      <div className="mt-6 rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
-        <div className="flex items-start gap-5">
-          <span className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-accent-soft">
+      {/* Header Profile Block */}
+      <div className="mt-6 border border-line bg-white p-7 shadow-xs sm:p-10">
+        <div className="flex flex-col gap-6 sm:flex-row sm:items-center">
+          <span className="flex h-20 w-20 shrink-0 items-center justify-center border-2 border-accent bg-accent-soft text-white">
             <IkonEkstrakurikuler ikon={item.ikon} className="h-10 w-10 text-white" />
           </span>
           <div className="min-w-0">
-            <h1 className="text-3xl font-extrabold tracking-tight break-words text-primary">{item.nama}</h1>
+            <span className="text-[11px] font-bold tracking-[0.16em] text-accent uppercase">
+              {kategori}
+            </span>
+            <h1 className="mt-1 font-serif text-2xl font-black text-primary-dark sm:text-4xl">
+              {item.nama}
+            </h1>
             <CuplikanBerformat
               teks={item.deskripsi}
-              className="mt-1 line-clamp-2 text-sm leading-relaxed text-muted"
+              className="mt-2 text-sm leading-relaxed text-muted line-clamp-2"
             />
           </div>
         </div>
-        <div className="mt-6 flex flex-wrap gap-8 border-t border-line pt-5">
+
+        <div className="mt-8 flex flex-wrap gap-8 border-t border-line/60 pt-6">
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary">
-              <LuUsers className="h-5 w-5" aria-hidden="true" />
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-accent/30 bg-primary-soft text-primary">
+              <LuUsers className="h-5 w-5 text-accent" aria-hidden="true" />
             </span>
-            <span>
-              <span className="block text-xs font-semibold text-muted">Anggota</span>
-              <span className="mt-0.5 block text-base font-bold text-ink">
-                {item.jumlahAnggota !== null ? item.jumlahAnggota : "[Jumlah Anggota]"}
+            <div>
+              <span className="block text-[11px] font-bold text-muted uppercase">Anggota Aktif</span>
+              <span className="block text-sm font-bold text-primary-dark">
+                {item.jumlahAnggota !== null ? `${item.jumlahAnggota} Siswa` : "Terbuka untuk Siswa"}
               </span>
-            </span>
+            </div>
           </div>
           <div className="flex items-center gap-3">
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary-soft text-primary">
-              <LuTag className="h-5 w-5" aria-hidden="true" />
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center border border-accent/30 bg-primary-soft text-primary">
+              <LuTag className="h-5 w-5 text-accent" aria-hidden="true" />
             </span>
-            <span>
-              <span className="block text-xs font-semibold text-muted">Kategori</span>
-              <span className="mt-0.5 block text-base font-bold break-words text-ink">{kategori}</span>
-            </span>
+            <div>
+              <span className="block text-[11px] font-bold text-muted uppercase">Kategori Minat</span>
+              <span className="block text-sm font-bold text-primary-dark">{kategori}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-start">
-        <div className="rounded-none bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
-          <h2 className="text-2xl font-extrabold tracking-tight break-words text-ink">Tentang Kegiatan Ini</h2>
+      {/* Content & Sidebar Grid */}
+      <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_340px] lg:items-start">
+        {/* Main Details */}
+        <div className="border border-line bg-white p-7 shadow-xs sm:p-10">
+          <h2 className="font-serif text-2xl font-bold text-primary-dark">Tentang Kegiatan Ini</h2>
           <div className="mt-4">
-            <TeksBerformat teks={item.deskripsi} kelasTeks="text-base leading-relaxed text-muted" />
+            <TeksBerformat teks={item.deskripsi} kelasTeks="text-sm leading-relaxed text-muted" />
           </div>
-          <BagianDaftar judul="Tujuan Kegiatan" teks={item.tujuan} />
-          <BagianDaftar judul="Kegiatan Rutin" teks={item.kegiatanRutin} />
-          <BagianDaftar judul="Fasilitas & Dukungan" teks={item.fasilitas} />
+
+          <BagianDaftar judul="Tujuan Pembinaan" teks={item.tujuan} />
+          <BagianDaftar judul="Agenda & Kegiatan Rutin" teks={item.kegiatanRutin} />
+          <BagianDaftar judul="Fasilitas & Dukungan Sekolah" teks={item.fasilitas} />
         </div>
 
-        <aside className="lg:sticky lg:top-24">
-          <div className="rounded-none bg-accent-soft p-6 text-center">
-            <h2 className="text-xl font-extrabold text-white">Bergabunglah!</h2>
-            <p className="mt-2 text-sm leading-relaxed text-white/90">
-              Jadilah bagian dari keluarga besar {item.nama}
+        {/* Aside Sidebar */}
+        <aside className="space-y-6 lg:sticky lg:top-28">
+          {/* CTA Box */}
+          <div className="border-l-4 border-accent bg-accent-soft p-6 text-white shadow-sm">
+            <span className="text-xs font-bold tracking-[0.16em] text-white/80 uppercase">
+              Peluang Bergabung
+            </span>
+            <h2 className="mt-2 font-serif text-xl font-bold text-white">
+              Tertarik Mengikuti Kegiatan Ini?
+            </h2>
+            <p className="mt-2 text-xs leading-relaxed text-white/90">
+              Siswa MTs Nurul Falah didorong aktif mengikuti minimal satu kegiatan ekstrakurikuler untuk membentuk karakter dan pertemanan yang sehat.
             </p>
-            <Link
-              href="/kontak"
-              className="mt-5 inline-flex min-h-11 items-center justify-center gap-1.5 bg-white px-6 py-3 text-base font-bold text-accent-soft transition-colors hover:bg-cream"
-            >
-                            Daftar Sekarang →
-            </Link>
+            <div className="mt-6">
+              <Link
+                href="/kontak"
+                className="group inline-flex min-h-11 w-full items-center justify-center gap-2 border border-white bg-white px-5 py-2.5 text-xs font-bold tracking-wider text-primary-dark uppercase transition-colors hover:bg-cream"
+              >
+                <span>Tanya Informasi Lebih Lanjut</span>
+                <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
 
-          <div className="mt-6 rounded-none bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
-            <h2 className="flex items-center gap-2 text-lg font-bold text-primary">
-              <LuInfo className="h-5 w-5" aria-hidden="true" />
+          {/* Important Info Card */}
+          <div className="border border-line bg-white p-6 shadow-xs">
+            <h2 className="flex items-center gap-2 font-serif text-base font-bold text-primary-dark border-b border-line pb-3">
+              <LuInfo className="h-4 w-4 text-accent" aria-hidden="true" />
               Informasi Penting
             </h2>
-            <ul className="mt-4 space-y-3">
+            <ul className="mt-4 space-y-3.5">
               {infoPenting.map((info) => (
-                <li key={info.label} className="text-sm leading-relaxed">
-                  <span className="font-bold text-ink">{info.label}: </span>
-                  <span className="text-muted">{info.nilai}</span>
+                <li key={info.label} className="text-xs leading-relaxed">
+                  <span className="block font-bold text-primary-dark uppercase text-[10px] tracking-wider text-muted">
+                    {info.label}
+                  </span>
+                  <span className="mt-0.5 block text-sm font-medium text-ink">
+                    {info.nilai}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -177,13 +204,16 @@ async function IsiEkstrakurikuler({ params }: { params: Promise<{ slug: string }
 
 function Kerangka() {
   return (
-    <div className="animate-pulse">
-      <div className="h-6 w-52 rounded-full bg-white" />
-      <div className="mt-6 aspect-video w-full rounded-none bg-white" />
-      <div className="mt-6 h-40 rounded-none bg-white" />
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div className="h-96 rounded-none bg-white" />
-        <div className="h-64 rounded-none bg-white" />
+    <div className="animate-pulse space-y-6">
+      <div className="h-6 w-52 bg-line/80" />
+      <div className="border border-line bg-white p-8 space-y-4">
+        <div className="h-16 w-16 bg-line/60" />
+        <div className="h-8 w-64 bg-line/80" />
+        <div className="h-16 w-full bg-line/40" />
+      </div>
+      <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
+        <div className="border border-line bg-white p-8 h-96" />
+        <div className="border border-line bg-white p-6 h-64" />
       </div>
     </div>
   );
@@ -195,8 +225,8 @@ export default function DetailEkstrakurikulerPage({
   params: Promise<{ slug: string }>;
 }) {
   return (
-    <div className="bg-cream">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
+    <div className="bg-cream py-14">
+      <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
         <Suspense fallback={<Kerangka />}>
           <IsiEkstrakurikuler params={params} />
         </Suspense>

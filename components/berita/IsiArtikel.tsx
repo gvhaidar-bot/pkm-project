@@ -6,7 +6,7 @@ function Teks({ teks }: { teks: string }) {
     <>
       {bagian.map((b, i) =>
         b.length > 4 && b.startsWith("**") && b.endsWith("**") ? (
-          <strong key={i} className="font-bold text-ink">
+          <strong key={i} className="font-bold text-primary-dark">
             {b.slice(2, -2)}
           </strong>
         ) : (
@@ -24,29 +24,29 @@ export default function IsiArtikel({ isi }: { isi: string }) {
       {blok.map((b, i) => {
         if (b.jenis === "judul") {
           return (
-            <h2 key={i} className="pt-2 text-2xl font-extrabold tracking-tight break-words text-ink">
+            <h2 key={i} className="pt-4 font-serif text-2xl font-bold tracking-tight break-words text-primary-dark border-b border-line/60 pb-2">
               <Teks teks={b.teks} />
             </h2>
           );
         }
         if (b.jenis === "daftar") {
           const butir = b.butir.map((item, j) => (
-            <li key={j} className="text-[17px] leading-[1.8] break-words text-ink sm:text-lg">
+            <li key={j} className="text-base leading-[1.8] break-words text-ink/90 sm:text-lg">
               <Teks teks={item} />
             </li>
           ));
           return b.berurut ? (
-            <ol key={i} className="list-decimal space-y-2 pl-6">
+            <ol key={i} className="list-decimal space-y-2 pl-6 marker:font-bold marker:text-accent">
               {butir}
             </ol>
           ) : (
-            <ul key={i} className="list-disc space-y-2 pl-6">
+            <ul key={i} className="list-disc space-y-2 pl-6 marker:text-accent">
               {butir}
             </ul>
           );
         }
         return (
-          <p key={i} className="text-[17px] leading-[1.8] break-words text-ink sm:text-lg">
+          <p key={i} className="text-base leading-[1.85] break-words text-ink/85 sm:text-lg">
             <Teks teks={b.teks} />
           </p>
         );

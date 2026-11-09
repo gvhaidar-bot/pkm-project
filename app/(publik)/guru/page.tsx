@@ -1,11 +1,13 @@
 import { Suspense } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { LuChevronRight, LuSparkles, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import TeksBerformat from "@/components/TeksBerformat";
 
 export const metadata = {
   title: "Staff & Guru",
-  description: "Staff dan guru MTs Nurul Falah Serpong.",
+  description: "Dewan guru dan staf pengajar MTs Nurul Falah Serpong: tenaga pendidik berdedikasi membimbing putra-putri Anda.",
 };
 
 async function DaftarGuru() {
@@ -16,44 +18,58 @@ async function DaftarGuru() {
 
   if (daftar.length === 0) {
     return (
-      <div className="mt-10 rounded-none bg-white p-10 text-center shadow-[0_4px_24px_rgba(11,91,62,0.08)]">
-        <p className="text-lg font-bold text-ink">Data guru belum tersedia</p>
-        <p className="mt-2 text-base text-muted">Daftar guru sedang disiapkan oleh pihak madrasah.</p>
+      <div className="border border-line bg-white p-12 text-center shadow-xs">
+        <LuUsers className="mx-auto h-12 w-12 text-accent" aria-hidden="true" />
+        <h3 className="mt-4 font-serif text-xl font-bold text-primary-dark">
+          Data Pengajar Sedang Diperbarui
+        </h3>
+        <p className="mx-auto mt-2 max-w-md text-sm text-muted">
+          Daftar guru dan tenaga kependidikan sedang disinkronkan oleh pengelola madrasah.
+        </p>
       </div>
     );
   }
 
   return (
-    <div className="mt-10 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {daftar.map((guru) => (
         <article
           key={guru.id}
-          className="overflow-hidden rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)] transition-shadow hover:shadow-[0_8px_32px_rgba(11,91,62,0.14)]"
+          className="group flex flex-col border border-line bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-[0_12px_32px_rgba(11,79,58,0.12)]"
         >
-          {guru.fotoUrl ? (
-            <Image
-              src={guru.fotoUrl}
-              alt={`Foto ${guru.nama}, ${guru.jabatan}`}
-              width={400}
-              height={400}
-              className="aspect-square w-full object-cover"
-            />
-          ) : (
-            <div
-              className="flex aspect-square w-full items-center justify-center bg-primary-soft"
-              aria-hidden="true"
-            >
-              <span className="text-6xl font-extrabold text-primary">
-                {guru.nama.charAt(0).toUpperCase()}
-              </span>
-            </div>
-          )}
-          <div className="p-5">
-            <h2 className="text-lg font-bold tracking-tight text-ink">{guru.nama}</h2>
-            <p className="mt-1 text-sm font-bold tracking-wide text-primary uppercase">{guru.jabatan}</p>
+          <div className="relative overflow-hidden bg-primary-dark">
+            {guru.fotoUrl ? (
+              <Image
+                src={guru.fotoUrl}
+                alt={`Foto ${guru.nama}, ${guru.jabatan}`}
+                width={400}
+                height={400}
+                className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
+            ) : (
+              <div
+                className="flex aspect-square w-full items-center justify-center bg-primary"
+                aria-hidden="true"
+              >
+                <span className="font-serif text-6xl font-black text-accent/80">
+                  {guru.nama.charAt(0).toUpperCase()}
+                </span>
+              </div>
+            )}
+            <div className="absolute inset-x-0 bottom-0 h-1 bg-accent" aria-hidden="true" />
+          </div>
+
+          <div className="flex flex-1 flex-col p-6">
+            <span className="text-[11px] font-bold tracking-[0.14em] text-accent uppercase">
+              {guru.jabatan}
+            </span>
+            <h2 className="mt-2 font-serif text-lg font-bold tracking-tight text-primary-dark">
+              {guru.nama}
+            </h2>
+
             {guru.bio && (
-              <div className="mt-3">
-                <TeksBerformat teks={guru.bio} kelasTeks="text-[15px] leading-relaxed text-muted" />
+              <div className="mt-3 flex-1 border-t border-line/60 pt-3">
+                <TeksBerformat teks={guru.bio} kelasTeks="text-xs leading-relaxed text-muted" />
               </div>
             )}
           </div>
@@ -65,9 +81,16 @@ async function DaftarGuru() {
 
 function KerangkaGuru() {
   return (
-    <div className="mt-10 grid animate-pulse grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <div className="grid animate-pulse grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       {[0, 1, 2, 3].map((i) => (
-        <div key={i} className="h-80 rounded-none bg-white shadow-[0_4px_24px_rgba(11,91,62,0.08)]" />
+        <div key={i} className="border border-line bg-white">
+          <div className="aspect-square bg-line/60" />
+          <div className="p-6 space-y-3">
+            <div className="h-4 w-24 bg-line/60" />
+            <div className="h-6 w-36 bg-line/80" />
+            <div className="h-12 w-full bg-line/40" />
+          </div>
+        </div>
       ))}
     </div>
   );
@@ -76,14 +99,44 @@ function KerangkaGuru() {
 export default function GuruPage() {
   return (
     <div className="bg-cream">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
-        <p className="text-xs font-bold tracking-[0.12em] text-primary uppercase">Tentang Kami</p>
-        <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-ink">Staff & Guru</h1>
-        <p className="mt-3 max-w-2xl text-base leading-relaxed text-muted">
-          Para pendidik dan tenaga kependidikan yang membersamai putra-putri Anda setiap hari di
-          madrasah.
-        </p>
+      {/* Editorial Header Banner */}
+      <section className="border-b border-primary-dark/30 bg-primary-dark text-white py-16 lg:py-20">
+        <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
+          <div className="inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1 text-xs font-bold tracking-[0.16em] text-accent uppercase">
+            <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
+            <span>Pendidik & Pembimbing</span>
+          </div>
+          <h1 className="mt-4 font-serif text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">
+            Staff &amp; Guru Madrasah
+          </h1>
+          <div className="mt-4 flex items-center gap-2" aria-hidden="true">
+            <span className="h-0.5 w-12 bg-accent" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
+          </div>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
+            Mengenal para guru dan tenaga kependidikan yang berdedikasi membimbing perkembangan
+            intelektual, akhlak, dan kepribadian siswa setiap hari di MTs Nurul Falah Serpong.
+          </p>
+        </div>
+      </section>
 
+      {/* Breadcrumbs */}
+      <nav aria-label="Breadcrumb" className="border-b border-line bg-white shadow-xs">
+        <div className="mx-auto flex w-full max-w-300 items-center gap-2 px-5 py-3 text-xs font-medium lg:px-6">
+          <Link href="/" className="text-primary hover:text-primary-dark hover:underline">
+            Beranda
+          </Link>
+          <LuChevronRight className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+          <span className="text-muted">Tentang</span>
+          <LuChevronRight className="h-3.5 w-3.5 text-muted" aria-hidden="true" />
+          <span className="font-semibold text-primary-dark" aria-current="page">
+            Staff &amp; Guru
+          </span>
+        </div>
+      </nav>
+
+      {/* Main Grid */}
+      <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
         <Suspense fallback={<KerangkaGuru />}>
           <DaftarGuru />
         </Suspense>

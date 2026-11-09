@@ -2,13 +2,13 @@ import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { LuArrowLeft, LuClock, LuLayoutGrid, LuStar, LuUsers } from "react-icons/lu";
+import { LuArrowLeft, LuArrowRight, LuClock, LuLayoutGrid, LuStar, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import IsiProgram from "@/components/program/IsiProgram";
 
 export const metadata = {
   title: "Program Akademik",
-  description: "Detail program akademik MTs Nurul Falah Serpong.",
+  description: "Rincian dan silabus program akademik MTs Nurul Falah Serpong.",
 };
 
 async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
@@ -18,77 +18,107 @@ async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
 
   const info = [
     { ikon: LuLayoutGrid, label: "Tipe Program", nilai: program.judul },
-    { ikon: LuClock, label: "Durasi", nilai: "[Durasi]" },
-    { ikon: LuUsers, label: "Peserta", nilai: "[Peserta]" },
-    { ikon: LuStar, label: "Status", nilai: program.unggulan ? "Program Unggulan" : "Program Aktif" },
+    { ikon: LuClock, label: "Durasi Waktu", nilai: "[Durasi Belajar]" },
+    { ikon: LuUsers, label: "Sasaran Peserta", nilai: "Siswa Kelas VII, VIII, IX" },
+    { ikon: LuStar, label: "Status Program", nilai: program.unggulan ? "Program Prioritas Unggulan" : "Program Kurikuler Aktif" },
   ];
 
   return (
     <div>
       <Link
         href="/program/akademik"
-        className="inline-flex min-h-11 items-center gap-2 text-base font-semibold text-primary transition-colors hover:text-primary-dark"
+        className="group inline-flex min-h-10 items-center gap-2 text-xs font-bold tracking-wider text-primary uppercase transition-colors hover:text-primary-dark"
       >
-        <LuArrowLeft className="h-5 w-5" aria-hidden="true" />
-        Kembali ke Program
+        <LuArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
+        <span>Kembali ke Daftar Akademik</span>
       </Link>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px] lg:items-start">
-        <div>
+      <div className="mt-6 grid gap-8 lg:grid-cols-[1fr_340px] lg:items-start">
+        {/* Main Column */}
+        <div className="border border-line bg-white shadow-xs">
           {program.gambarUrl ? (
-            <Image
-              src={program.gambarUrl}
-              alt={`Foto ${program.judul}`}
-              width={1200}
-              height={750}
-              priority
-              className="aspect-[16/10] w-full rounded-none object-cover"
-            />
+            <div className="relative overflow-hidden bg-primary-dark">
+              <Image
+                src={program.gambarUrl}
+                alt={`Foto ${program.judul}`}
+                width={1200}
+                height={750}
+                priority
+                className="aspect-[16/10] w-full object-cover"
+              />
+              <div className="absolute inset-x-0 bottom-0 h-1 bg-accent" aria-hidden="true" />
+            </div>
           ) : (
-            <div className="flex aspect-[16/10] w-full items-center justify-center rounded-none bg-primary-soft">
-              <span className="px-6 text-center font-serif text-xl font-bold break-words text-primary">
+            <div className="flex aspect-[16/10] w-full items-center justify-center border-b border-accent bg-primary">
+              <span className="px-6 text-center font-serif text-2xl font-bold text-white">
                 {program.judul}
               </span>
             </div>
           )}
 
-          <div className="mt-6 rounded-none bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)] sm:p-8">
-            <h1 className="text-2xl font-extrabold tracking-tight break-words text-primary sm:text-3xl">
+          <div className="p-7 sm:p-10">
+            {program.unggulan && (
+              <span className="inline-block border border-accent/40 bg-accent/15 px-3 py-1 text-xs font-bold text-primary-dark uppercase">
+                Program Unggulan
+              </span>
+            )}
+            <h1 className="mt-3 font-serif text-2xl font-black tracking-tight text-primary-dark sm:text-4xl">
               {program.judul}
             </h1>
-            <p className="mt-3 text-base leading-relaxed text-muted">{program.ringkasan}</p>
-            <IsiProgram isi={program.isi} />
+            <p className="mt-4 text-base font-medium leading-relaxed text-muted border-b border-line pb-6">
+              {program.ringkasan}
+            </p>
+
+            <div className="mt-6">
+              <IsiProgram isi={program.isi} />
+            </div>
           </div>
         </div>
 
-        <aside className="lg:sticky lg:top-24">
-          <div className="rounded-none bg-white p-6 shadow-[0_2px_16px_rgba(26,46,40,0.06)]">
-            <ul className="space-y-5">
+        {/* Sidebar Sticky */}
+        <aside className="space-y-6 lg:sticky lg:top-28">
+          {/* Quick Facts Card */}
+          <div className="border border-line bg-white p-6 shadow-xs">
+            <h2 className="font-serif text-base font-bold text-primary-dark border-b border-line pb-3">
+              Informasi Singkat Program
+            </h2>
+            <ul className="mt-5 space-y-4">
               {info.map((item) => (
                 <li key={item.label} className="flex items-start gap-3">
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white">
-                    <item.ikon className="h-5 w-5" aria-hidden="true" />
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center border border-accent/30 bg-primary-soft text-primary">
+                    <item.ikon className="h-4 w-4 text-accent" aria-hidden="true" />
                   </span>
-                  <span className="min-w-0">
-                    <span className="block text-xs font-semibold text-muted">{item.label}</span>
-                    <span className="mt-0.5 block text-sm font-bold break-words text-ink">{item.nilai}</span>
-                  </span>
+                  <div className="min-w-0">
+                    <span className="block text-[11px] font-bold text-muted uppercase">{item.label}</span>
+                    <span className="mt-0.5 block text-sm font-bold text-primary-dark break-words">
+                      {item.nilai}
+                    </span>
+                  </div>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="mt-6 rounded-none bg-accent-soft p-6 text-center">
-            <h2 className="text-lg font-extrabold text-white">Tertarik Bergabung?</h2>
-            <p className="mt-2 text-sm leading-relaxed text-white/90">
-              Daftarkan diri Anda sekarang untuk mengikuti program akademik unggulan kami
+          {/* Consultation CTA Card */}
+          <div className="border-l-4 border-accent bg-accent-soft p-6 text-white shadow-sm">
+            <span className="text-xs font-bold tracking-[0.16em] text-white/80 uppercase">
+              Konsultasi Orang Tua
+            </span>
+            <h2 className="mt-2 font-serif text-xl font-bold leading-snug text-white">
+              Ingin Mengetahui Rincian Pembelajaran Ini?
+            </h2>
+            <p className="mt-2.5 text-xs leading-relaxed text-white/90">
+              Tim guru dan kurikulum kami siap berdiskusi mengenai kesiapan dan kesesuaian program untuk buah hati Anda.
             </p>
-            <Link
-              href="/kontak"
-              className="mt-5 inline-flex min-h-11 items-center justify-center gap-1.5 bg-white px-6 py-3 text-base font-bold text-accent-soft transition-colors hover:bg-cream"
-            >
-                            Hubungi Kami →
-            </Link>
+            <div className="mt-6">
+              <Link
+                href="/kontak"
+                className="group inline-flex min-h-11 w-full items-center justify-center gap-2 border border-white bg-white px-5 py-2.5 text-xs font-bold tracking-wider text-primary-dark uppercase transition-colors hover:bg-cream"
+              >
+                <span>Hubungi Pihak Sekolah</span>
+                <LuArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </div>
           </div>
         </aside>
       </div>
@@ -98,23 +128,31 @@ async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {
 
 function Kerangka() {
   return (
-    <div className="animate-pulse">
-      <div className="h-6 w-44 rounded-full bg-white" />
-      <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_320px]">
-        <div>
-          <div className="aspect-[16/10] w-full rounded-none bg-white" />
-          <div className="mt-6 h-96 rounded-none bg-white" />
+    <div className="animate-pulse space-y-6">
+      <div className="h-6 w-48 bg-line/80" />
+      <div className="grid gap-8 lg:grid-cols-[1fr_340px]">
+        <div className="border border-line bg-white p-8 space-y-6">
+          <div className="aspect-[16/10] bg-line/60" />
+          <div className="h-8 w-3/4 bg-line/80" />
+          <div className="h-20 w-full bg-line/40" />
         </div>
-        <div className="h-64 rounded-none bg-white" />
+        <div className="border border-line bg-white p-6 space-y-4">
+          <div className="h-6 w-32 bg-line/60" />
+          <div className="h-40 w-full bg-line/40" />
+        </div>
       </div>
     </div>
   );
 }
 
-export default function DetailProgramAkademikPage({ params }: { params: Promise<{ slug: string }> }) {
+export default function DetailAkademikPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   return (
-    <div className="bg-cream">
-      <div className="mx-auto w-full max-w-[1200px] px-5 py-16 lg:px-6">
+    <div className="bg-cream py-14">
+      <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
         <Suspense fallback={<Kerangka />}>
           <IsiDetail params={params} />
         </Suspense>
