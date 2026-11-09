@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { prisma } from "@/lib/prisma";
 import FormPengaturan from "./_components/FormPengaturan";
 
@@ -17,14 +18,30 @@ async function muatPengaturan() {
   }
 }
 
-export default async function PengaturanPage() {
-  const tampilkanBeritaFooter = await muatPengaturan();
+function KerangkaPengaturan() {
+  return (
+    <div className="h-64 animate-pulse bg-primary-soft/40" aria-hidden="true" />
+  );
+}
 
+async function IsiPengaturan() {
+  const tampilkanBeritaFooter = await muatPengaturan();
+  return <FormPengaturan tampilkanBeritaFooter={tampilkanBeritaFooter} />;
+}
+
+export default function PengaturanPage() {
   return (
     <div className="mx-auto w-full max-w-3xl px-5 py-8 lg:px-6">
-      <h1 className="text-2xl font-extrabold tracking-tight text-ink">Pengaturan</h1>
-      <p className="mt-1 text-base text-muted">Atur tampilan website MTs Nurul Falah Serpong.</p>
-      <FormPengaturan tampilkanBeritaFooter={tampilkanBeritaFooter} />
+      <h1 className="font-serif text-2xl font-black tracking-tight text-primary">
+        Pengaturan
+      </h1>
+      <p className="mt-1 text-base text-secondary">
+        Atur tampilan website MTs Nurul Falah Serpong.
+      </p>
+
+      <Suspense fallback={<KerangkaPengaturan />}>
+        <IsiPengaturan />
+      </Suspense>
     </div>
   );
 }

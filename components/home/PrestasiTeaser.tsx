@@ -1,4 +1,4 @@
-import { LuMedal, LuTrophy } from "react-icons/lu";
+import { LuTrophy } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
 import JudulBagian from "./JudulBagian";
 import { CuplikanBerformat } from "@/components/TeksBerformat";
