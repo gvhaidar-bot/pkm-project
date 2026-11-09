@@ -16,8 +16,8 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
   return (
     <Suspense
       fallback={
-        <div className="flex min-h-screen items-center justify-center bg-cream">
-          <p className="text-base font-semibold text-muted">Memuat panel admin...</p>
+        <div className="flex min-h-screen items-center justify-center bg-background">
+          <p className="text-base font-semibold text-secondary">Memuat panel admin...</p>
         </div>
       }
     >
