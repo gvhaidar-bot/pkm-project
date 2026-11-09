@@ -28,6 +28,9 @@ Desain lengkapnya ada di [`DESIGN.md`](./DESIGN.md).
 
 ## Menjalankan di lokal
 
+Panduan lengkap langkah demi langkah (termasuk untuk tim yang memakai PostgreSQL
+lokal, bukan Neon) ada di [`PANDUAN-SETUP.md`](./PANDUAN-SETUP.md).
+
 ```bash
 npm install
 ```
