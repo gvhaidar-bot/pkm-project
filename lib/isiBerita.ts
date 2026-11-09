@@ -1,6 +1,7 @@
 export type BlokIsi =
   | { jenis: "paragraf"; teks: string }
-  | { jenis: "judul"; teks: string }
+  | { jenis: "judul"; level?: number; teks: string }
+  | { jenis: "kutipan"; teks: string }
   | { jenis: "daftar"; berurut: boolean; butir: string[] };
 
 export function parseIsiBerita(isi: string): BlokIsi[] {
@@ -8,17 +9,27 @@ export function parseIsiBerita(isi: string): BlokIsi[] {
   for (const mentah of isi.split("\n")) {
     const baris = mentah.trim();
     if (!baris) continue;
+    if (baris.startsWith("### ")) {
+      const teks = baris.slice(4).trim();
+      if (teks) blok.push({ jenis: "judul", level: 3, teks });
+      continue;
+    }
     if (baris.startsWith("## ")) {
       const teks = baris.slice(3).trim();
-      if (teks) blok.push({ jenis: "judul", teks });
+      if (teks) blok.push({ jenis: "judul", level: 2, teks });
       continue;
     }
     if (baris.startsWith("# ")) {
       const teks = baris.slice(2).trim();
-      if (teks) blok.push({ jenis: "judul", teks });
+      if (teks) blok.push({ jenis: "judul", level: 1, teks });
       continue;
     }
-    if (baris.startsWith("- ")) {
+    if (baris.startsWith("> ")) {
+      const teks = baris.slice(2).trim();
+      if (teks) blok.push({ jenis: "kutipan", teks });
+      continue;
+    }
+    if (baris.startsWith("- ") || baris.startsWith("* ")) {
       const teks = baris.slice(2).trim();
       if (!teks) continue;
       const terakhir = blok[blok.length - 1];

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LuChevronLeft, LuChevronRight } from "react-icons/lu";
+import HeroActions from "./HeroActions";
 
 const foto = [
   {
@@ -21,27 +21,21 @@ const foto = [
   },
 ];
 
-const DURASI_TAMPIL = 8000;
+const DURASI_TAMPIL = 6000;
 
 export default function HeroStack() {
   const [aktif, setAktif] = useState(0);
-  const [dijeda, setDijeda] = useState(false);
 
   useEffect(() => {
-    if (dijeda) return;
-    const timer = setInterval(() => setAktif((a) => (a + 1) % foto.length), DURASI_TAMPIL);
+    const timer = setInterval(() => {
+      setAktif((prev) => (prev + 1) % foto.length);
+    }, DURASI_TAMPIL);
     return () => clearInterval(timer);
-  }, [dijeda]);
-
-  const sebelumnya = () => setAktif((a) => (a - 1 + foto.length) % foto.length);
-  const berikutnya = () => setAktif((a) => (a + 1) % foto.length);
+  }, []);
 
   return (
-    <div
-      className="relative aspect-[16/9] w-full overflow-hidden select-none border border-line bg-primary-dark sm:aspect-[21/10]"
-      onMouseEnter={() => setDijeda(true)}
-      onMouseLeave={() => setDijeda(false)}
-    >
+    <div className="relative flex min-h-[640px] w-full flex-col justify-between overflow-hidden bg-primary-dark select-none sm:min-h-[700px] lg:min-h-[780px] xl:min-h-[820px]">
+      {/* Background Slideshow Photos */}
       {foto.map((item, i) => (
         <div
           key={item.src}
@@ -53,53 +47,80 @@ export default function HeroStack() {
             src={item.src}
             alt={item.alt}
             draggable={false}
-            className="h-full w-full object-cover"
+            className="h-full w-full object-cover object-center"
           />
-          <div
-            className="absolute inset-0 bg-gradient-to-t from-primary-dark/85 via-primary-dark/30 to-black/10"
-            aria-hidden="true"
-          />
-          {/* Subtle caption bottom left */}
-          <div className="absolute bottom-5 left-5 z-10 hidden sm:block">
-            <span className="inline-block bg-primary-dark/80 px-3 py-1 font-serif text-xs font-semibold tracking-wide text-white/90 backdrop-blur-xs border-l-2 border-accent">
-              {item.caption}
-            </span>
-          </div>
         </div>
       ))}
 
-      {/* Slide Indicators & Navigation Controls */}
-      <div className="absolute right-4 bottom-4 z-20 flex items-center gap-3">
-        <div className="flex gap-1.5" aria-hidden="true">
-          {foto.map((_, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => setAktif(i)}
-              aria-label={`Lihat foto ${i + 1}`}
-              className={`h-1.5 transition-all ${
-                i === aktif ? "w-6 bg-accent" : "w-2 bg-white/50 hover:bg-white"
-              }`}
-            />
-          ))}
+      {/* Multi-layered High-Contrast Gradient Overlays */}
+      <div
+        className="absolute inset-0 bg-gradient-to-r from-primary-dark/95 via-primary-dark/85 to-primary-dark/50 sm:from-primary-dark/95 sm:via-primary-dark/75 sm:to-black/30"
+        aria-hidden="true"
+      />
+      {/* Top vignette to ensure transparent navbar items are always crystal clear */}
+      <div
+        className="absolute inset-0 bg-gradient-to-b from-primary-dark/85 via-transparent to-primary-dark/70"
+        aria-hidden="true"
+      />
+      <div
+        className="absolute inset-0 bg-gradient-to-t from-primary-dark/95 via-transparent to-transparent"
+        aria-hidden="true"
+      />
+
+      {/* Hero Content Overlay (Text & Actions) */}
+      <div className="relative z-10 my-auto mx-auto w-full max-w-300 px-5 pt-28 pb-20 sm:pt-32 sm:pb-24 lg:pt-36 lg:px-6">
+        <div className="max-w-3xl text-left">
+          {/* Accreditation Tag */}
+          <div className="inline-flex items-center gap-2 border border-accent/60 bg-primary-dark/80 px-3.5 py-1.5 text-xs font-bold tracking-[0.16em] text-accent uppercase backdrop-blur-xs">
+            <span className="h-1.5 w-1.5 bg-accent" aria-hidden="true" />
+            <span>Madrasah Tsanawiyah Terakreditasi B · Serpong</span>
+          </div>
+
+          {/* Main Headline H1 */}
+          <h1 className="mt-5 font-serif text-3xl font-black leading-[1.14] tracking-tight text-white drop-shadow-sm sm:text-5xl lg:text-6xl">
+            Mendidik Generasi Berilmu, Berakhlak, dan Siap Menghadapi Masa Depan
+          </h1>
+
+          {/* Gold Decorative Accent Divider */}
+          <div className="mt-5 flex items-center gap-2" aria-hidden="true">
+            <span className="h-0.5 w-16 bg-accent" />
+            <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
+            <span className="h-0.5 w-8 bg-accent" />
+          </div>
+
+          {/* Subtitle Description */}
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg">
+            Kenali profil MTs Nurul Falah Serpong, program unggulan, fasilitas, dan prestasi kami.
+            Pilihan madrasah terpercaya untuk buah hati Anda di Tangerang Selatan.
+          </p>
+
+          {/* Action Buttons */}
+          <HeroActions />
         </div>
-        <div className="flex gap-1">
-          <button
-            type="button"
-            aria-label="Foto sebelumnya"
-            onClick={sebelumnya}
-            className="flex h-9 w-9 items-center justify-center border border-white/20 bg-primary-dark/80 text-white transition-colors hover:bg-accent hover:text-primary-dark"
-          >
-            <LuChevronLeft className="h-4 w-4" aria-hidden="true" />
-          </button>
-          <button
-            type="button"
-            aria-label="Foto berikutnya"
-            onClick={berikutnya}
-            className="flex h-9 w-9 items-center justify-center border border-white/20 bg-primary-dark/80 text-white transition-colors hover:bg-accent hover:text-primary-dark"
-          >
-            <LuChevronRight className="h-4 w-4" aria-hidden="true" />
-          </button>
+      </div>
+
+      {/* Bottom Bar: Slide Caption & Passive Slide Indicator Lines */}
+      <div className="relative z-10 w-full border-t border-white/15 bg-primary-dark/75 py-3.5 backdrop-blur-xs">
+        <div className="mx-auto flex w-full max-w-300 items-center justify-between px-5 lg:px-6">
+          {/* Active Caption */}
+          <div className="flex items-center gap-2.5">
+            <span className="h-2 w-2 bg-accent inline-block shrink-0" aria-hidden="true" />
+            <span className="font-serif text-xs font-semibold tracking-wide text-white/90 sm:text-sm">
+              {foto[aktif].caption}
+            </span>
+          </div>
+
+          {/* Passive Slide Dots (No buttons, auto-progress indicator) */}
+          <div className="flex items-center gap-1.5" aria-hidden="true">
+            {foto.map((_, i) => (
+              <span
+                key={i}
+                className={`h-1 transition-all duration-700 ${
+                  i === aktif ? "w-7 bg-accent" : "w-2.5 bg-white/35"
+                }`}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>

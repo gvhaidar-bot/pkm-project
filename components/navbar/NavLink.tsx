@@ -26,15 +26,11 @@ const links = [
   { label: "Berita", href: "/berita" },
 ];
 
-const tautanCls = (aktif: boolean) =>
-  clsx(
-    "relative flex min-h-11 items-center px-3.5 py-2 text-xs font-bold tracking-[0.14em] whitespace-nowrap uppercase transition-colors",
-    aktif
-      ? "text-primary bg-primary-soft/60 lg:bg-transparent lg:text-primary after:absolute after:bottom-0 after:left-3.5 after:right-3.5 after:hidden after:h-[2px] after:bg-accent lg:after:block"
-      : "text-ink/80 hover:text-primary hover:bg-primary-soft/40 lg:hover:bg-transparent",
-  );
+interface NavLinkProps {
+  isTransparent?: boolean;
+}
 
-const NavLink = () => {
+const NavLink = ({ isTransparent = false }: NavLinkProps) => {
   const [open, setOpen] = useState(false);
   const [tentangBuka, setTentangBuka] = useState(false);
   const [programBuka, setProgramBuka] = useState(false);
@@ -53,6 +49,23 @@ const NavLink = () => {
     setProgramBuka(false);
   };
 
+  const tautanCls = (aktif: boolean) =>
+    clsx(
+      "relative flex min-h-11 items-center px-3.5 py-2 text-xs font-bold tracking-[0.14em] whitespace-nowrap uppercase transition-colors duration-200",
+      // Mobile appearance (inside white popup drawer): always dark ink with hover
+      aktif
+        ? "bg-primary-soft/60 text-primary after:absolute after:bottom-0 after:left-3.5 after:right-3.5 after:hidden after:h-[2px] after:bg-accent lg:after:block"
+        : "text-ink/80 hover:bg-primary-soft/40 hover:text-primary lg:hover:bg-transparent",
+      // Desktop appearance (varies by isTransparent):
+      isTransparent
+        ? aktif
+          ? "lg:bg-transparent lg:text-white"
+          : "lg:text-white/90 lg:hover:text-accent"
+        : aktif
+          ? "lg:bg-transparent lg:text-primary"
+          : "lg:text-ink/80 lg:hover:text-primary",
+    );
+
   return (
     <nav aria-label="Menu utama" className="lg:flex lg:items-center">
       <button
@@ -60,7 +73,12 @@ const NavLink = () => {
         onClick={() => setOpen(!open)}
         aria-expanded={open}
         aria-label={open ? "Tutup menu" : "Buka menu"}
-        className="inline-flex h-11 w-11 items-center justify-center border border-line text-primary-dark transition-colors hover:bg-primary-soft lg:hidden"
+        className={clsx(
+          "inline-flex h-11 w-11 items-center justify-center border transition-all duration-300 lg:hidden",
+          isTransparent && !open
+            ? "border-white/30 bg-black/20 text-white hover:bg-black/40"
+            : "border-line bg-white text-primary-dark hover:bg-primary-soft",
+        )}
       >
         {open ? <IoClose size={24} /> : <IoMenu size={24} />}
       </button>
@@ -92,7 +110,10 @@ const NavLink = () => {
             >
               Tentang
               <LuChevronDown
-                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180"
+                className={clsx(
+                  "h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180",
+                  isTransparent ? "text-white/70 group-hover:text-white" : "text-muted group-hover:text-primary",
+                )}
                 aria-hidden="true"
               />
             </button>
@@ -162,7 +183,10 @@ const NavLink = () => {
             >
               Program
               <LuChevronDown
-                className="h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180"
+                className={clsx(
+                  "h-3.5 w-3.5 transition-transform duration-200 group-hover:rotate-180",
+                  isTransparent ? "text-white/70 group-hover:text-white" : "text-muted group-hover:text-primary",
+                )}
                 aria-hidden="true"
               />
             </button>

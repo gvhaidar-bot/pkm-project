@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight, LuBookOpen, LuCheck, LuChevronRight, LuCompass, LuSparkles, LuTrophy } from "react-icons/lu";
 
@@ -55,8 +56,16 @@ export default function ProgramPage() {
   return (
     <div className="bg-cream">
       {/* Editorial Header Banner */}
-      <section className="border-b border-primary-dark/30 bg-primary-dark text-white py-16 lg:py-20">
-        <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
+      <section className="relative overflow-hidden bg-primary-dark text-white">
+        <Image
+          src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?q=80&w=2000&auto=format&fit=crop"
+          alt="Kolaborasi Siswa dalam Program Pendidikan MTs Nurul Falah"
+          fill
+          className="object-cover opacity-80 sm:opacity-85"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/85 to-transparent sm:via-primary-dark/75" aria-hidden="true" />
+        <div className="relative mx-auto w-full max-w-300 px-5 py-16 lg:px-6 lg:py-20">
           <div className="inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1 text-xs font-bold tracking-[0.16em] text-accent uppercase">
             <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Struktur Kurikulum & Pembinaan</span>

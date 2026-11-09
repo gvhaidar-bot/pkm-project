@@ -9,6 +9,13 @@ export const metadata = {
   description: "Program akademik MTs Nurul Falah Serpong: kurikulum terpadu dan proses pembelajaran berkualitas.",
 };
 
+const fallbackFotoAkademik = [
+  "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=800&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=800&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=800&auto=format&fit=crop",
+  "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=800&auto=format&fit=crop",
+];
+
 async function DaftarProgram() {
   const daftar = await prisma.programAkademik.findMany({
     where: { aktif: true },
@@ -31,31 +38,20 @@ async function DaftarProgram() {
 
   return (
     <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
-      {daftar.map((program) => (
+      {daftar.map((program, idx) => (
         <article
           key={program.id}
           className="group flex flex-col justify-between border border-line bg-white shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_16px_40px_rgba(11,79,58,0.12)]"
         >
           <div>
             <div className="relative overflow-hidden bg-primary-dark">
-              {program.gambarUrl ? (
-                <Image
-                  src={program.gambarUrl}
-                  alt={`Sampul ${program.judul}`}
-                  width={600}
-                  height={450}
-                  className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              ) : (
-                <div
-                  className="flex aspect-[4/3] w-full items-center justify-center bg-primary"
-                  aria-hidden="true"
-                >
-                  <span className="px-6 text-center font-serif text-lg font-bold text-white">
-                    {program.judul}
-                  </span>
-                </div>
-              )}
+              <Image
+                src={program.gambarUrl || fallbackFotoAkademik[idx % fallbackFotoAkademik.length]}
+                alt={`Sampul ${program.judul}`}
+                width={600}
+                height={450}
+                className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              />
               {program.unggulan && (
                 <span className="absolute top-3 left-3 bg-accent px-3 py-1 text-xs font-bold text-primary-dark shadow-sm">
                   Program Unggulan
@@ -113,8 +109,16 @@ export default function AkademikPage() {
   return (
     <div className="bg-cream">
       {/* Editorial Header Banner */}
-      <section className="border-b border-primary-dark/30 bg-primary-dark text-white py-16 lg:py-20">
-        <div className="mx-auto w-full max-w-300 px-5 lg:px-6">
+      <section className="relative overflow-hidden bg-primary-dark text-white">
+        <Image
+          src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?q=80&w=2000&auto=format&fit=crop"
+          alt="Buku dan Kurikulum Program Akademik MTs Nurul Falah"
+          fill
+          className="object-cover opacity-80 sm:opacity-85"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/85 to-transparent sm:via-primary-dark/75" aria-hidden="true" />
+        <div className="relative mx-auto w-full max-w-300 px-5 py-16 lg:px-6 lg:py-20">
           <div className="inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1 text-xs font-bold tracking-[0.16em] text-accent uppercase">
             <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Pendidikan Formal & Agama</span>

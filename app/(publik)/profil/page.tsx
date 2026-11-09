@@ -77,8 +77,14 @@ export default function ProfilPage() {
     <div className="bg-cream">
       {/* Editorial Header Banner */}
       <section className="relative overflow-hidden bg-primary-dark text-white">
-        <Image src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2000&auto=format&fit=crop" alt="Gedung MTs Nurul Falah Serpong" fill className="object-cover opacity-25" priority />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/95 to-primary-dark/80" aria-hidden="true" />
+        <Image
+          src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2000&auto=format&fit=crop"
+          alt="Gedung & Ruang Belajar MTs Nurul Falah Serpong"
+          fill
+          className="object-cover opacity-80 sm:opacity-85"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark via-primary-dark/85 to-transparent sm:via-primary-dark/75" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-300 px-5 py-16 lg:px-6 lg:py-20">
           <div className="inline-flex items-center gap-2 border border-accent/40 bg-accent/10 px-3.5 py-1 text-xs font-bold tracking-[0.16em] text-accent uppercase">
             <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
