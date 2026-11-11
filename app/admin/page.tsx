@@ -6,7 +6,7 @@ import {
   LuArrowRight,
   LuBookOpen,
   LuBuilding2,
-  LuCalendarDays,
+  LuImage,
   LuMedal,
   LuNewspaper,
   LuTrophy,
@@ -145,7 +145,7 @@ async function DaftarStatistik() {
     fasilitas,
     guru,
     prestasi,
-    kegiatan,
+    galeri,
     programAkademik,
     ekstrakurikuler,
   ] = await Promise.all([
@@ -153,7 +153,7 @@ async function DaftarStatistik() {
     prisma.fasilitas.count(),
     prisma.guru.count(),
     prisma.prestasi.count(),
-    prisma.kegiatan.count(),
+    prisma.galeri.count(),
     prisma.programAkademik.count(),
     prisma.ekstrakurikuler.count(),
   ]);
@@ -162,7 +162,7 @@ async function DaftarStatistik() {
     { label: "Berita", jumlah: berita, href: "/admin/berita", ikon: LuNewspaper },
     { label: "Fasilitas", jumlah: fasilitas, href: "/admin/fasilitas", ikon: LuBuilding2 },
     { label: "Prestasi", jumlah: prestasi, href: "/admin/prestasi", ikon: LuTrophy },
-    { label: "Kegiatan", jumlah: kegiatan, href: "/admin/kegiatan", ikon: LuCalendarDays },
+    { label: "Galeri", jumlah: galeri, href: "/admin/galeri", ikon: LuImage },
   ];
 
   const akademik: KartuData[] = [

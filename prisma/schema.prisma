@@ -121,28 +121,12 @@ model PrestasiFoto {
   prestasi Prestasi @relation(fields: [prestasiId], references: [id], onDelete: Cascade)
 }
 
-model Kegiatan {
-  id        Int            @id @default(autoincrement())
-  judul     String
-  deskripsi String         @db.Text
-  tanggal   DateTime
-  lokasi    String?
-  gambarUrl String?
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
-
-  foto KegiatanFoto[]
-}
-
-model KegiatanFoto {
-  id         Int      @id @default(autoincrement())
-  url        String
-  caption    String?
-  urutan     Int      @default(0)
-  kegiatanId Int
-  createdAt  DateTime @default(now())
-
-  kegiatan Kegiatan @relation(fields: [kegiatanId], references: [id], onDelete: Cascade)
+model Galeri {
+  id        Int      @id @default(autoincrement())
+  gambarUrl String
+  aktif     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model ProgramAkademik {

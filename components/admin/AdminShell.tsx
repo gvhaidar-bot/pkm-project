@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 import { Suspense, useState } from "react";
 import {
   LuBuilding2,
-  LuCalendarDays,
   LuGlobe,
   LuGraduationCap,
+  LuImage,
   LuLayoutDashboard,
   LuLogOut,
   LuMenu,
@@ -31,7 +31,7 @@ const menuKonten = [
   { label: "Fasilitas", href: "/admin/fasilitas", icon: LuBuilding2 },
   { label: "Guru", href: "/admin/guru", icon: LuUsers },
   { label: "Prestasi", href: "/admin/prestasi", icon: LuTrophy },
-  { label: "Kegiatan", href: "/admin/kegiatan", icon: LuCalendarDays },
+  { label: "Galeri", href: "/admin/galeri", icon: LuImage },
   { label: "Program Akademik", href: "/admin/program-akademik", icon: LuGraduationCap },
   { label: "Ekstrakurikuler", href: "/admin/ekstrakurikuler", icon: LuShapes },
 ];
