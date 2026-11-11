@@ -26,7 +26,7 @@ export default async function GaleriTeaser() {
           {daftar.map((foto, i) => (
             <figure
               key={foto.id}
-              className="group relative overflow-hidden border border-line bg-primary-dark shadow-sm transition-all duration-300 hover:shadow-lg"
+              className="group relative overflow-hidden rounded-2xl border border-line bg-primary-dark shadow-sm transition-all duration-300 hover:shadow-lg"
             >
               <Image
                 src={foto.gambarUrl}

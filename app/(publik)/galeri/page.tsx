@@ -32,7 +32,7 @@ async function IsiGaleri() {
   return (
     <div className="columns-2 gap-4 sm:columns-3 lg:columns-4 [&>*]:mb-4">
       {daftar.map((foto, i) => (
-        <figure key={foto.id} className="break-inside-avoid overflow-hidden bg-primary-dark">
+        <figure key={foto.id} className="break-inside-avoid overflow-hidden rounded-2xl bg-primary-dark">
           <img
             src={foto.gambarUrl}
             alt={`Foto galeri MTs Nurul Falah Serpong ${i + 1}`}
