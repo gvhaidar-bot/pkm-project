@@ -24,8 +24,8 @@ const fallbackSampulBerita =
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const berita = await prisma.berita.findUnique({
-    where: { slug },
+  const berita = await prisma.berita.findFirst({
+    where: { slug, published: true },
     select: { judul: true, ringkasan: true },
   });
   if (!berita) return { title: "Berita Tidak Ditemukan" };
@@ -64,7 +64,7 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
   const berita = await prisma.berita.findUnique({
     where: { slug },
     include: {
-      author: true,
+      author: { select: { nama: true } },
       foto: { orderBy: { urutan: "asc" } },
     },
   });

@@ -18,7 +18,7 @@ export default async function BeritaTeaser() {
     where: { published: true, unggulan: true },
     orderBy: { publishedAt: "desc" },
     take: 3,
-    include: { author: true },
+    include: { author: { select: { nama: true } } },
   });
 
   let daftar = unggulan;
@@ -27,7 +27,7 @@ export default async function BeritaTeaser() {
       where: { published: true, id: { notIn: daftar.map((b) => b.id) } },
       orderBy: { publishedAt: "desc" },
       take: 3 - daftar.length,
-      include: { author: true },
+      include: { author: { select: { nama: true } } },
     });
     daftar = [...daftar, ...tambahan];
   }
