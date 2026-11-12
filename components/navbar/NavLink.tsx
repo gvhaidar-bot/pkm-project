@@ -14,8 +14,8 @@ const tentangAnak = [
 ];
 
 const programAnak = [
-  { label: "Akademik", href: "/program/akademik", deskripsi: "Kurikulum & proses belajar" },
-  { label: "Ekstrakurikuler", href: "/program/ekstrakurikuler", deskripsi: "Pengembangan minat & bakat" },
+  { label: "Program Akademik", href: "/program/akademik", deskripsi: "Kurikulum & proses belajar" },
+  { label: "Program Non Akademik", href: "/program/ekstrakurikuler", deskripsi: "Ekstrakurikuler & minat bakat" },
   { label: "Program Unggulan", href: "/program/unggulan", deskripsi: "Ciri khas & fokus madrasah" },
 ];
 
