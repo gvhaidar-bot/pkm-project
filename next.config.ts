@@ -1,5 +1,18 @@
 import type { NextConfig } from "next";
 
+const produksi = process.env.NODE_ENV === "production";
+
+const csp = [
+  "default-src 'self'",
+  produksi ? "script-src 'self' 'unsafe-inline'" : "script-src 'self' 'unsafe-inline' 'unsafe-eval'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: https://images.unsplash.com",
+  "font-src 'self' data:",
+  "connect-src 'self'",
+  "frame-src https://maps.google.com https://www.google.com",
+  "frame-ancestors 'none'",
+].join("; ");
+
 const nextConfig: NextConfig = {
   allowedDevOrigins: ["192.168.1.46"],
   poweredByHeader: false,
@@ -13,11 +26,7 @@ const nextConfig: NextConfig = {
           { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
           { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
           { key: "Strict-Transport-Security", value: "max-age=63072000; includeSubDomains" },
-          {
-            key: "Content-Security-Policy",
-            value:
-              "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://images.unsplash.com; font-src 'self' data:; connect-src 'self'; frame-src https://maps.google.com https://www.google.com; frame-ancestors 'none';",
-          },
+          { key: "Content-Security-Policy", value: csp },
         ],
       },
     ];
