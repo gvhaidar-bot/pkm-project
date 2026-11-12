@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuChevronRight, LuSparkles, LuUsers } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
-import TeksBerformat from "@/components/TeksBerformat";
+import DaftarGuruStruktur from "@/components/guru/DaftarGuruStruktur";
 
 export const metadata = {
   title: "Staff & Guru",
@@ -30,68 +30,36 @@ async function DaftarGuru() {
     );
   }
 
-  return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {daftar.map((guru) => (
-        <article
-          key={guru.id}
-          className="group flex flex-col border border-line bg-white shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-accent hover:shadow-[0_12px_32px_rgba(11,79,58,0.12)]"
-        >
-          <div className="relative overflow-hidden bg-primary-dark">
-            {guru.fotoUrl ? (
-              <Image
-                src={guru.fotoUrl}
-                alt={`Foto ${guru.nama}, ${guru.jabatan}`}
-                width={400}
-                height={400}
-                className="aspect-square w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              />
-            ) : (
-              <div
-                className="flex aspect-square w-full items-center justify-center bg-primary"
-                aria-hidden="true"
-              >
-                <span className="font-serif text-6xl font-black text-accent/80">
-                  {guru.nama.charAt(0).toUpperCase()}
-                </span>
-              </div>
-            )}
-            <div className="absolute inset-x-0 bottom-0 h-1 bg-accent" aria-hidden="true" />
-          </div>
-
-          <div className="flex flex-1 flex-col p-6">
-            <span className="text-[11px] font-bold tracking-[0.14em] text-accent uppercase">
-              {guru.jabatan}
-            </span>
-            <h2 className="mt-2 font-serif text-lg font-bold tracking-tight text-primary-dark">
-              {guru.nama}
-            </h2>
-
-            {guru.bio && (
-              <div className="mt-3 flex-1 border-t border-line/60 pt-3">
-                <TeksBerformat teks={guru.bio} kelasTeks="text-xs leading-relaxed text-muted" />
-              </div>
-            )}
-          </div>
-        </article>
-      ))}
-    </div>
-  );
+  return <DaftarGuruStruktur daftar={daftar} />;
 }
 
 function KerangkaGuru() {
   return (
-    <div className="grid animate-pulse grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-      {[0, 1, 2, 3].map((i) => (
-        <div key={i} className="border border-line bg-white">
+    <div className="animate-pulse space-y-12">
+      {/* Principal skeleton */}
+      <div className="mx-auto max-w-4xl border border-line bg-white p-8">
+        <div className="grid grid-cols-1 md:grid-cols-[280px_1fr] gap-8">
           <div className="aspect-square bg-line/60" />
-          <div className="p-6 space-y-3">
-            <div className="h-4 w-24 bg-line/60" />
+          <div className="space-y-4">
             <div className="h-6 w-36 bg-line/80" />
-            <div className="h-12 w-full bg-line/40" />
+            <div className="h-10 w-3/4 bg-line/80" />
+            <div className="h-20 w-full bg-line/40" />
           </div>
         </div>
-      ))}
+      </div>
+      {/* Grid skeleton */}
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        {[0, 1, 2, 3].map((i) => (
+          <div key={i} className="border border-line bg-white">
+            <div className="aspect-square bg-line/60" />
+            <div className="p-6 space-y-3">
+              <div className="h-4 w-24 bg-line/60" />
+              <div className="h-6 w-36 bg-line/80" />
+              <div className="h-12 w-full bg-line/40" />
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

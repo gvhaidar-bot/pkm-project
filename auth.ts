@@ -15,7 +15,8 @@ type BarisBatas = { blokirSampai: Date | null };
 async function ambilBatas(kunci: string): Promise<BarisBatas | null> {
   try {
     return await prisma.percobaanLogin.findUnique({ where: { kunci } });
-  } catch {
+  } catch (e) {
+    console.error("[auth] Gagal membaca tabel PercobaanLogin:", e);
     return null;
   }
 }
@@ -27,41 +28,63 @@ function sedangDiblokir(baris: BarisBatas | null): boolean {
 async function catatGagal(kunci: string, batas: number) {
   try {
     const sekarang = new Date();
-    const baris = await prisma.percobaanLogin.findUnique({ where: { kunci } });
-    if (!baris || sekarang.getTime() - baris.jendelaMulai.getTime() > JENDELA_MS) {
-      await prisma.percobaanLogin.upsert({
-        where: { kunci },
-        update: { jumlah: 1, jendelaMulai: sekarang, blokirSampai: null },
-        create: { kunci, jumlah: 1, jendelaMulai: sekarang },
-      });
-      return;
-    }
-    const jumlah = baris.jumlah + 1;
-    await prisma.percobaanLogin.update({
-      where: { kunci },
-      data: {
-        jumlah,
-        blokirSampai: jumlah >= batas ? new Date(sekarang.getTime() + JENDELA_MS) : baris.blokirSampai,
-      },
+    const batasJendela = new Date(sekarang.getTime() - JENDELA_MS);
+
+    // Reset atomik jika jendela waktu percobaan sebelumnya sudah kedaluwarsa
+    const direset = await prisma.percobaanLogin.updateMany({
+      where: { kunci, jendelaMulai: { lt: batasJendela } },
+      data: { jumlah: 1, jendelaMulai: sekarang, blokirSampai: null },
     });
-  } catch {
-    return;
+
+    if (direset.count > 0) return;
+
+    // Increment atomik di level database untuk mencegah race condition permintaan paralel
+    const baris = await prisma.percobaanLogin.upsert({
+      where: { kunci },
+      create: { kunci, jumlah: 1, jendelaMulai: sekarang },
+      update: { jumlah: { increment: 1 } },
+    });
+
+    if (baris.jumlah >= batas && (!baris.blokirSampai || baris.blokirSampai <= sekarang)) {
+      await prisma.percobaanLogin.updateMany({
+        where: { kunci, blokirSampai: baris.blokirSampai },
+        data: { blokirSampai: new Date(sekarang.getTime() + JENDELA_MS) },
+      });
+    }
+  } catch (e) {
+    console.error("[auth] Gagal mencatat percobaan login:", e);
   }
 }
 
 async function hapusBatas(kunci: string) {
   try {
     await prisma.percobaanLogin.deleteMany({ where: { kunci } });
-  } catch {
-    return;
+  } catch (e) {
+    console.error("[auth] Gagal menghapus batas login:", e);
   }
 }
 
+function bersihkanIp(nilai: string | null | undefined): string | null {
+  const bersih = nilai?.trim();
+  if (!bersih) return null;
+  return bersih.slice(0, 64);
+}
+
 function ambilIp(request: Request | undefined): string {
-  const diteruskan = request?.headers.get("x-forwarded-for");
-  if (diteruskan?.trim()) return diteruskan.split(",")[0].trim();
-  const asli = request?.headers.get("x-real-ip");
-  if (asli?.trim()) return asli.trim();
+  // Prioritaskan header tunggal yang ditetapkan oleh reverse proxy tepercaya
+  const vercelIp = bersihkanIp(request?.headers.get("x-vercel-forwarded-for")?.split(",").at(-1));
+  if (vercelIp) return vercelIp;
+  const cfIp = bersihkanIp(request?.headers.get("cf-connecting-ip"));
+  if (cfIp) return cfIp;
+  const realIp = bersihkanIp(request?.headers.get("x-real-ip"));
+  if (realIp) return realIp;
+
+  // Ambil hop paling kanan pada X-Forwarded-For (ditambahkan proxy terdekat), bukan [0] yang mudah dipalsukan klien
+  const xff = request?.headers.get("x-forwarded-for");
+  if (xff?.trim()) {
+    const hopTerakhir = bersihkanIp(xff.split(",").at(-1));
+    if (hopTerakhir) return hopTerakhir;
+  }
   return "lokal";
 }
 

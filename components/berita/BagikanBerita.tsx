@@ -26,7 +26,7 @@ export default function BagikanBerita({ judul }: BagikanBeritaProps) {
     if (typeof window === "undefined") return;
     const url = encodeURIComponent(window.location.href);
     const teks = encodeURIComponent(`${judul} - Baca selengkapnya di MTs Nurul Falah Serpong:\n`);
-    window.open(`https://api.whatsapp.com/send?text=${teks}${url}`, "_blank");
+    window.open(`https://api.whatsapp.com/send?text=${teks}${url}`, "_blank", "noopener,noreferrer");
   };
 
   const cetakHalaman = () => {
