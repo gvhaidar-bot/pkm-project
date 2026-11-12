@@ -172,3 +172,10 @@ model Pengaturan {
   nilai     String
   updatedAt DateTime @updatedAt
 }
+
+model PercobaanLogin {
+  kunci        String    @id
+  jumlah       Int       @default(0)
+  jendelaMulai DateTime  @default(now())
+  blokirSampai DateTime?
+}

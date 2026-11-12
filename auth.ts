@@ -4,26 +4,65 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 import { authConfig } from "./auth.config";
 
-const BATAS_GAGAL = 5;
-const BLOKIR_MS = 15 * 60 * 1000;
-const gagalLogin = new Map<string, { jumlah: number; sampai: number }>();
+const BATAS_GAGAL_KOMBINASI = 5;
+const BATAS_GAGAL_IP = 20;
+const JENDELA_MS = 15 * 60 * 1000;
 
 const HASH_DUMMY = "$2b$12$MGGErlXY.meZBQKuslvuAum4YkB2DJmtU94aJiXjFf/ZLc1gbr.mC";
 
-function loginDiblokir(email: string): boolean {
-  const data = gagalLogin.get(email);
-  if (!data) return false;
-  if (Date.now() > data.sampai) {
-    gagalLogin.delete(email);
-    return false;
+type BarisBatas = { blokirSampai: Date | null };
+
+async function ambilBatas(kunci: string): Promise<BarisBatas | null> {
+  try {
+    return await prisma.percobaanLogin.findUnique({ where: { kunci } });
+  } catch {
+    return null;
   }
-  return data.jumlah >= BATAS_GAGAL;
 }
 
-function catatLoginGagal(email: string) {
-  const data = gagalLogin.get(email);
-  const jumlah = (data?.jumlah ?? 0) + 1;
-  gagalLogin.set(email, { jumlah, sampai: Date.now() + BLOKIR_MS });
+function sedangDiblokir(baris: BarisBatas | null): boolean {
+  return !!baris?.blokirSampai && baris.blokirSampai.getTime() > Date.now();
+}
+
+async function catatGagal(kunci: string, batas: number) {
+  try {
+    const sekarang = new Date();
+    const baris = await prisma.percobaanLogin.findUnique({ where: { kunci } });
+    if (!baris || sekarang.getTime() - baris.jendelaMulai.getTime() > JENDELA_MS) {
+      await prisma.percobaanLogin.upsert({
+        where: { kunci },
+        update: { jumlah: 1, jendelaMulai: sekarang, blokirSampai: null },
+        create: { kunci, jumlah: 1, jendelaMulai: sekarang },
+      });
+      return;
+    }
+    const jumlah = baris.jumlah + 1;
+    await prisma.percobaanLogin.update({
+      where: { kunci },
+      data: {
+        jumlah,
+        blokirSampai: jumlah >= batas ? new Date(sekarang.getTime() + JENDELA_MS) : baris.blokirSampai,
+      },
+    });
+  } catch {
+    return;
+  }
+}
+
+async function hapusBatas(kunci: string) {
+  try {
+    await prisma.percobaanLogin.deleteMany({ where: { kunci } });
+  } catch {
+    return;
+  }
+}
+
+function ambilIp(request: Request | undefined): string {
+  const diteruskan = request?.headers.get("x-forwarded-for");
+  if (diteruskan?.trim()) return diteruskan.split(",")[0].trim();
+  const asli = request?.headers.get("x-real-ip");
+  if (asli?.trim()) return asli.trim();
+  return "lokal";
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -36,22 +75,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         email: { label: "Email", type: "email" },
         password: { label: "Kata sandi", type: "password" },
       },
-      authorize: async (credentials) => {
-        const email = credentials?.email as string | undefined;
+      authorize: async (credentials, request) => {
+        const emailMentah = credentials?.email as string | undefined;
         const password = credentials?.password as string | undefined;
-        if (!email || !password) return null;
+        if (!emailMentah || !password) return null;
 
-        const kunci = email.toLowerCase().trim();
-        if (loginDiblokir(kunci)) return null;
+        const email = emailMentah.toLowerCase().trim();
+        const ip = ambilIp(request);
+        const kunciKombinasi = `e:${email}|i:${ip}`;
+        const kunciIp = `i:${ip}`;
+
+        const [barisKombinasi, barisIp] = await Promise.all([ambilBatas(kunciKombinasi), ambilBatas(kunciIp)]);
+        if (sedangDiblokir(barisKombinasi) || sedangDiblokir(barisIp)) return null;
 
         const admin = await prisma.admin.findUnique({ where: { email } });
         const cocok = await bcrypt.compare(password, admin?.passwordHash ?? HASH_DUMMY);
         if (!admin || !cocok) {
-          catatLoginGagal(kunci);
+          await catatGagal(kunciKombinasi, BATAS_GAGAL_KOMBINASI);
+          await catatGagal(kunciIp, BATAS_GAGAL_IP);
           return null;
         }
 
-        gagalLogin.delete(kunci);
+        await hapusBatas(kunciKombinasi);
         return { id: String(admin.id), name: admin.nama, email: admin.email };
       },
     }),
