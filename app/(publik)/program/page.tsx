@@ -4,7 +4,7 @@ import { LuArrowRight, LuBookOpen, LuCheck, LuChevronRight, LuCompass, LuSparkle
 
 export const metadata = {
   title: "Program",
-  description: "Program pendidikan MTs Nurul Falah Serpong: program akademik, ekstrakurikuler, dan program unggulan madrasah.",
+  description: "Program pendidikan MTs Nurul Falah Serpong: program akademik, program non akademik (ekstrakurikuler), dan program unggulan madrasah.",
 };
 
 const pilarProgram = [
@@ -23,8 +23,8 @@ const pilarProgram = [
     ikon: LuBookOpen,
   },
   {
-    judul: "Kegiatan Ekstrakurikuler",
-    tag: "Pengembangan Minat & Bakat",
+    judul: "Program Non Akademik",
+    tag: "Ekstrakurikuler & Minat Bakat",
     href: "/program/ekstrakurikuler",
     deskripsi:
       "Ruang aktualisasi diri di luar jam pelajaran untuk mengasah kepemimpinan, sportivitas, kreativitas seni, dan keterampilan sosial siswa.",
@@ -33,7 +33,7 @@ const pilarProgram = [
       "Olahraga (Futsal, Bulu Tangkis, Beladiri)",
       "Seni Islami, Marawis, dan Keterampilan",
     ],
-    cta: "Lihat Ekstrakurikuler",
+    cta: "Lihat Program Non Akademik",
     ikon: LuCompass,
   },
   {

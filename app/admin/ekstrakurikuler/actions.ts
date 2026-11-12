@@ -29,6 +29,7 @@ function bacaForm(formData: FormData) {
   const fasilitas = (formData.get("fasilitas") as string | null)?.trim();
   const ikon = (formData.get("ikon") as string | null) ?? "sains";
   const aktif = formData.get("aktif") === "on";
+  const unggulan = formData.get("unggulan") === "on";
   const urutan = Number(formData.get("urutan")) || 0;
   const jumlahMentah = (formData.get("jumlahAnggota") as string | null)?.trim();
   const jumlahAnggota = jumlahMentah ? Number(jumlahMentah) : null;
@@ -50,6 +51,7 @@ function bacaForm(formData: FormData) {
     pembimbing,
     ikon: IKON_EKSTRAKURIKULER[ikon] ? ikon : "sains",
     aktif,
+    unggulan,
     urutan,
     jumlahAnggota:
       jumlahAnggota !== null && Number.isFinite(jumlahAnggota) && jumlahAnggota >= 0
@@ -111,6 +113,7 @@ export async function tambahEkstrakurikuler(
           jumlahAnggota: data.jumlahAnggota,
           ikon: data.ikon,
           aktif: data.aktif,
+          unggulan: data.unggulan,
           urutan: data.urutan,
         },
       });
@@ -181,6 +184,7 @@ export async function ubahEkstrakurikuler(
         jumlahAnggota: data.jumlahAnggota,
         ikon: data.ikon,
         aktif: data.aktif,
+        unggulan: data.unggulan,
         urutan: data.urutan,
       },
     });

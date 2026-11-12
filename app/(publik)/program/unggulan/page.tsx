@@ -1,11 +1,13 @@
+import { Suspense } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight, LuCheck, LuChevronRight, LuGlobe, LuHeart, LuMedal, LuSparkles, LuTrophy } from "react-icons/lu";
 import type { IconType } from "react-icons";
+import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Program Unggulan",
-  description: "Program unggulan khas MTs Nurul Falah Serpong: keistimewaan kurikulum dan pembiasaan karakter Islami.",
+  description: "Program unggulan MTs Nurul Falah Serpong dari program akademik dan non akademik pilihan madrasah.",
 };
 
 type Program = {
@@ -71,10 +73,176 @@ const daftarProgram: Program[] = [
   },
 ];
 
+function ProgramStatis() {
+  return (
+    <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+      {daftarProgram.map((program) => (
+        <article
+          key={program.nama}
+          className="group flex flex-col justify-between border border-line bg-white p-8 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_16px_40px_rgba(11,79,58,0.12)]"
+        >
+          <div>
+            <div className="flex items-center justify-between border-b border-line pb-5">
+              <span className="flex h-12 w-12 items-center justify-center border border-accent/40 bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white">
+                <program.Icon className="h-6 w-6 text-accent" aria-hidden="true" />
+              </span>
+              <span className="text-[11px] font-bold tracking-[0.14em] text-accent uppercase">
+                {program.tag}
+              </span>
+            </div>
+
+            <h2 className="mt-6 font-serif text-2xl font-bold tracking-tight text-primary-dark">
+              {program.nama}
+            </h2>
+            <p className="mt-3 text-sm leading-relaxed text-muted">
+              {program.deskripsi}
+            </p>
+
+            <div className="mt-6 border-t border-line/60 pt-5">
+              <span className="text-xs font-bold tracking-wider text-primary-dark uppercase">
+                Keunggulan Program:
+              </span>
+              <ul className="mt-3 space-y-2.5">
+                {program.keunggulan.map((item) => (
+                  <li key={item} className="flex items-start gap-2.5 text-xs font-medium text-muted">
+                    <LuCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+type ItemUnggulan = {
+  kunci: string;
+  nama: string;
+  ringkasan: string;
+  gambarUrl: string | null;
+  href: string;
+  jenis: "Akademik" | "Non Akademik";
+};
+
+async function IsiUnggulan() {
+  const [akademik, nonAkademik] = await Promise.all([
+    prisma.programAkademik.findMany({
+      where: { aktif: true, unggulan: true },
+      orderBy: { urutan: "asc" },
+    }),
+    prisma.ekstrakurikuler.findMany({
+      where: { aktif: true, unggulan: true },
+      orderBy: { urutan: "asc" },
+    }),
+  ]);
+
+  const daftar: ItemUnggulan[] = [
+    ...akademik.map((p) => ({
+      kunci: `akademik-${p.id}`,
+      nama: p.judul,
+      ringkasan: p.ringkasan,
+      gambarUrl: p.gambarUrl,
+      href: `/program/akademik/${p.slug}`,
+      jenis: "Akademik" as const,
+    })),
+    ...nonAkademik.map((p) => ({
+      kunci: `nonakademik-${p.id}`,
+      nama: p.nama,
+      ringkasan: p.deskripsi,
+      gambarUrl: p.gambarUrl,
+      href: `/program/ekstrakurikuler/${p.slug}`,
+      jenis: "Non Akademik" as const,
+    })),
+  ];
+
+  if (daftar.length === 0) return <ProgramStatis />;
+
+  return (
+    <div>
+      <p className="mb-8 max-w-3xl text-base leading-relaxed text-muted">
+        Program berikut dipilih madrasah sebagai unggulan, dari program akademik maupun
+        non akademik (ekstrakurikuler). Klik untuk melihat detail setiap program.
+      </p>
+      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        {daftar.map((item) => (
+          <article
+            key={item.kunci}
+            className="group flex flex-col justify-between border border-line bg-white shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_16px_40px_rgba(11,79,58,0.12)]"
+          >
+            <div>
+              <Link href={item.href} className="relative block overflow-hidden bg-primary-dark">
+                {item.gambarUrl ? (
+                  <Image
+                    src={item.gambarUrl}
+                    alt={`Foto ${item.nama}`}
+                    width={600}
+                    height={375}
+                    className="aspect-[16/10] w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="flex aspect-[16/10] w-full items-center justify-center bg-primary" aria-hidden="true">
+                    <span className="px-6 text-center font-serif text-lg font-bold text-white">
+                      {item.nama}
+                    </span>
+                  </div>
+                )}
+                <span
+                  className={`absolute top-3 left-3 px-3 py-1 text-xs font-bold shadow-sm ${
+                    item.jenis === "Akademik" ? "bg-primary text-white" : "bg-accent text-primary-dark"
+                  }`}
+                >
+                  {item.jenis}
+                </span>
+              </Link>
+              <div className="p-6">
+                <h2 className="font-serif text-xl font-bold tracking-tight text-primary-dark transition-colors group-hover:text-primary">
+                  <Link href={item.href} className="hover:underline">
+                    {item.nama}
+                  </Link>
+                </h2>
+                <p className="mt-2.5 text-sm leading-relaxed text-muted line-clamp-3">
+                  {item.ringkasan}
+                </p>
+              </div>
+            </div>
+            <div className="px-6 pb-6">
+              <Link
+                href={item.href}
+                className="inline-flex items-center gap-1.5 text-xs font-bold tracking-wider text-accent uppercase transition-colors hover:text-accent-soft"
+              >
+                <span>Lihat Detail</span>
+                <LuArrowRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+              </Link>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Kerangka() {
+  return (
+    <div className="grid animate-pulse grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+      {[0, 1, 2].map((i) => (
+        <div key={i} className="border border-line bg-white">
+          <div className="aspect-[16/10] bg-line/60" />
+          <div className="space-y-3 p-6">
+            <div className="h-6 w-44 bg-line/80" />
+            <div className="h-14 w-full bg-line/40" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 export default function UnggulanPage() {
   return (
     <div className="bg-cream">
-      {/* Editorial Header Banner */}
       <section className="relative overflow-hidden bg-primary-dark text-white">
         <Image
           src="https://images.unsplash.com/photo-1564769625905-50e93615e769?q=80&w=2000&auto=format&fit=crop"
@@ -103,7 +271,6 @@ export default function UnggulanPage() {
         </div>
       </section>
 
-      {/* Breadcrumbs */}
       <nav aria-label="Breadcrumb" className="border-b border-line bg-white shadow-xs">
         <div className="mx-auto flex w-full max-w-300 items-center gap-2 px-5 py-3 text-xs font-medium lg:px-6">
           <Link href="/" className="text-primary hover:text-primary-dark hover:underline">
@@ -120,50 +287,11 @@ export default function UnggulanPage() {
         </div>
       </nav>
 
-      {/* Main Grid */}
       <div className="mx-auto w-full max-w-300 px-5 py-16 lg:px-6">
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          {daftarProgram.map((program) => (
-            <article
-              key={program.nama}
-              className="group flex flex-col justify-between border border-line bg-white p-8 shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:border-accent hover:shadow-[0_16px_40px_rgba(11,79,58,0.12)]"
-            >
-              <div>
-                <div className="flex items-center justify-between border-b border-line pb-5">
-                  <span className="flex h-12 w-12 items-center justify-center border border-accent/40 bg-primary-soft text-primary transition-colors group-hover:bg-primary group-hover:text-white">
-                    <program.Icon className="h-6 w-6 text-accent" aria-hidden="true" />
-                  </span>
-                  <span className="text-[11px] font-bold tracking-[0.14em] text-accent uppercase">
-                    {program.tag}
-                  </span>
-                </div>
+        <Suspense fallback={<Kerangka />}>
+          <IsiUnggulan />
+        </Suspense>
 
-                <h2 className="mt-6 font-serif text-2xl font-bold tracking-tight text-primary-dark">
-                  {program.nama}
-                </h2>
-                <p className="mt-3 text-sm leading-relaxed text-muted">
-                  {program.deskripsi}
-                </p>
-
-                <div className="mt-6 border-t border-line/60 pt-5">
-                  <span className="text-xs font-bold tracking-wider text-primary-dark uppercase">
-                    Keunggulan Program:
-                  </span>
-                  <ul className="mt-3 space-y-2.5">
-                    {program.keunggulan.map((item) => (
-                      <li key={item} className="flex items-start gap-2.5 text-xs font-medium text-muted">
-                        <LuCheck className="mt-0.5 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                        <span>{item}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-
-        {/* Bottom Consultation Strip */}
         <div className="mt-14 border border-line bg-primary-soft/50 p-8 text-center sm:p-10">
           <h3 className="font-serif text-2xl font-bold text-primary-dark">
             Ingin Konsultasi Mengenai Program Unggulan Kami?

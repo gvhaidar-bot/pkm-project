@@ -6,6 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
 import { adminLogin } from "@/lib/admin";
 import { cekPanjang } from "@/lib/validasi";
+import { kategoriBeritaValid } from "@/lib/kategoriBerita";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -36,6 +37,7 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
   const isi = (formData.get("isi") as string | null)?.trim();
   const published = formData.get("published") === "on";
   const unggulan = formData.get("unggulan") === "on";
+  const kategori = kategoriBeritaValid(formData.get("kategori"));
 
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
 
@@ -55,6 +57,7 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
         ringkasan,
         isi,
         gambarUrl: fotoUrl,
+        kategori,
         published,
         unggulan,
         publishedAt: published ? new Date() : null,
@@ -81,6 +84,7 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
   const isi = (formData.get("isi") as string | null)?.trim();
   const published = formData.get("published") === "on";
   const unggulan = formData.get("unggulan") === "on";
+  const kategori = kategoriBeritaValid(formData.get("kategori"));
 
   if (!id) return { error: "ID berita tidak valid." };
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
@@ -109,6 +113,7 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
         ringkasan,
         isi,
         gambarUrl: fotoUrl,
+        kategori,
         published,
         unggulan,
         publishedAt: published ? (lama.publishedAt ?? new Date()) : lama.publishedAt,

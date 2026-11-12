@@ -4,6 +4,7 @@ import { useActionState, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { buatSlug } from "@/lib/slug";
+import { KATEGORI_BERITA } from "@/lib/kategoriBerita";
 import type { HasilAksi } from "../actions";
 import MasukanFoto from "@/components/admin/MasukanFoto";
 import ToolbarFormat, { PetunjukFormat } from "@/components/admin/ToolbarFormat";
@@ -15,6 +16,7 @@ export type DataBerita = {
   ringkasan: string;
   isi: string;
   gambarUrl: string | null;
+  kategori: string;
   published: boolean;
   unggulan: boolean;
 };
@@ -124,6 +126,25 @@ export default function FormBerita({ berita, aksi }: { berita?: DataBerita; aksi
           catatan={berita ? "(kosongkan jika tidak diganti)" : undefined}
           teksBantuan="Format gambar, maksimal 2 MB. Rasio 16:9 disarankan."
         />
+      </div>
+
+      <div>
+        <label htmlFor="kategori" className="mb-1.5 block text-sm font-semibold text-ink">
+          Kategori
+        </label>
+        <select
+          id="kategori"
+          name="kategori"
+          defaultValue={berita?.kategori ?? "Lainnya"}
+          className={inputCls}
+        >
+          {KATEGORI_BERITA.map((k) => (
+            <option key={k} value={k}>
+              {k}
+            </option>
+          ))}
+        </select>
+        <p className="mt-1.5 text-sm text-muted">Pengunjung bisa menyaring berita berdasarkan kategori ini di halaman Berita.</p>
       </div>
 
       <div className="flex items-center pb-1">

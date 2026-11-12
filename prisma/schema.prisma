@@ -25,6 +25,7 @@ model Berita {
   ringkasan   String
   isi         String       @db.Text
   gambarUrl   String?
+  kategori    String       @default("Lainnya")
   published   Boolean      @default(false)
   publishedAt DateTime?
   unggulan    Boolean      @default(false)
@@ -159,6 +160,7 @@ model Ekstrakurikuler {
   jumlahAnggota Int?
   ikon          String   @default("sains")
   aktif         Boolean  @default(true)
+  unggulan      Boolean  @default(false)
   urutan        Int      @default(0)
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt

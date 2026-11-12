@@ -25,6 +25,7 @@ export type DataEkstrakurikuler = {
   jumlahAnggota: number | null;
   ikon: string;
   aktif: boolean;
+  unggulan: boolean;
   urutan: number;
 };
 
@@ -307,6 +308,25 @@ export default function FormEkstrakurikuler({
           />
           Tampilkan di website
         </label>
+      </div>
+
+      <div>
+        <div className="flex items-center pb-1">
+          <label htmlFor="unggulan" className="flex min-h-11 cursor-pointer items-center gap-3 text-base font-medium text-ink">
+            <input
+              id="unggulan"
+              name="unggulan"
+              type="checkbox"
+              defaultChecked={ekstrakurikuler?.unggulan ?? false}
+              className="h-5 w-5 accent-[#0B5B3E]"
+            />
+            Jadikan Program Unggulan
+          </label>
+        </div>
+        <p className="text-sm text-muted">
+          Ekstrakurikuler yang ditandai tampil di halaman Program Unggulan bersama program
+          akademik unggulan.
+        </p>
       </div>
 
       {hasil?.error && (
