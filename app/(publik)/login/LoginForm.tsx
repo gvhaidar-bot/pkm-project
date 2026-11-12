@@ -3,12 +3,13 @@
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
-import { LuCircleAlert } from "react-icons/lu";
+import { LuCircleAlert, LuEye, LuEyeOff } from "react-icons/lu";
 
 export default function LoginForm() {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [lihatSandi, setLihatSandi] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -56,16 +57,27 @@ export default function LoginForm() {
         <label htmlFor="password" className="mb-1.5 block text-xs font-bold tracking-wider text-primary-dark uppercase">
           Kata Sandi
         </label>
-        <input
-          id="password"
-          type="password"
-          required
-          autoComplete="current-password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="••••••••••••"
-          className="flex min-h-11 w-full items-center border border-line bg-cream/30 px-4 text-sm text-ink transition-colors placeholder:text-muted/60 focus:border-accent focus:bg-white focus:outline-none"
-        />
+        <div className="relative">
+          <input
+            id="password"
+            type={lihatSandi ? "text" : "password"}
+            required
+            autoComplete="current-password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="••••••••••••"
+            className="flex min-h-11 w-full items-center border border-line bg-cream/30 px-4 pr-12 text-sm text-ink transition-colors placeholder:text-muted/60 focus:border-accent focus:bg-white focus:outline-none"
+          />
+          <button
+            type="button"
+            onClick={() => setLihatSandi(!lihatSandi)}
+            aria-label={lihatSandi ? "Sembunyikan kata sandi" : "Tampilkan kata sandi"}
+            aria-pressed={lihatSandi}
+            className="absolute inset-y-0 right-0 flex w-11 items-center justify-center text-muted transition-colors hover:text-primary"
+          >
+            {lihatSandi ? <LuEyeOff className="h-5 w-5" aria-hidden="true" /> : <LuEye className="h-5 w-5" aria-hidden="true" />}
+          </button>
+        </div>
       </div>
 
       {error && (
