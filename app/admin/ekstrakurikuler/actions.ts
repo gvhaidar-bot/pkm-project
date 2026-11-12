@@ -72,7 +72,8 @@ export async function tambahEkstrakurikuler(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
-  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+  const admin = await adminLogin();
+  if (!admin) return { error: "Anda harus login sebagai admin." };
 
   const data = bacaForm(formData);
 
@@ -115,6 +116,7 @@ export async function tambahEkstrakurikuler(
           aktif: data.aktif,
           unggulan: data.unggulan,
           urutan: data.urutan,
+          dibuatOlehId: admin.id,
         },
       });
     } catch (e) {

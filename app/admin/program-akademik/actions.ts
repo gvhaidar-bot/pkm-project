@@ -31,7 +31,8 @@ export async function tambahProgramAkademik(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
-  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+  const admin = await adminLogin();
+  if (!admin) return { error: "Anda harus login sebagai admin." };
 
   const judul = (formData.get("judul") as string | null)?.trim();
   const ringkasan = (formData.get("ringkasan") as string | null)?.trim();
@@ -52,7 +53,7 @@ export async function tambahProgramAkademik(
     const slug = await slugUnik(buatSlug(slugMasukan || judul));
     fotoUrl = await simpanFoto(formData.get("foto"), "program-akademik");
     await prisma.programAkademik.create({
-      data: { judul, slug, ringkasan, isi, gambarUrl: fotoUrl, unggulan, aktif, urutan },
+      data: { judul, slug, ringkasan, isi, gambarUrl: fotoUrl, unggulan, aktif, urutan, dibuatOlehId: admin.id },
     });
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "program-akademik");

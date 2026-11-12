@@ -64,6 +64,17 @@ async function hapusBatas(kunci: string) {
   }
 }
 
+async function tautkanAdmin(kunci: string, adminId: number) {
+  try {
+    await prisma.percobaanLogin.updateMany({
+      where: { kunci, adminId: null },
+      data: { adminId },
+    });
+  } catch (e) {
+    console.error("[auth] Gagal menautkan percobaan login ke admin:", e);
+  }
+}
+
 function bersihkanIp(nilai: string | null | undefined): string | null {
   const bersih = nilai?.trim();
   if (!bersih) return null;
@@ -116,6 +127,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         if (!admin || !cocok) {
           await catatGagal(kunciKombinasi, BATAS_GAGAL_KOMBINASI);
           await catatGagal(kunciIp, BATAS_GAGAL_IP);
+          if (admin) await tautkanAdmin(kunciKombinasi, admin.id);
           return null;
         }
 

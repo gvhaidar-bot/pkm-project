@@ -17,7 +17,8 @@ export async function tambahFotoGaleri(
   _sebelumnya: HasilAksi,
   formData: FormData,
 ): Promise<HasilAksi> {
-  if (!(await adminLogin())) return { error: "Anda harus login sebagai admin." };
+  const admin = await adminLogin();
+  if (!admin) return { error: "Anda harus login sebagai admin." };
 
   const files = (formData.getAll("foto") as File[]).filter((f) => f instanceof File && f.size > 0);
   if (files.length === 0) return { error: "Pilih minimal satu foto." };
@@ -29,7 +30,7 @@ export async function tambahFotoGaleri(
       const url = await simpanFoto(file, "galeri");
       if (!url) continue;
       tersimpan.push(url);
-      await prisma.galeri.create({ data: { gambarUrl: url } });
+      await prisma.galeri.create({ data: { gambarUrl: url, diunggahOlehId: admin.id } });
     }
   } catch (e) {
     for (const url of tersimpan) await hapusBerkas(url, "galeri");

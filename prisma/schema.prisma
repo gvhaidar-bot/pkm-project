@@ -15,7 +15,12 @@ model Admin {
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
-  berita Berita[]
+  berita          Berita[]
+  galeri          Galeri[]
+  pengaturan      Pengaturan[]
+  programAkademik ProgramAkademik[]
+  ekstrakurikuler Ekstrakurikuler[]
+  percobaanLogin  PercobaanLogin[]
 }
 
 model Berita {
@@ -132,25 +137,31 @@ model PrestasiFoto {
 }
 
 model Galeri {
-  id        Int      @id @default(autoincrement())
-  gambarUrl String
-  aktif     Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             Int      @id @default(autoincrement())
+  gambarUrl      String
+  aktif          Boolean  @default(true)
+  diunggahOlehId Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  diunggahOleh Admin? @relation(fields: [diunggahOlehId], references: [id], onDelete: SetNull)
 }
 
 model ProgramAkademik {
-  id        Int      @id @default(autoincrement())
-  judul     String
-  slug      String   @unique
-  ringkasan String
-  isi       String   @db.Text
-  gambarUrl String?
-  unggulan  Boolean  @default(false)
-  aktif     Boolean  @default(true)
-  urutan    Int      @default(0)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  judul        String
+  slug         String   @unique
+  ringkasan    String
+  isi          String   @db.Text
+  gambarUrl    String?
+  unggulan     Boolean  @default(false)
+  aktif        Boolean  @default(true)
+  urutan       Int      @default(0)
+  dibuatOlehId Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  dibuatOleh Admin? @relation(fields: [dibuatOlehId], references: [id], onDelete: SetNull)
 }
 
 model Ekstrakurikuler {
@@ -171,15 +182,21 @@ model Ekstrakurikuler {
   aktif         Boolean  @default(true)
   unggulan      Boolean  @default(false)
   urutan        Int      @default(0)
+  dibuatOlehId  Int?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
+
+  dibuatOleh Admin? @relation(fields: [dibuatOlehId], references: [id], onDelete: SetNull)
 }
 
 model Pengaturan {
-  id        Int      @id @default(autoincrement())
-  kunci     String   @unique
-  nilai     String
-  updatedAt DateTime @updatedAt
+  id           Int      @id @default(autoincrement())
+  kunci        String   @unique
+  nilai        String
+  diubahOlehId Int?
+  updatedAt    DateTime @updatedAt
+
+  diubahOleh Admin? @relation(fields: [diubahOlehId], references: [id], onDelete: SetNull)
 }
 
 model PercobaanLogin {
@@ -187,4 +204,7 @@ model PercobaanLogin {
   jumlah       Int       @default(0)
   jendelaMulai DateTime  @default(now())
   blokirSampai DateTime?
+  adminId      Int?
+
+  admin Admin? @relation(fields: [adminId], references: [id], onDelete: SetNull)
 }

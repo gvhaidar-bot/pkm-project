@@ -15,8 +15,8 @@ export async function simpanPengaturan(_sebelumnya: HasilAksi, formData: FormDat
   try {
     await prisma.pengaturan.upsert({
       where: { kunci: "tampilkanBeritaFooter" },
-      update: { nilai: tampilkanBeritaFooter ? "true" : "false" },
-      create: { kunci: "tampilkanBeritaFooter", nilai: tampilkanBeritaFooter ? "true" : "false" },
+      update: { nilai: tampilkanBeritaFooter ? "true" : "false", diubahOlehId: admin.id },
+      create: { kunci: "tampilkanBeritaFooter", nilai: tampilkanBeritaFooter ? "true" : "false", diubahOlehId: admin.id },
     });
   } catch (e) {
     console.error(e);
