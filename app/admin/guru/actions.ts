@@ -33,7 +33,12 @@ export async function tambahGuru(_sebelumnya: HasilAksi, formData: FormData): Pr
   let fotoUrl: string | null = null;
   try {
     fotoUrl = await simpanFoto(formData.get("foto"), "guru");
-    await prisma.guru.create({ data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
+    const guru = await prisma.guru.create({ data: { nama, jabatan, bio, urutan, aktif } });
+    if (fotoUrl) {
+      await prisma.guruFoto.create({
+        data: { url: fotoUrl, guruId: guru.id, urutan: 0, utama: true },
+      });
+    }
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "guru");
     console.error(e);
@@ -62,15 +67,24 @@ export async function ubahGuru(_sebelumnya: HasilAksi, formData: FormData): Prom
   const lama = await prisma.guru.findUnique({ where: { id } });
   if (!lama) return { error: "Data guru tidak ditemukan." };
 
-  let fotoUrl = lama.fotoUrl;
+  let fotoBaru: string | null = null;
   try {
-    const baru = await simpanFoto(formData.get("foto"), "guru");
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.fotoUrl, "guru");
+    fotoBaru = await simpanFoto(formData.get("foto"), "guru");
+    await prisma.guru.update({ where: { id }, data: { nama, jabatan, bio, urutan, aktif } });
+    if (fotoBaru) {
+      const sampulLama = await prisma.guruFoto.findFirst({
+        where: { guruId: id, utama: true },
+      });
+      if (sampulLama) {
+        await hapusBerkas(sampulLama.url, "guru");
+        await prisma.guruFoto.delete({ where: { id: sampulLama.id } });
+      }
+      await prisma.guruFoto.create({
+        data: { url: fotoBaru, guruId: id, urutan: 0, utama: true },
+      });
     }
-    await prisma.guru.update({ where: { id }, data: { nama, jabatan, bio, fotoUrl, urutan, aktif } });
   } catch (e) {
+    if (fotoBaru) await hapusBerkas(fotoBaru, "guru");
     console.error(e);
     return { error: "Gagal mengubah data guru." };
   }
@@ -85,7 +99,6 @@ export async function hapusGuru(id: number): Promise<void> {
     include: { foto: true },
   });
   if (!guru) return;
-  await hapusBerkas(guru.fotoUrl, "guru");
   for (const f of guru.foto) await hapusBerkas(f.url, "guru");
   await prisma.guru.delete({ where: { id } });
   muatUlang();

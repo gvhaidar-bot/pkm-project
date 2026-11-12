@@ -2,6 +2,7 @@ import "dotenv/config";
 import bcrypt from "bcryptjs";
 import { PrismaClient } from "./generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
+import { KATEGORI_BERITA } from "../lib/kategoriBerita";
 
 const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
@@ -33,6 +34,16 @@ async function main() {
   });
 
   console.log("Pengaturan awal siap: tampilkanBeritaFooter = true");
+
+  for (const nama of KATEGORI_BERITA) {
+    await prisma.kategoriBerita.upsert({
+      where: { nama },
+      update: {},
+      create: { nama },
+    });
+  }
+
+  console.log(`Kategori berita siap: ${KATEGORI_BERITA.length} kategori`);
 }
 
 main()

@@ -31,7 +31,12 @@ export async function tambahPrestasi(_sebelumnya: HasilAksi, formData: FormData)
   let fotoUrl: string | null = null;
   try {
     fotoUrl = await simpanFoto(formData.get("foto"), "prestasi");
-    await prisma.prestasi.create({ data: { judul, deskripsi, tahun, tingkat, gambarUrl: fotoUrl } });
+    const prestasi = await prisma.prestasi.create({ data: { judul, deskripsi, tahun, tingkat } });
+    if (fotoUrl) {
+      await prisma.prestasiFoto.create({
+        data: { url: fotoUrl, prestasiId: prestasi.id, urutan: 0, utama: true },
+      });
+    }
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "prestasi");
     console.error(e);
@@ -60,15 +65,24 @@ export async function ubahPrestasi(_sebelumnya: HasilAksi, formData: FormData): 
   const lama = await prisma.prestasi.findUnique({ where: { id } });
   if (!lama) return { error: "Prestasi tidak ditemukan." };
 
-  let fotoUrl = lama.gambarUrl;
+  let fotoBaru: string | null = null;
   try {
-    const baru = await simpanFoto(formData.get("foto"), "prestasi");
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.gambarUrl, "prestasi");
+    fotoBaru = await simpanFoto(formData.get("foto"), "prestasi");
+    await prisma.prestasi.update({ where: { id }, data: { judul, deskripsi, tahun, tingkat } });
+    if (fotoBaru) {
+      const sampulLama = await prisma.prestasiFoto.findFirst({
+        where: { prestasiId: id, utama: true },
+      });
+      if (sampulLama) {
+        await hapusBerkas(sampulLama.url, "prestasi");
+        await prisma.prestasiFoto.delete({ where: { id: sampulLama.id } });
+      }
+      await prisma.prestasiFoto.create({
+        data: { url: fotoBaru, prestasiId: id, urutan: 0, utama: true },
+      });
     }
-    await prisma.prestasi.update({ where: { id }, data: { judul, deskripsi, tahun, tingkat, gambarUrl: fotoUrl } });
   } catch (e) {
+    if (fotoBaru) await hapusBerkas(fotoBaru, "prestasi");
     console.error(e);
     return { error: "Gagal mengubah prestasi." };
   }
@@ -83,7 +97,6 @@ export async function hapusPrestasi(id: number): Promise<void> {
     include: { foto: true },
   });
   if (!prestasi) return;
-  await hapusBerkas(prestasi.gambarUrl, "prestasi");
   for (const f of prestasi.foto) await hapusBerkas(f.url, "prestasi");
   await prisma.prestasi.delete({ where: { id } });
   muatUlang();

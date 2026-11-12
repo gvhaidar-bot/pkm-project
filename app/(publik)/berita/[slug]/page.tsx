@@ -16,6 +16,7 @@ import {
   LuUser,
 } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import IsiArtikel from "@/components/berita/IsiArtikel";
 import BagikanBerita from "@/components/berita/BagikanBerita";
 
@@ -71,13 +72,20 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
   if (!berita || !berita.published) notFound();
 
   const menitBaca = hitungMenitBaca(berita.isi);
-  const wartaTerkini = await prisma.berita.findMany({
+  const wartaMentah = await prisma.berita.findMany({
     where: { published: true, id: { not: berita.id } },
     orderBy: { publishedAt: "desc" },
     take: 4,
+    include: { foto: { orderBy: { urutan: "asc" } } },
   });
+  const wartaTerkini = wartaMentah.map((item) => ({
+    ...item,
+    gambarUrl: urlFotoUtama(item.foto),
+  }));
 
-  const sampulUtama = berita.gambarUrl || fallbackSampulBerita;
+  const fotoSampul = berita.foto.find((f) => f.utama) ?? berita.foto[0];
+  const sampulUtama = fotoSampul?.url || fallbackSampulBerita;
+  const galeriFoto = berita.foto.filter((f) => f.id !== fotoSampul?.id);
 
   return (
     <div>
@@ -200,18 +208,18 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
           </article>
 
           {/* Additional Photo Gallery */}
-          {berita.foto.length > 0 && (
+          {galeriFoto.length > 0 && (
             <section className="mt-14 border-t-2 border-primary-dark pt-8" aria-label="Galeri dokumentasi kegiatan">
               <div className="flex items-center justify-between">
                 <div>
                   <span className="text-xs font-bold tracking-[0.16em] text-accent uppercase">Arsip Visual</span>
                   <h2 className="mt-1 font-serif text-2xl font-bold text-primary-dark">Dokumentasi Terkait Kegiatan</h2>
                 </div>
-                <span className="text-xs font-bold text-muted">{berita.foto.length} Foto</span>
+                <span className="text-xs font-bold text-muted">{galeriFoto.length} Foto</span>
               </div>
 
               <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-                {berita.foto.map((foto) => (
+                {galeriFoto.map((foto) => (
                   <figure
                     key={foto.id}
                     className="group relative overflow-hidden border border-line bg-white shadow-xs transition-all duration-300 hover:border-accent hover:shadow-md"

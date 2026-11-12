@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight, LuCalendarDays, LuNewspaper, LuSparkles } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import JudulBagian from "./JudulBagian";
 
 function formatTanggal(t: Date | null) {
@@ -14,21 +15,29 @@ function formatTanggal(t: Date | null) {
 }
 
 export default async function BeritaTeaser() {
-  const unggulan = await prisma.berita.findMany({
+  const unggulanMentah = await prisma.berita.findMany({
     where: { published: true, unggulan: true },
     orderBy: { publishedAt: "desc" },
     take: 3,
-    include: { author: { select: { nama: true } } },
+    include: {
+      author: { select: { nama: true } },
+      foto: { orderBy: { urutan: "asc" } },
+    },
   });
+  const unggulan = unggulanMentah.map((b) => ({ ...b, gambarUrl: urlFotoUtama(b.foto) }));
 
   let daftar = unggulan;
   if (daftar.length < 3) {
-    const tambahan = await prisma.berita.findMany({
+    const tambahanMentah = await prisma.berita.findMany({
       where: { published: true, id: { notIn: daftar.map((b) => b.id) } },
       orderBy: { publishedAt: "desc" },
       take: 3 - daftar.length,
-      include: { author: { select: { nama: true } } },
+      include: {
+        author: { select: { nama: true } },
+        foto: { orderBy: { urutan: "asc" } },
+      },
     });
+    const tambahan = tambahanMentah.map((b) => ({ ...b, gambarUrl: urlFotoUtama(b.foto) }));
     daftar = [...daftar, ...tambahan];
   }
 

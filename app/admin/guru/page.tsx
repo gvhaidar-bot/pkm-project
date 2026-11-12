@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuPencil, LuPlus } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import TombolHapus from "@/components/admin/TombolHapus";
 import { hapusGuru } from "./actions";
 
@@ -12,9 +13,11 @@ export const metadata = {
 };
 
 async function TabelGuru() {
-  const daftar = await prisma.guru.findMany({
+  const daftarMentah = await prisma.guru.findMany({
     orderBy: [{ urutan: "asc" }, { nama: "asc" }],
+    include: { foto: { orderBy: { urutan: "asc" } } },
   });
+  const daftar = daftarMentah.map((g) => ({ ...g, fotoUrl: urlFotoUtama(g.foto) }));
 
   if (daftar.length === 0) {
     return (

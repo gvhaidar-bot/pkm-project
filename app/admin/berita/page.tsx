@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuPencil, LuPlus } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import TombolHapus from "@/components/admin/TombolHapus";
 import { hapusBerita } from "./actions";
 
@@ -21,9 +22,11 @@ function formatTanggal(t: Date | null) {
 }
 
 async function TabelBerita() {
-  const daftar = await prisma.berita.findMany({
+  const daftarMentah = await prisma.berita.findMany({
     orderBy: { createdAt: "desc" },
+    include: { foto: { orderBy: { urutan: "asc" } } },
   });
+  const daftar = daftarMentah.map((b) => ({ ...b, gambarUrl: urlFotoUtama(b.foto) }));
 
   if (daftar.length === 0) {
     return (

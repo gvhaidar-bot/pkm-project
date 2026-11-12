@@ -6,7 +6,6 @@ import { prisma } from "@/lib/prisma";
 import { adalahGalatDuplikat, buatSlug } from "@/lib/slug";
 import { adminLogin } from "@/lib/admin";
 import { cekPanjang } from "@/lib/validasi";
-import { kategoriBeritaValid } from "@/lib/kategoriBerita";
 import { hapusBerkas, simpanFoto } from "@/lib/upload";
 
 export type HasilAksi = { error?: string } | null;
@@ -37,7 +36,7 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
   const isi = (formData.get("isi") as string | null)?.trim();
   const published = formData.get("published") === "on";
   const unggulan = formData.get("unggulan") === "on";
-  const kategori = kategoriBeritaValid(formData.get("kategori"));
+  const kategoriId = Number(formData.get("kategoriId"));
 
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
 
@@ -49,21 +48,27 @@ export async function tambahBerita(_sebelumnya: HasilAksi, formData: FormData): 
   let fotoUrl: string | null = null;
   try {
     const slug = await slugUnik(buatSlug(slugMasukan || judul));
+    const kategori = await prisma.kategoriBerita.findUnique({ where: { id: kategoriId } });
+    if (!kategori) return { error: "Kategori tidak valid." };
     fotoUrl = await simpanFoto(formData.get("foto"), "berita");
-    await prisma.berita.create({
+    const berita = await prisma.berita.create({
       data: {
         judul,
         slug,
         ringkasan,
         isi,
-        gambarUrl: fotoUrl,
-        kategori,
+        kategoriId,
         published,
         unggulan,
         publishedAt: published ? new Date() : null,
         authorId: admin.id,
       },
     });
+    if (fotoUrl) {
+      await prisma.beritaFoto.create({
+        data: { url: fotoUrl, beritaId: berita.id, urutan: 0, utama: true },
+      });
+    }
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "berita");
     if (adalahGalatDuplikat(e)) return { error: "Judul sudah dipakai. Coba judul lain." };
@@ -84,7 +89,7 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
   const isi = (formData.get("isi") as string | null)?.trim();
   const published = formData.get("published") === "on";
   const unggulan = formData.get("unggulan") === "on";
-  const kategori = kategoriBeritaValid(formData.get("kategori"));
+  const kategoriId = Number(formData.get("kategoriId"));
 
   if (!id) return { error: "ID berita tidak valid." };
   if (!judul || !ringkasan || !isi) return { error: "Judul, ringkasan, dan isi wajib diisi." };
@@ -97,14 +102,12 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
 
   const slugMasukan = (formData.get("slug") as string | null)?.trim();
 
-  let fotoUrl = lama.gambarUrl;
+  let fotoBaru: string | null = null;
   try {
     const slug = await slugUnik(buatSlug(slugMasukan || judul), id);
-    const baru = await simpanFoto(formData.get("foto"), "berita");
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.gambarUrl, "berita");
-    }
+    const kategori = await prisma.kategoriBerita.findUnique({ where: { id: kategoriId } });
+    if (!kategori) return { error: "Kategori tidak valid." };
+    fotoBaru = await simpanFoto(formData.get("foto"), "berita");
     await prisma.berita.update({
       where: { id },
       data: {
@@ -112,15 +115,27 @@ export async function ubahBerita(_sebelumnya: HasilAksi, formData: FormData): Pr
         slug,
         ringkasan,
         isi,
-        gambarUrl: fotoUrl,
-        kategori,
+        kategoriId,
         published,
         unggulan,
         publishedAt: published ? (lama.publishedAt ?? new Date()) : lama.publishedAt,
       },
     });
+    if (fotoBaru) {
+      const sampulLama = await prisma.beritaFoto.findFirst({
+        where: { beritaId: id, utama: true },
+      });
+      if (sampulLama) {
+        await hapusBerkas(sampulLama.url, "berita");
+        await prisma.beritaFoto.delete({ where: { id: sampulLama.id } });
+      }
+      await prisma.beritaFoto.create({
+        data: { url: fotoBaru, beritaId: id, urutan: 0, utama: true },
+      });
+    }
     muatUlang(slug);
   } catch (e) {
+    if (fotoBaru) await hapusBerkas(fotoBaru, "berita");
     if (adalahGalatDuplikat(e)) return { error: "Judul sudah dipakai. Coba judul lain." };
     console.error(e);
     return { error: "Gagal mengubah berita." };
@@ -135,7 +150,6 @@ export async function hapusBerita(id: number): Promise<void> {
     include: { foto: true },
   });
   if (!berita) return;
-  await hapusBerkas(berita.gambarUrl, "berita");
   for (const f of berita.foto) await hapusBerkas(f.url, "berita");
   await prisma.berita.delete({ where: { id } });
   muatUlang(berita.slug);

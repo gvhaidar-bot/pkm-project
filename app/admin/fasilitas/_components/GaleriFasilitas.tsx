@@ -9,6 +9,7 @@ import MasukanFoto from "@/components/admin/MasukanFoto";
 export type FotoFasilitas = {
   id: number;
   url: string;
+  utama: boolean;
 };
 
 export default function GaleriFasilitas({
@@ -38,7 +39,7 @@ export default function GaleriFasilitas({
     <section className="mt-8 rounded-3xl bg-white p-6 shadow-[0_4px_24px_rgba(11,91,62,0.08)] sm:p-8">
       <h2 className="text-xl font-bold tracking-tight text-ink">Foto Galeri</h2>
       <p className="mt-1 text-base text-muted">
-        Foto tambahan selain gambar sampul. Bisa pilih beberapa sekaligus.
+        Semua foto tersimpan di sini, termasuk gambar sampul yang bertanda khusus. Bisa pilih beberapa sekaligus.
       </p>
 
       {fotoAwal.length > 0 && (
@@ -52,6 +53,11 @@ export default function GaleriFasilitas({
                 height={200}
                 className="aspect-[3/2] w-full object-cover"
               />
+              {foto.utama && (
+                <span className="absolute bottom-2 left-2 bg-accent px-2 py-0.5 text-xs font-bold text-primary-dark shadow-sm">
+                  Sampul
+                </span>
+              )}
               <button
                 type="button"
                 onClick={() => tanganiHapus(foto.id)}

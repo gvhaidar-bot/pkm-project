@@ -32,7 +32,12 @@ export async function tambahFasilitas(_sebelumnya: HasilAksi, formData: FormData
   let fotoUrl: string | null = null;
   try {
     fotoUrl = await simpanFoto(formData.get("foto"), "fasilitas");
-    await prisma.fasilitas.create({ data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif, unggulan } });
+    const fasilitas = await prisma.fasilitas.create({ data: { nama, deskripsi, urutan, aktif, unggulan } });
+    if (fotoUrl) {
+      await prisma.fasilitasFoto.create({
+        data: { url: fotoUrl, fasilitasId: fasilitas.id, urutan: 0, utama: true },
+      });
+    }
   } catch (e) {
     if (fotoUrl) await hapusBerkas(fotoUrl, "fasilitas");
     console.error(e);
@@ -61,15 +66,24 @@ export async function ubahFasilitas(_sebelumnya: HasilAksi, formData: FormData):
   const lama = await prisma.fasilitas.findUnique({ where: { id } });
   if (!lama) return { error: "Fasilitas tidak ditemukan." };
 
-  let fotoUrl = lama.gambarUrl;
+  let fotoBaru: string | null = null;
   try {
-    const baru = await simpanFoto(formData.get("foto"), "fasilitas");
-    if (baru) {
-      fotoUrl = baru;
-      await hapusBerkas(lama.gambarUrl, "fasilitas");
+    fotoBaru = await simpanFoto(formData.get("foto"), "fasilitas");
+    await prisma.fasilitas.update({ where: { id }, data: { nama, deskripsi, urutan, aktif, unggulan } });
+    if (fotoBaru) {
+      const sampulLama = await prisma.fasilitasFoto.findFirst({
+        where: { fasilitasId: id, utama: true },
+      });
+      if (sampulLama) {
+        await hapusBerkas(sampulLama.url, "fasilitas");
+        await prisma.fasilitasFoto.delete({ where: { id: sampulLama.id } });
+      }
+      await prisma.fasilitasFoto.create({
+        data: { url: fotoBaru, fasilitasId: id, urutan: 0, utama: true },
+      });
     }
-    await prisma.fasilitas.update({ where: { id }, data: { nama, deskripsi, gambarUrl: fotoUrl, urutan, aktif, unggulan } });
   } catch (e) {
+    if (fotoBaru) await hapusBerkas(fotoBaru, "fasilitas");
     console.error(e);
     return { error: "Gagal mengubah fasilitas." };
   }
@@ -84,7 +98,6 @@ export async function hapusFasilitas(id: number): Promise<void> {
     include: { foto: true },
   });
   if (!fasilitas) return;
-  await hapusBerkas(fasilitas.gambarUrl, "fasilitas");
   for (const f of fasilitas.foto) await hapusBerkas(f.url, "fasilitas");
   await prisma.fasilitas.delete({ where: { id } });
   muatUlang();

@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuBuilding, LuChevronRight, LuSparkles } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import TeksBerformat from "@/components/TeksBerformat";
 
 export const metadata = {
@@ -11,10 +12,12 @@ export const metadata = {
 };
 
 async function DaftarFasilitas() {
-  const daftar = await prisma.fasilitas.findMany({
+  const daftarMentah = await prisma.fasilitas.findMany({
     where: { aktif: true },
     orderBy: [{ urutan: "asc" }, { nama: "asc" }],
+    include: { foto: { orderBy: { urutan: "asc" } } },
   });
+  const daftar = daftarMentah.map((f) => ({ ...f, gambarUrl: urlFotoUtama(f.foto) }));
 
   if (daftar.length === 0) {
     return (

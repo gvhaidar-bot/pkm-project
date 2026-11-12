@@ -19,22 +19,28 @@ model Admin {
 }
 
 model Berita {
-  id          Int          @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   judul       String
-  slug        String       @unique
+  slug        String   @unique
   ringkasan   String
-  isi         String       @db.Text
-  gambarUrl   String?
-  kategori    String       @default("Lainnya")
-  published   Boolean      @default(false)
+  isi         String   @db.Text
+  published   Boolean  @default(false)
   publishedAt DateTime?
-  unggulan    Boolean      @default(false)
+  unggulan    Boolean  @default(false)
   authorId    Int?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  kategoriId  Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  author Admin?      @relation(fields: [authorId], references: [id], onDelete: SetNull)
-  foto   BeritaFoto[]
+  author   Admin?         @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  kategori KategoriBerita @relation(fields: [kategoriId], references: [id], onDelete: Restrict)
+  foto     BeritaFoto[]
+}
+
+model KategoriBerita {
+  id     Int      @id @default(autoincrement())
+  nama   String   @unique
+  berita Berita[]
 }
 
 model BeritaFoto {
@@ -42,6 +48,7 @@ model BeritaFoto {
   url       String
   caption   String?
   urutan    Int      @default(0)
+  utama     Boolean  @default(false)
   beritaId  Int
   createdAt DateTime @default(now())
 
@@ -49,15 +56,14 @@ model BeritaFoto {
 }
 
 model Fasilitas {
-  id        Int             @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   nama      String
-  deskripsi String          @db.Text
-  gambarUrl String?
-  urutan    Int             @default(0)
-  aktif     Boolean         @default(true)
-  unggulan  Boolean         @default(false)
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
+  deskripsi String   @db.Text
+  urutan    Int      @default(0)
+  aktif     Boolean  @default(true)
+  unggulan  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   foto FasilitasFoto[]
 }
@@ -67,6 +73,7 @@ model FasilitasFoto {
   url         String
   caption     String?
   urutan      Int       @default(0)
+  utama       Boolean   @default(false)
   fasilitasId Int
   createdAt   DateTime  @default(now())
 
@@ -74,15 +81,14 @@ model FasilitasFoto {
 }
 
 model Guru {
-  id        Int         @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   nama      String
   jabatan   String
-  fotoUrl   String?
-  bio       String?     @db.Text
-  urutan    Int         @default(0)
-  aktif     Boolean     @default(true)
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
+  bio       String?  @db.Text
+  urutan    Int      @default(0)
+  aktif     Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   foto GuruFoto[]
 }
@@ -92,6 +98,7 @@ model GuruFoto {
   url       String
   caption   String?
   urutan    Int      @default(0)
+  utama     Boolean  @default(false)
   guruId    Int
   createdAt DateTime @default(now())
 
@@ -99,14 +106,13 @@ model GuruFoto {
 }
 
 model Prestasi {
-  id        Int            @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   judul     String
-  deskripsi String?        @db.Text
+  deskripsi String?  @db.Text
   tahun     Int
   tingkat   String?
-  gambarUrl String?
-  createdAt DateTime       @default(now())
-  updatedAt DateTime       @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   foto PrestasiFoto[]
 }
@@ -116,6 +122,7 @@ model PrestasiFoto {
   url        String
   caption    String?
   urutan     Int      @default(0)
+  utama      Boolean  @default(false)
   prestasiId Int
   createdAt  DateTime @default(now())
 

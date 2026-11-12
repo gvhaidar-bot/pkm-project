@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import FormGuru from "../../_components/FormGuru";
 import GaleriGuru from "../../_components/GaleriGuru";
 import { ubahGuru } from "../../actions";
@@ -19,7 +20,7 @@ async function FormUbah({ params }: { params: Promise<{ id: string }> }) {
   if (!guru) notFound();
   return (
     <>
-      <FormGuru guru={guru} aksi={ubahGuru} />
+      <FormGuru guru={{ ...guru, fotoUrl: urlFotoUtama(guru.foto) }} aksi={ubahGuru} />
       <GaleriGuru guruId={guru.id} fotoAwal={guru.foto} />
     </>
   );

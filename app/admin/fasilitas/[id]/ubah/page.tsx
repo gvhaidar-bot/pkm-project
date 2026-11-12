@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import FormFasilitas from "../../_components/FormFasilitas";
 import GaleriFasilitas from "../../_components/GaleriFasilitas";
 import { ubahFasilitas } from "../../actions";
@@ -19,7 +20,7 @@ async function KontenUbah({ params }: { params: Promise<{ id: string }> }) {
   if (!fasilitas) notFound();
   return (
     <>
-      <FormFasilitas fasilitas={fasilitas} aksi={ubahFasilitas} />
+      <FormFasilitas fasilitas={{ ...fasilitas, gambarUrl: urlFotoUtama(fasilitas.foto) }} aksi={ubahFasilitas} />
       <GaleriFasilitas fasilitasId={fasilitas.id} fotoAwal={fasilitas.foto} />
     </>
   );

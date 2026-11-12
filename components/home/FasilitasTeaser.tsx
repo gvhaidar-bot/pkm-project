@@ -2,22 +2,27 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import JudulBagian from "./JudulBagian";
 
 export default async function FasilitasTeaser() {
-  const unggulan = await prisma.fasilitas.findMany({
+  const unggulanMentah = await prisma.fasilitas.findMany({
     where: { aktif: true, unggulan: true },
     orderBy: [{ urutan: "asc" }, { nama: "asc" }],
     take: 6,
+    include: { foto: { orderBy: { urutan: "asc" } } },
   });
+  const unggulan = unggulanMentah.map((f) => ({ ...f, gambarUrl: urlFotoUtama(f.foto) }));
 
   let daftar = unggulan;
   if (daftar.length < 6) {
-    const tambahan = await prisma.fasilitas.findMany({
+    const tambahanMentah = await prisma.fasilitas.findMany({
       where: { aktif: true, id: { notIn: daftar.map((f) => f.id) } },
       orderBy: [{ urutan: "asc" }, { nama: "asc" }],
       take: 6 - daftar.length,
+      include: { foto: { orderBy: { urutan: "asc" } } },
     });
+    const tambahan = tambahanMentah.map((f) => ({ ...f, gambarUrl: urlFotoUtama(f.foto) }));
     daftar = [...daftar, ...tambahan];
   }
 

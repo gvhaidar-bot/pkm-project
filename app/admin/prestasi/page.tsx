@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuPencil, LuPlus } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import TombolHapus from "@/components/admin/TombolHapus";
 import { hapusPrestasi } from "./actions";
 
@@ -12,9 +13,11 @@ export const metadata = {
 };
 
 async function TabelPrestasi() {
-  const daftar = await prisma.prestasi.findMany({
+  const daftarMentah = await prisma.prestasi.findMany({
     orderBy: [{ tahun: "desc" }, { createdAt: "desc" }],
+    include: { foto: { orderBy: { urutan: "asc" } } },
   });
+  const daftar = daftarMentah.map((p) => ({ ...p, gambarUrl: urlFotoUtama(p.foto) }));
 
   if (daftar.length === 0) {
     return (

@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import FormBerita from "../../_components/FormBerita";
 import GaleriBerita from "../../_components/GaleriBerita";
 import { ubahBerita } from "../../actions";
@@ -17,10 +18,15 @@ async function KontenUbah({ params }: { params: Promise<{ id: string }> }) {
     include: { foto: { orderBy: { urutan: "asc" } } },
   });
   if (!berita) notFound();
+  const daftarKategori = await prisma.kategoriBerita.findMany({ orderBy: { id: "asc" } });
 
   return (
     <>
-      <FormBerita berita={berita} aksi={ubahBerita} />
+      <FormBerita
+        berita={{ ...berita, gambarUrl: urlFotoUtama(berita.foto) }}
+        aksi={ubahBerita}
+        daftarKategori={daftarKategori}
+      />
       <GaleriBerita beritaId={berita.id} fotoAwal={berita.foto} />
     </>
   );

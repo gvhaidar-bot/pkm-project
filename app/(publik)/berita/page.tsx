@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { LuArrowRight, LuCalendarDays, LuChevronRight, LuNewspaper, LuSearch, LuSparkles, LuTag, LuX } from "react-icons/lu";
 import { prisma } from "@/lib/prisma";
-import { KATEGORI_BERITA } from "@/lib/kategoriBerita";
+import { urlFotoUtama } from "@/lib/foto";
 
 export const metadata = {
   title: "Berita",
@@ -27,7 +27,15 @@ function tautanFilter(kategori: string | null, q: string) {
   return s ? `/berita?${s}` : "/berita";
 }
 
-function FilterBerita({ kategoriAktif, q }: { kategoriAktif: string | null; q: string }) {
+function FilterBerita({
+  kategoriAktif,
+  q,
+  daftarKategori,
+}: {
+  kategoriAktif: string | null;
+  q: string;
+  daftarKategori: string[];
+}) {
   const adaFilter = !!kategoriAktif || !!q;
   return (
     <div className="mb-10 space-y-5">
@@ -73,7 +81,7 @@ function FilterBerita({ kategoriAktif, q }: { kategoriAktif: string | null; q: s
         >
           Semua
         </Link>
-        {KATEGORI_BERITA.map((k) => {
+        {daftarKategori.map((k) => {
           const aktif = kategoriAktif === k;
           return (
             <Link
@@ -96,10 +104,10 @@ function FilterBerita({ kategoriAktif, q }: { kategoriAktif: string | null; q: s
 }
 
 async function DaftarBerita({ kategori, q }: { kategori: string | null; q: string }) {
-  const daftar = await prisma.berita.findMany({
+  const daftarMentah = await prisma.berita.findMany({
     where: {
       published: true,
-      ...(kategori ? { kategori } : {}),
+      ...(kategori ? { kategori: { nama: kategori } } : {}),
       ...(q
         ? {
             OR: [
@@ -110,7 +118,16 @@ async function DaftarBerita({ kategori, q }: { kategori: string | null; q: strin
         : {}),
     },
     orderBy: { publishedAt: "desc" },
+    include: {
+      kategori: { select: { nama: true } },
+      foto: { orderBy: { urutan: "asc" } },
+    },
   });
+  const daftar = daftarMentah.map((b) => ({
+    ...b,
+    gambarUrl: urlFotoUtama(b.foto),
+    kategoriNama: b.kategori.nama,
+  }));
 
   if (daftar.length === 0) {
     if (kategori || q) {
@@ -196,7 +213,7 @@ async function DaftarBerita({ kategori, q }: { kategori: string | null; q: strin
                   </span>
                   <span className="flex items-center gap-1.5">
                     <LuTag className="h-3.5 w-3.5 text-accent-soft" aria-hidden="true" />
-                    <span>{berita.kategori}</span>
+                    <span>{berita.kategoriNama}</span>
                   </span>
                 </p>
 
@@ -234,15 +251,15 @@ async function IsiBerita({
   searchParams: Promise<{ kategori?: string; q?: string }>;
 }) {
   const sp = await searchParams;
+  const semuaKategori = await prisma.kategoriBerita.findMany({ orderBy: { id: "asc" } });
+  const namaKategori = semuaKategori.map((k) => k.nama);
   const kategoriMentah = sp.kategori?.trim();
-  const kategori = kategoriMentah && (KATEGORI_BERITA as readonly string[]).includes(kategoriMentah)
-    ? kategoriMentah
-    : null;
+  const kategori = kategoriMentah && namaKategori.includes(kategoriMentah) ? kategoriMentah : null;
   const q = (sp.q ?? "").trim().slice(0, 100);
 
   return (
     <>
-      <FilterBerita kategoriAktif={kategori} q={q} />
+      <FilterBerita kategoriAktif={kategori} q={q} daftarKategori={namaKategori} />
       <DaftarBerita kategori={kategori} q={q} />
     </>
   );

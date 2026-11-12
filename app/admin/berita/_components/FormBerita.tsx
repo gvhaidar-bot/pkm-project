@@ -4,7 +4,6 @@ import { useActionState, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { buatSlug } from "@/lib/slug";
-import { KATEGORI_BERITA } from "@/lib/kategoriBerita";
 import type { HasilAksi } from "../actions";
 import MasukanFoto from "@/components/admin/MasukanFoto";
 import ToolbarFormat, { PetunjukFormat } from "@/components/admin/ToolbarFormat";
@@ -16,9 +15,14 @@ export type DataBerita = {
   ringkasan: string;
   isi: string;
   gambarUrl: string | null;
-  kategori: string;
+  kategoriId: number;
   published: boolean;
   unggulan: boolean;
+};
+
+export type PilihanKategori = {
+  id: number;
+  nama: string;
 };
 
 type AksiForm = (sebelumnya: HasilAksi, formData: FormData) => Promise<HasilAksi>;
@@ -26,7 +30,15 @@ type AksiForm = (sebelumnya: HasilAksi, formData: FormData) => Promise<HasilAksi
 const inputCls =
   "flex min-h-11 w-full items-center rounded-2xl border border-line bg-white px-4 text-base text-ink transition-colors placeholder:text-muted focus:border-primary focus:outline-none";
 
-export default function FormBerita({ berita, aksi }: { berita?: DataBerita; aksi: AksiForm }) {
+export default function FormBerita({
+  berita,
+  aksi,
+  daftarKategori,
+}: {
+  berita?: DataBerita;
+  aksi: AksiForm;
+  daftarKategori: PilihanKategori[];
+}) {
   const [hasil, jalankan, menunggu] = useActionState(aksi, null);
   const [slug, setSlug] = useState(berita?.slug ?? "");
   const slugManual = useRef(!!berita);
@@ -129,18 +141,22 @@ export default function FormBerita({ berita, aksi }: { berita?: DataBerita; aksi
       </div>
 
       <div>
-        <label htmlFor="kategori" className="mb-1.5 block text-sm font-semibold text-ink">
+        <label htmlFor="kategoriId" className="mb-1.5 block text-sm font-semibold text-ink">
           Kategori
         </label>
         <select
-          id="kategori"
-          name="kategori"
-          defaultValue={berita?.kategori ?? "Lainnya"}
+          id="kategoriId"
+          name="kategoriId"
+          defaultValue={
+            berita?.kategoriId ??
+            daftarKategori.find((k) => k.nama === "Lainnya")?.id ??
+            daftarKategori[0]?.id
+          }
           className={inputCls}
         >
-          {KATEGORI_BERITA.map((k) => (
-            <option key={k} value={k}>
-              {k}
+          {daftarKategori.map((k) => (
+            <option key={k.id} value={k.id}>
+              {k.nama}
             </option>
           ))}
         </select>

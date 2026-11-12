@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
+import { urlFotoUtama } from "@/lib/foto";
 import FormPrestasi from "../../_components/FormPrestasi";
 import GaleriPrestasi from "../../_components/GaleriPrestasi";
 import { ubahPrestasi } from "../../actions";
@@ -19,7 +20,7 @@ async function KontenUbah({ params }: { params: Promise<{ id: string }> }) {
   if (!prestasi) notFound();
   return (
     <>
-      <FormPrestasi prestasi={prestasi} aksi={ubahPrestasi} />
+      <FormPrestasi prestasi={{ ...prestasi, gambarUrl: urlFotoUtama(prestasi.foto) }} aksi={ubahPrestasi} />
       <GaleriPrestasi prestasiId={prestasi.id} fotoAwal={prestasi.foto} />
     </>
   );
