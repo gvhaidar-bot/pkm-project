@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  LuArrowUpRight,
   LuClock,
   LuChevronRight,
   LuInstagram,
@@ -18,7 +19,16 @@ export const metadata = {
     "Hubungi MTs Nurul Falah Gunungsindur: Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340.",
 };
 
-const daftarKontak = [
+type Kontak = {
+  label: string;
+  nilai: string;
+  keterangan: string;
+  Icon: React.ComponentType<{ className?: string }>;
+  href?: string;
+  teksTombol?: string;
+};
+
+const daftarKontak: Kontak[] = [
   {
     label: "Alamat Madrasah",
     nilai: "Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340",
@@ -33,15 +43,19 @@ const daftarKontak = [
   },
   {
     label: "Layanan WhatsApp",
-    nilai: "[Nomor WhatsApp Resmi Madrasah]",
+    nilai: "0852-1378-5571",
     keterangan: "Pusat informasi dan konsultasi wali murid",
     Icon: LuMessageCircle,
+    href: "https://wa.me/6285213785571",
+    teksTombol: "Chat via WhatsApp",
   },
   {
     label: "Telepon Kantor",
-    nilai: "[Nomor Telepon Kantor Madrasah]",
+    nilai: "0852-1378-5571",
     keterangan: "Hubungi pada hari dan jam kerja operasional",
     Icon: LuPhone,
+    href: "tel:+6285213785571",
+    teksTombol: "Telepon Sekarang",
   },
   {
     label: "Email Resmi",
@@ -51,9 +65,11 @@ const daftarKontak = [
   },
   {
     label: "Media Sosial Resmi",
-    nilai: "[Akun Instagram Resmi Madrasah]",
-    keterangan: "[Akun TikTok Resmi Madrasah]",
+    nilai: "Instagram: @mts_nurulfalah_lengkong",
+    keterangan: "TikTok: [Akun TikTok Resmi Madrasah]",
     Icon: LuInstagram,
+    href: "https://www.instagram.com/mts_nurulfalah_lengkong/",
+    teksTombol: "Buka Instagram",
   },
 ];
 
@@ -125,6 +141,16 @@ export default function KontakPage() {
               <p className="mt-1 text-xs text-muted">
                 {item.keterangan}
               </p>
+              {item.href && (
+                <a
+                  href={item.href}
+                  {...(item.href.startsWith("http") ? { target: "_blank", rel: "noreferrer" } : {})}
+                  className="mt-4 inline-flex min-h-10 items-center gap-2 bg-primary px-4 py-2 text-xs font-bold tracking-wider text-white uppercase transition-colors hover:bg-primary-dark"
+                >
+                  <span>{item.teksTombol}</span>
+                  <LuArrowUpRight className="h-4 w-4" aria-hidden="true" />
+                </a>
+              )}
             </article>
           ))}
         </div>
@@ -196,7 +222,9 @@ export default function KontakPage() {
             <div className="mt-8 border-t border-line/60 pt-6">
               <div className="flex items-center gap-4">
                 <a
-                  href="#"
+                  href="https://www.instagram.com/mts_nurulfalah_lengkong/"
+                  target="_blank"
+                  rel="noreferrer"
                   className="flex items-center gap-2 text-xs font-bold text-primary hover:text-accent"
                 >
                   <LuInstagram className="h-4 w-4" aria-hidden="true" />

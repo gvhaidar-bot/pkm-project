@@ -14,7 +14,7 @@ export const site = {
     country: "ID",
   },
   social: {
-    instagram: "",
+    instagram: "https://www.instagram.com/mts_nurulfalah_lengkong/",
     tiktok: "",
   },
 } as const;
