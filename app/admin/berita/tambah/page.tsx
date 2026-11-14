@@ -5,7 +5,7 @@ import { tambahBerita } from "../actions";
 
 export const metadata = {
   title: "Tulis Berita — Panel Admin",
-  description: "Tulis berita baru MTs Nurul Falah Serpong.",
+  description: "Tulis berita baru MTs Nurul Falah Gunungsindur.",
 };
 
 async function KontenTambah() {

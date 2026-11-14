@@ -8,7 +8,7 @@ import IsiProgram from "@/components/program/IsiProgram";
 
 export const metadata = {
   title: "Program Akademik",
-  description: "Rincian dan silabus program akademik MTs Nurul Falah Serpong.",
+  description: "Rincian dan silabus program akademik MTs Nurul Falah Gunungsindur.",
 };
 
 async function IsiDetail({ params }: { params: Promise<{ slug: string }> }) {

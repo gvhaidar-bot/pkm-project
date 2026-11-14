@@ -14,8 +14,12 @@ export function JsonLd() {
       postalCode: site.address.postalCode,
       addressCountry: site.address.country,
     },
-    sameAs: [site.social.instagram, site.social.tiktok],
   };
+
+  const sameAs = [site.social.instagram, site.social.tiktok].filter(Boolean);
+  if (sameAs.length > 0) {
+    schema.sameAs = sameAs;
+  }
 
   if (site.url) {
     schema.url = site.url;

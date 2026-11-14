@@ -7,7 +7,7 @@ import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Program Unggulan",
-  description: "Program unggulan MTs Nurul Falah Serpong dari program akademik dan non akademik pilihan madrasah.",
+  description: "Program unggulan MTs Nurul Falah Gunungsindur dari program akademik dan non akademik pilihan madrasah.",
 };
 
 type Program = {

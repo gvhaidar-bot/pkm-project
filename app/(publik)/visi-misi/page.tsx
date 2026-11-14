@@ -1,54 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
-import { LuCircleCheck, LuChevronRight, LuCompass, LuSparkles, LuTarget } from "react-icons/lu";
+import { LuChevronRight, LuCompass, LuSparkles, LuTarget } from "react-icons/lu";
 
 export const metadata = {
   title: "Visi & Misi",
   description:
-    "Visi dan misi MTs Nurul Falah Serpong: terwujudnya madrasah yang mampu membentuk generasi yang berakhlakul karimah.",
+    "Visi dan misi MTs Nurul Falah Gunungsindur, Madrasah Tsanawiyah berciri khas Agama Islam di Gunungsindur, Kabupaten Bogor.",
 };
-
-const misi = [
-  {
-    nomor: "01",
-    judul: "Madrasah yang Inovatif",
-    deskripsi: "Mewujudkan madrasah yang inovatif dalam metode pengajaran, pemanfaatan teknologi, dan kurikulum adaptif.",
-  },
-  {
-    nomor: "02",
-    judul: "Organisasi Terus Belajar",
-    deskripsi: "Mewujudkan organisasi madrasah yang senantiasa belajar, berkembang, dan meningkatkan mutu secara berkelanjutan.",
-  },
-  {
-    nomor: "03",
-    judul: "Fasilitas Berkelanjutan",
-    deskripsi: "Mewujudkan sarana dan fasilitas madrasah yang relevan, mutakhir, nyaman, dan berwawasan lingkungan.",
-  },
-  {
-    nomor: "04",
-    judul: "Pendidikan Terjangkau",
-    deskripsi: "Mewujudkan pembiayaan pendidikan yang terjangkau tanpa mengurangi standar kualitas pendidikan putra-putri Anda.",
-  },
-  {
-    nomor: "05",
-    judul: "Pendidik Berakhlak Mulia",
-    deskripsi: "Mewujudkan tenaga pendidik dan kependidikan yang kompeten, berintegritas tinggi, dan menjadi teladan akhlak bagi siswa.",
-  },
-  {
-    nomor: "06",
-    judul: "Manajemen Berbasis Madrasah",
-    deskripsi: "Mewujudkan tata kelola manajemen madrasah yang handal, profesional, transparan, dan berorientasi pada kepuasan orang tua.",
-  },
-];
-
-const tujuan = [
-  "Terwujudnya perkembangan potensi siswa secara optimal, baik spiritual, intelektual, maupun emosional.",
-  "Terwujudnya kemandirian madrasah dalam tata kelola dan pengembangan mutu pendidikan berkelanjutan.",
-  "Tersedianya sarana dan prasarana pendidikan yang memadai, aman, dan menunjang efektivitas belajar.",
-  "Tercapainya seluruh program kurikuler, kokurikuler, dan ekstrakurikuler madrasah dengan hasil memuaskan.",
-  "Terlaksananya kehidupan madrasah yang bernuansa Islami, tertib, santun, dan penuh kasih sayang.",
-  "Terwujudnya lulusan yang berkualitas, berprestasi, berakhlakul karimah, dan bertaqwa kepada Allah SWT.",
-];
 
 export default function VisiMisiPage() {
   return (
@@ -102,7 +60,7 @@ export default function VisiMisiPage() {
         <section aria-label="Visi madrasah" className="border border-line bg-white p-8 shadow-sm lg:p-12">
           <div className="mx-auto max-w-3xl text-center">
             <span className="text-xs font-bold tracking-[0.2em] text-accent-soft uppercase">
-              Panduan Utama Kami
+              Berciri Khas Agama Islam
             </span>
             <h2 className="mt-2 font-serif text-3xl font-black text-primary-dark sm:text-4xl">
               Visi Madrasah
@@ -115,13 +73,13 @@ export default function VisiMisiPage() {
 
             <div className="mt-8 border-l-4 border-accent bg-primary-soft/50 p-6 sm:p-10">
               <blockquote className="font-serif text-2xl font-black leading-relaxed text-primary-dark sm:text-3xl">
-                &ldquo;Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah.&rdquo;
+                &ldquo;Sekolah Lanjutan Tingkat Pertama Berciri Khas Agama Islam.&rdquo;
               </blockquote>
             </div>
 
             <p className="mt-6 text-sm leading-relaxed text-muted sm:text-base">
-              Visi ini menjadi jiwa dari seluruh proses belajar mengajar, pembiasaan ibadah, dan
-              pendampingan karakter siswa di MTs Nurul Falah Serpong setiap harinya.
+              Rumusan visi, misi, dan tujuan resmi MTs Nurul Falah Gunungsindur akan ditampilkan di
+              halaman ini setelah data resmi diterima dari pihak madrasah.
             </p>
           </div>
         </section>
@@ -141,32 +99,15 @@ export default function VisiMisiPage() {
               <span className="h-0.5 w-12 bg-accent" />
             </div>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base">
-              Enam pilar komitmen operasional yang kami jalankan secara konsisten untuk merealisasikan visi madrasah.
+              Rumusan misi resmi madrasah sedang dilengkapi bersama pihak sekolah.
             </p>
           </div>
 
-          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {misi.map((item) => (
-              <article
-                key={item.nomor}
-                className="group relative border border-line bg-white p-7 transition-all duration-200 hover:-translate-y-1 hover:border-accent hover:shadow-[0_12px_32px_rgba(11,79,58,0.1)]"
-              >
-                <div className="flex items-center justify-between">
-                  <span className="flex h-10 w-10 items-center justify-center border border-accent/40 bg-primary-soft text-primary font-bold text-sm">
-                    <LuCompass className="h-5 w-5 text-accent" aria-hidden="true" />
-                  </span>
-                  <span className="font-serif text-2xl font-bold text-accent/50 group-hover:text-accent">
-                    {item.nomor}
-                  </span>
-                </div>
-                <h3 className="mt-5 font-serif text-lg font-bold text-primary-dark">
-                  {item.judul}
-                </h3>
-                <p className="mt-2.5 text-sm leading-relaxed text-muted">
-                  {item.deskripsi}
-                </p>
-              </article>
-            ))}
+          <div className="mx-auto mt-12 max-w-2xl border-2 border-dashed border-accent/40 bg-white p-8 text-center">
+            <LuCompass className="mx-auto h-10 w-10 text-accent" aria-hidden="true" />
+            <p className="mx-auto mt-3 max-w-lg text-sm leading-relaxed text-muted">
+              Rumusan misi resmi madrasah akan ditampilkan setelah data resmi diterima dari pihak madrasah.
+            </p>
           </div>
         </section>
 
@@ -186,18 +127,10 @@ export default function VisiMisiPage() {
             </div>
           </div>
 
-          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
-            {tujuan.map((item, idx) => (
-              <div
-                key={idx}
-                className="flex items-start gap-3.5 border border-line/60 bg-cream/40 p-4 transition-colors hover:bg-primary-soft/40 hover:border-accent/40"
-              >
-                <LuCircleCheck className="mt-0.5 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
-                <p className="text-sm leading-relaxed text-muted">
-                  {item}
-                </p>
-              </div>
-            ))}
+          <div className="mt-8 border-2 border-dashed border-accent/40 bg-cream/40 p-6 text-center">
+            <p className="mx-auto max-w-lg text-sm leading-relaxed text-muted">
+              Rumusan tujuan resmi madrasah akan ditampilkan setelah data resmi diterima dari pihak madrasah.
+            </p>
           </div>
         </section>
       </div>

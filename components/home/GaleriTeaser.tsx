@@ -30,7 +30,7 @@ export default async function GaleriTeaser() {
             >
               <Image
                 src={foto.gambarUrl}
-                alt={`Foto galeri MTs Nurul Falah Serpong ${i + 1}`}
+                alt={`Foto galeri MTs Nurul Falah Gunungsindur ${i + 1}`}
                 width={600}
                 height={450}
                 className="aspect-[4/3] w-full object-cover transition-transform duration-500 group-hover:scale-105"

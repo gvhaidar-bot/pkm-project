@@ -5,7 +5,7 @@ import LoginForm from "./LoginForm";
 
 export const metadata = {
   title: "Login Admin",
-  description: "Portal masuk pengelola dan tim administrator website MTs Nurul Falah Serpong.",
+  description: "Portal masuk pengelola dan tim administrator website MTs Nurul Falah Gunungsindur.",
 };
 
 export default function LoginPage() {
@@ -15,7 +15,7 @@ export default function LoginPage() {
         <div className="flex items-center justify-between border-b border-line pb-6">
           <Link href="/" className="flex items-center gap-3" aria-label="Kembali ke beranda">
             <div className="flex h-11 w-11 shrink-0 items-center justify-center border border-accent/40 bg-primary-soft p-1">
-              <Image src="/logo.svg" alt="Logo MTs Nurul Falah Serpong" width={40} height={40} className="h-9 w-9 object-contain" />
+              <Image src="/logo.svg" alt="Logo MTs Nurul Falah Gunungsindur" width={40} height={40} className="h-9 w-9 object-contain" />
             </div>
             <span className="flex flex-col leading-tight">
               <span className="font-serif text-base font-bold text-primary-dark">
@@ -53,7 +53,7 @@ export default function LoginPage() {
 
         <div className="mt-8 border-t border-line/60 pt-4 text-center">
           <p className="text-[11px] text-muted">
-            MTs Nurul Falah Serpong · Sistem Informasi Manajemen
+            MTs Nurul Falah Gunungsindur · Sistem Informasi Manajemen
           </p>
         </div>
       </div>

@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Galeri",
-  description: "Dinding foto MTs Nurul Falah Serpong — momen kegiatan belajar, kebersamaan, dan kreativitas siswa.",
+  description: "Dinding foto MTs Nurul Falah Gunungsindur — momen kegiatan belajar, kebersamaan, dan kreativitas siswa.",
 };
 
 async function IsiGaleri() {
@@ -35,7 +35,7 @@ async function IsiGaleri() {
         <figure key={foto.id} className="break-inside-avoid overflow-hidden rounded-2xl bg-primary-dark">
           <img
             src={foto.gambarUrl}
-            alt={`Foto galeri MTs Nurul Falah Serpong ${i + 1}`}
+            alt={`Foto galeri MTs Nurul Falah Gunungsindur ${i + 1}`}
             loading="lazy"
             className="w-full h-auto"
           />
@@ -85,7 +85,7 @@ export default function GaleriPage() {
           </div>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
             Potret momen keseharian belajar, kebersamaan, dan kreativitas siswa MTs Nurul
-            Falah Serpong.
+            Falah Gunungsindur.
           </p>
         </div>
       </section>

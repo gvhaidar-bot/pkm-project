@@ -4,7 +4,7 @@ import { LuArrowRight, LuBookOpen, LuCheck, LuChevronRight, LuCompass, LuSparkle
 
 export const metadata = {
   title: "Program",
-  description: "Program pendidikan MTs Nurul Falah Serpong: program akademik, program non akademik (ekstrakurikuler), dan program unggulan madrasah.",
+  description: "Program pendidikan MTs Nurul Falah Gunungsindur: program akademik, program non akademik (ekstrakurikuler), dan program unggulan madrasah.",
 };
 
 const pilarProgram = [

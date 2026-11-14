@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 
 export const metadata = {
   title: "Program Akademik",
-  description: "Program akademik MTs Nurul Falah Serpong: kurikulum terpadu dan proses pembelajaran berkualitas.",
+  description: "Program akademik MTs Nurul Falah Gunungsindur: kurikulum terpadu dan proses pembelajaran berkualitas.",
 };
 
 const fallbackFotoAkademik = [

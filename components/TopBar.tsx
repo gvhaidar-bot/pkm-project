@@ -7,7 +7,7 @@ export default function TopBar() {
         <div className="flex items-center gap-2">
           <LuMapPin className="h-3.5 w-3.5 shrink-0 text-accent" aria-hidden="true" />
           <span className="truncate font-medium text-white/90">
-            Lengkong Gudang, Serpong, Tangerang Selatan 15310
+            Jl. Pahlawan No. 06, Cibadung, Gunungsindur, Bogor 16340
           </span>
         </div>
         <div className="hidden items-center gap-6 sm:flex">
@@ -18,7 +18,7 @@ export default function TopBar() {
           <span className="h-3 w-px bg-white/20" aria-hidden="true" />
           <span className="flex items-center gap-1.5 font-semibold text-accent">
             <LuAward className="h-3.5 w-3.5" aria-hidden="true" />
-            <span>Akreditasi B (BAN-S/M)</span>
+            <span>Akreditasi A (BAN-S/M)</span>
           </span>
         </div>
       </div>

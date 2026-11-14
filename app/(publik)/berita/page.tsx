@@ -7,7 +7,7 @@ import { urlFotoUtama } from "@/lib/foto";
 
 export const metadata = {
   title: "Berita",
-  description: "Warta, informasi terkini, dan agenda kegiatan MTs Nurul Falah Serpong.",
+  description: "Warta, informasi terkini, dan agenda kegiatan MTs Nurul Falah Gunungsindur.",
 };
 
 function formatTanggal(t: Date | null) {
@@ -292,7 +292,7 @@ export default function BeritaPage({
       <section className="relative overflow-hidden bg-primary-dark text-white">
         <Image
           src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?q=80&w=2000&auto=format&fit=crop"
-          alt="Publikasi dan Kabar Berita MTs Nurul Falah Serpong"
+          alt="Publikasi dan Kabar Berita MTs Nurul Falah Gunungsindur"
           fill
           className="object-cover opacity-80 sm:opacity-85"
           priority
@@ -312,7 +312,7 @@ export default function BeritaPage({
           </div>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
             Ikuti berbagai perkembangan kegiatan belajar mengajar, pengumuman resmi madrasah,
-            dan kabar prestasi siswa MTs Nurul Falah Serpong.
+            dan kabar prestasi siswa MTs Nurul Falah Gunungsindur.
           </p>
         </div>
       </section>

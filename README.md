@@ -1,7 +1,7 @@
-# Website Promosi MTs Nurul Falah Serpong
+# Website Promosi MTs Nurul Falah Gunungsindur
 
-Website promosi untuk **MTs Nurul Falah Serpong**, madrasah tsanawiyah swasta di Lengkong Gudang,
-Kecamatan Serpong, Kota Tangerang Selatan, Banten 15310. Ditujukan untuk orang tua yang mencari
+Website promosi untuk **MTs Nurul Falah Gunungsindur**, madrasah tsanawiyah swasta di Desa Cibadung,
+Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340. Ditujukan untuk orang tua yang mencari
 sekolah untuk putra-putrinya: profil sekolah, program akademik dan ekstrakurikuler, fasilitas,
 berita, galeri, prestasi, dan kontak.
 
@@ -80,8 +80,8 @@ public/uploads/    Foto yang diunggah admin (lokal per mesin)
 
 ## Konten
 
-Data sekolah yang tampil adalah data asli yang terverifikasi (NPSN 20623052, NSM 121236740033,
-berdiri 16 November 2001, akreditasi B nilai 83 tahun 2019). Data yang belum dikonfirmasi sekolah
+Data sekolah yang tampil adalah data asli dari dokumen resmi sekolah (NPSN 20277531, NSM 121232010082,
+Yayasan Pendidikan Islam Nurul Fadhilah (YADINA), akreditasi A tahun 2019). Data yang belum dikonfirmasi sekolah
 ditampilkan sebagai placeholder bertanda kurung siku `[...]` — jangan dikarang.
 
 Statistik di beranda dihitung langsung dari database (jumlah guru, program, ekstrakurikuler,

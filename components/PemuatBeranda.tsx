@@ -50,7 +50,7 @@ export default function PemuatBeranda() {
       }`}
     >
       <Image src="/logo.svg" alt="" width={72} height={72} className="h-18 w-18" priority />
-      <p className="text-lg font-extrabold tracking-tight text-cream">MTs Nurul Falah Serpong</p>
+      <p className="text-lg font-extrabold tracking-tight text-cream">MTs Nurul Falah Gunungsindur</p>
       <span className="h-10 w-10 animate-spin rounded-full border-4 border-white/20 border-t-accent" />
     </div>
   );

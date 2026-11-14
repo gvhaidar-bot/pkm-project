@@ -9,7 +9,7 @@ import { hapusGuru } from "./actions";
 
 export const metadata = {
   title: "Kelola Guru — Panel Admin",
-  description: "Tambah, ubah, dan hapus data guru MTs Nurul Falah Serpong.",
+  description: "Tambah, ubah, dan hapus data guru MTs Nurul Falah Gunungsindur.",
 };
 
 async function TabelGuru() {

@@ -15,7 +15,7 @@ const tautanInternal = [
   { label: "Berita & Agenda", href: "/berita" },
 ];
 
-const petaUrl = "https://maps.google.com/maps?q=MTs%20Nurul%20Falah%20Serpong%2C%20Lengkong%20Gudang%2C%20Serpong%2C%20Kota%20Tangerang%20Selatan&output=embed";
+const petaUrl = "https://maps.google.com/maps?q=MTs%20Nurul%20Falah%2C%20Jl.%20Pahlawan%20No.%2006%2C%20Cibadung%2C%20Gunungsindur%2C%20Kabupaten%20Bogor&output=embed";
 
 function formatTanggal(t: Date | null) {
   if (!t) return "";
@@ -60,13 +60,13 @@ export default async function Footer() {
         <div className={`grid grid-cols-1 gap-10 sm:grid-cols-2 ${tampilkanBerita ? "lg:grid-cols-3 xl:grid-cols-5" : "lg:grid-cols-2 xl:grid-cols-4"}`}>
           {/* Col 1: Identity & Motto */}
           <div>
-            <Link href="/" className="flex items-center gap-3.5" aria-label="Beranda MTs Nurul Falah Serpong">
+            <Link href="/" className="flex items-center gap-3.5" aria-label="Beranda MTs Nurul Falah Gunungsindur">
               <div className="flex h-12 w-12 shrink-0 items-center justify-center border border-accent/40 bg-white/10 p-1">
-                <Image src="/logo.svg" alt="Logo MTs Nurul Falah Serpong" width={44} height={44} className="h-10 w-10 object-contain" />
+                <Image src="/logo.svg" alt="Logo MTs Nurul Falah Gunungsindur" width={44} height={44} className="h-10 w-10 object-contain" />
               </div>
               <span className="flex flex-col leading-tight">
                 <span className="font-serif text-[18px] font-bold tracking-tight text-white">MTs Nurul Falah</span>
-                <span className="text-[10px] font-bold tracking-[0.16em] text-accent uppercase">Serpong · Tangsel</span>
+                <span className="text-[10px] font-bold tracking-[0.16em] text-accent uppercase">Gunungsindur · Bogor</span>
               </span>
             </Link>
 
@@ -76,7 +76,7 @@ export default async function Footer() {
             </p>
 
             <div className="mt-5 border-t border-white/10 pt-4">
-              <span className="inline-block border border-accent/30 bg-primary-dark/80 px-2.5 py-1 text-[11px] font-bold tracking-wider text-accent uppercase">Akreditasi B (BAN-S/M)</span>
+              <span className="inline-block border border-accent/30 bg-primary-dark/80 px-2.5 py-1 text-[11px] font-bold tracking-wider text-accent uppercase">Akreditasi A (BAN-S/M)</span>
             </div>
           </div>
 
@@ -129,18 +129,18 @@ export default async function Footer() {
             <ul className="mt-4 space-y-3.5 text-sm text-cream/85">
               <li className="flex items-start gap-2.5">
                 <LuMapPin className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                <span className="text-xs leading-relaxed">Jl. Serpong Raya, Lengkong Gudang RT 06/04, Serpong, Tangerang Selatan, Banten 15310</span>
+                <span className="text-xs leading-relaxed">Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Cibadung, Gunungsindur, Kabupaten Bogor, Jawa Barat 16340</span>
               </li>
               <li>
-                <a href="https://www.instagram.com/mts_nurulfalah_lengkong/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-xs text-cream/85 transition-colors hover:text-accent">
+                <a href="#" className="flex items-center gap-2.5 text-xs text-cream/85 transition-colors hover:text-accent">
                   <LuInstagram className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                  <span>@mts_nurulfalah_lengkong</span>
+                  <span>Instagram</span>
                 </a>
               </li>
               <li>
-                <a href="https://www.tiktok.com/@mtsnurulfalahlengkong" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-xs text-cream/85 transition-colors hover:text-accent">
+                <a href="#" className="flex items-center gap-2.5 text-xs text-cream/85 transition-colors hover:text-accent">
                   <LuMusic2 className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                  <span>@mtsnurulfalahlengkong</span>
+                  <span>TikTok</span>
                 </a>
               </li>
             </ul>
@@ -160,16 +160,16 @@ export default async function Footer() {
             <h2 className="text-xs font-bold tracking-[0.16em] text-accent uppercase">Peta Lokasi</h2>
             <span className="mt-2.5 block h-0.5 w-8 bg-accent" aria-hidden="true" />
             <div className="mt-4 overflow-hidden border border-white/20 bg-primary-dark p-1 shadow-sm">
-              <iframe title="Peta lokasi MTs Nurul Falah Serpong" src={petaUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0" />
+              <iframe title="Peta lokasi MTs Nurul Falah Gunungsindur" src={petaUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" className="h-40 w-full border-0" />
             </div>
-            <p className="mt-2 text-[11px] text-cream/60">Akses mudah di jalan utama Serpong Raya, Lengkong Gudang.</p>
+            <p className="mt-2 text-[11px] text-cream/60">Berada di Jl. Pahlawan, Desa Cibadung, Gunungsindur.</p>
           </div>
         </div>
 
         {/* Bottom copyright line */}
         <div className="mt-14 flex flex-col items-center justify-between gap-3 border-t border-white/10 pt-6 text-center text-xs text-cream/70 sm:flex-row sm:text-left">
-          <p>© 2026 MTs Nurul Falah Serpong. Seluruh hak cipta dilindungi.</p>
-          <p className="font-serif italic text-accent/90">Membentuk Generasi yang Berakhlakul Karimah</p>
+          <p>© 2026 MTs Nurul Falah Gunungsindur. Seluruh hak cipta dilindungi.</p>
+          <p className="font-serif italic text-accent/90">Madrasah Tsanawiyah Berciri Khas Agama Islam</p>
         </div>
       </div>
     </footer>

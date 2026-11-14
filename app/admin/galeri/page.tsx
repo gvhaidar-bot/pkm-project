@@ -8,7 +8,7 @@ import { hapusFotoGaleri, ubahAktifGaleri } from "./actions";
 
 export const metadata = {
   title: "Kelola Galeri — Panel Admin",
-  description: "Unggah, tampilkan, sembunyikan, dan hapus foto galeri MTs Nurul Falah Serpong.",
+  description: "Unggah, tampilkan, sembunyikan, dan hapus foto galeri MTs Nurul Falah Gunungsindur.",
 };
 
 function formatTanggal(tanggal: Date) {

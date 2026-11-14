@@ -10,7 +10,7 @@ import TeksBerformat, { CuplikanBerformat, Teks } from "@/components/TeksBerform
 
 export const metadata = {
   title: "Ekstrakurikuler",
-  description: "Rincian kegiatan ekstrakurikuler MTs Nurul Falah Serpong.",
+  description: "Rincian kegiatan ekstrakurikuler MTs Nurul Falah Gunungsindur.",
 };
 
 function ButirDaftar({ teks }: { teks: string }) {

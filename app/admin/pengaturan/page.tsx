@@ -4,7 +4,7 @@ import FormPengaturan from "./_components/FormPengaturan";
 
 export const metadata = {
   title: "Pengaturan — Panel Admin",
-  description: "Atur tampilan website MTs Nurul Falah Serpong.",
+  description: "Atur tampilan website MTs Nurul Falah Gunungsindur.",
 };
 
 async function muatPengaturan() {
@@ -36,7 +36,7 @@ export default function PengaturanPage() {
         Pengaturan
       </h1>
       <p className="mt-1 text-base text-secondary">
-        Atur tampilan website MTs Nurul Falah Serpong.
+        Atur tampilan website MTs Nurul Falah Gunungsindur.
       </p>
 
       <Suspense fallback={<KerangkaPengaturan />}>

@@ -41,7 +41,7 @@ export default function ProfilTeaser() {
             Tentang Madrasah Kami
           </span>
           <h2 className="mt-2.5 font-serif text-3xl font-black leading-tight tracking-tight sm:text-4xl lg:text-5xl">
-            Profil MTs Nurul Falah Serpong
+            Profil MTs Nurul Falah Gunungsindur
           </h2>
           <div className="mt-4 flex items-center gap-2" aria-hidden="true">
             <span className="h-0.5 w-12 bg-white" />
@@ -49,10 +49,10 @@ export default function ProfilTeaser() {
           </div>
 
           <p className="mt-5 text-base leading-relaxed text-white/90 md:text-lg">
-            Berdiri sejak tahun 2001 di Lengkong Gudang, Serpong, MTs Nurul Falah hadir sebagai
-            madrasah tsanawiyah terakreditasi B yang memadukan pendidikan akademik formal dengan
-            penanaman nilai-nilai keislaman secara menyeluruh. Kami berkomitmen membentuk siswa yang
-            cerdas, mandiri, dan berakhlakul karimah.
+            MTs Nurul Falah Gunungsindur hadir sebagai madrasah tsanawiyah swasta berciri khas
+            Agama Islam yang terakreditasi A di Kabupaten Bogor, memadukan pendidikan akademik
+            formal dengan penanaman nilai-nilai keislaman secara menyeluruh. Kami berkomitmen
+            membentuk siswa yang cerdas, mandiri, dan berakhlakul karimah.
           </p>
 
           <ul className="mt-6 space-y-3.5">

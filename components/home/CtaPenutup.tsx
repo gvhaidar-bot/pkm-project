@@ -14,7 +14,7 @@ export default function CtaPenutup() {
           Masa Depan Buah Hati Anda
         </span>
         <h2 className="mt-3 font-serif text-3xl leading-tight font-black tracking-tight sm:text-4xl md:text-5xl">
-          Kenali MTs Nurul Falah Serpong Lebih Dekat
+          Kenali MTs Nurul Falah Gunungsindur Lebih Dekat
         </h2>
         <div className="mx-auto mt-4 flex items-center justify-center gap-2" aria-hidden="true">
           <span className="h-0.5 w-12 bg-accent" />
@@ -53,7 +53,7 @@ export default function CtaPenutup() {
 
         <div className="mt-10 flex items-center justify-center gap-2 text-xs text-white/70">
           <LuMapPin className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-          <span>Jl. Serpong Raya, Lengkong Gudang RT 06/04, Serpong, Tangerang Selatan</span>
+          <span>Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Cibadung, Gunungsindur, Bogor</span>
         </div>
       </div>
     </section>

@@ -39,7 +39,7 @@ export default function KenapaMemilihKami() {
         <JudulBagian
           label="Komitmen Pendidikan"
           judul="Kenapa Orang Tua Memilih Kami"
-          deskripsi="Alasan para orang tua mempercayakan masa depan dan akhlak putra-putrinya kepada MTs Nurul Falah Serpong."
+          deskripsi="Alasan para orang tua mempercayakan masa depan dan akhlak putra-putrinya kepada MTs Nurul Falah Gunungsindur."
         />
 
         <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">

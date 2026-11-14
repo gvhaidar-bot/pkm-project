@@ -8,7 +8,7 @@ import DaftarGuruStruktur from "@/components/guru/DaftarGuruStruktur";
 
 export const metadata = {
   title: "Staff & Guru",
-  description: "Dewan guru dan staf pengajar MTs Nurul Falah Serpong: tenaga pendidik berdedikasi membimbing putra-putri Anda.",
+  description: "Dewan guru dan staf pengajar MTs Nurul Falah Gunungsindur: tenaga pendidik berdedikasi membimbing putra-putri Anda.",
 };
 
 async function DaftarGuru() {
@@ -74,7 +74,7 @@ export default function GuruPage() {
       <section className="relative overflow-hidden bg-primary-dark text-white">
         <Image
           src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?q=80&w=2000&auto=format&fit=crop"
-          alt="Tenaga Pendidik & Guru MTs Nurul Falah Serpong"
+          alt="Tenaga Pendidik & Guru MTs Nurul Falah Gunungsindur"
           fill
           className="object-cover opacity-80 sm:opacity-85"
           priority
@@ -94,7 +94,7 @@ export default function GuruPage() {
           </div>
           <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">
             Mengenal para guru dan tenaga kependidikan yang berdedikasi membimbing perkembangan
-            intelektual, akhlak, dan kepribadian siswa setiap hari di MTs Nurul Falah Serpong.
+            intelektual, akhlak, dan kepribadian siswa setiap hari di MTs Nurul Falah Gunungsindur.
           </p>
         </div>
       </section>

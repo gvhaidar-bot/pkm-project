@@ -147,7 +147,7 @@ export default function DaftarGuruStruktur({ daftar }: DaftarGuruStrukturProps) 
           </h3>
 
           <p className="mt-1 text-xs font-bold tracking-[0.14em] text-muted uppercase">
-            MTs Nurul Falah Serpong · Tangerang Selatan
+            MTs Nurul Falah Gunungsindur · Kabupaten Bogor
           </p>
 
           {guru.bio ? (
@@ -246,7 +246,7 @@ export default function DaftarGuruStruktur({ daftar }: DaftarGuruStrukturProps) 
               Dewan Guru &amp; Tenaga Kependidikan
             </h2>
             <p className="mt-1 text-xs text-muted sm:text-sm">
-              Total {daftar.length} tenaga pendidik dan kependidikan terdaftar di MTs Nurul Falah Serpong.
+              Total {daftar.length} tenaga pendidik dan kependidikan terdaftar di MTs Nurul Falah Gunungsindur.
             </p>
           </div>
 

@@ -8,7 +8,7 @@ import { ubahPrestasi } from "../../actions";
 
 export const metadata = {
   title: "Ubah Prestasi — Panel Admin",
-  description: "Ubah prestasi MTs Nurul Falah Serpong.",
+  description: "Ubah prestasi MTs Nurul Falah Gunungsindur.",
 };
 
 async function KontenUbah({ params }: { params: Promise<{ id: string }> }) {

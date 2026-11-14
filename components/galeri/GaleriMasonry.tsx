@@ -427,7 +427,7 @@ export default function GaleriMasonry({ daftarFoto, daftarAlbum }: GaleriMasonry
               </div>
 
               <span className="text-[11px] font-bold tracking-wider text-accent uppercase">
-                MTs Nurul Falah Serpong
+                MTs Nurul Falah Gunungsindur
               </span>
             </div>
           </div>

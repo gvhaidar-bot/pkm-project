@@ -18,7 +18,7 @@ import { prisma } from "@/lib/prisma";
 export const metadata = {
   title: "Dasbor Admin",
   description:
-    "Ringkasan dan pengelolaan konten website MTs Nurul Falah Serpong.",
+    "Ringkasan dan pengelolaan konten website MTs Nurul Falah Gunungsindur.",
 };
 
 type KartuData = {

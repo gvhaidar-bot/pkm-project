@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!berita) return { title: "Berita Tidak Ditemukan" };
   return {
     title: berita.judul,
-    description: berita.ringkasan || "Warta resmi MTs Nurul Falah Serpong, Tangerang Selatan.",
+    description: berita.ringkasan || "Warta resmi MTs Nurul Falah Gunungsindur, Kabupaten Bogor.",
   };
 }
 
@@ -184,7 +184,7 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
             <div className="flex items-center justify-between border-t border-line/60 bg-white px-4 py-2.5 text-xs text-muted">
               <span className="flex items-center gap-1.5">
                 <LuImage className="h-3.5 w-3.5 text-accent" aria-hidden="true" />
-                <span className="font-medium text-ink/75">Dokumentasi Resmi MTs Nurul Falah Serpong</span>
+                <span className="font-medium text-ink/75">Dokumentasi Resmi MTs Nurul Falah Gunungsindur</span>
               </span>
               <span className="text-[11px] font-bold tracking-wider text-accent uppercase">Publikasi Humas</span>
             </div>
@@ -264,7 +264,7 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
                     {berita.author?.nama ?? "Tim Humas & Publikasi Madrasah"}
                   </p>
                   <p className="text-xs text-muted">
-                    MTs Nurul Falah Serpong · Lengkong Gudang, Tangerang Selatan
+                    MTs Nurul Falah Gunungsindur · Cibadung, Gunungsindur, Bogor
                   </p>
                 </div>
               </div>
@@ -277,7 +277,7 @@ async function IsiBerita({ params }: { params: Promise<{ slug: string }> }) {
               </Link>
             </div>
             <p className="mt-4 border-t border-line/60 pt-3 text-[11px] leading-relaxed text-muted">
-              Warta ini diterbitkan untuk konsumsi publik sebagai media informasi resmi kegiatan, program, dan prestasi di lingkungan MTs Nurul Falah Serpong.
+              Warta ini diterbitkan untuk konsumsi publik sebagai media informasi resmi kegiatan, program, dan prestasi di lingkungan MTs Nurul Falah Gunungsindur.
             </p>
           </div>
         </main>

@@ -8,7 +8,7 @@ import { hapusEkstrakurikuler } from "./actions";
 
 export const metadata = {
   title: "Kelola Ekstrakurikuler — Panel Admin",
-  description: "Tambah, ubah, dan hapus ekstrakurikuler MTs Nurul Falah Serpong.",
+  description: "Tambah, ubah, dan hapus ekstrakurikuler MTs Nurul Falah Gunungsindur.",
 };
 
 async function TabelEkstrakurikuler() {

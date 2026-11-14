@@ -20,10 +20,10 @@ export default function PitaVisiFooter() {
       <div className="mx-auto flex w-full max-w-300 flex-col items-center justify-between gap-6 px-5 lg:flex-row lg:px-6">
         <div className="max-w-2xl text-center lg:text-left">
           <span className="text-xs font-bold tracking-[0.2em] text-accent uppercase">
-            Visi Utama Kami
+            Berciri Khas Agama Islam
           </span>
           <p className="mt-2 font-serif text-2xl font-bold leading-snug text-white sm:text-3xl">
-            &ldquo;Terwujudnya Madrasah yang mampu membentuk generasi yang berakhlakul karimah.&rdquo;
+            &ldquo;Sekolah Lanjutan Tingkat Pertama Berciri Khas Agama Islam.&rdquo;
           </p>
         </div>
         <Link

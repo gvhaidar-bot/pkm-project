@@ -4,7 +4,7 @@ import { LuChevronRight, LuCircleCheck, LuClock3, LuIdCard, LuNetwork, LuSparkle
 
 export const metadata = {
   title: "Profil Sekolah",
-  description: "Profil MTs Nurul Falah Serpong: identitas resmi, sejarah perjalanan sejak 2001, visi misi, tujuan pendidikan, serta struktur organisasi madrasah tsanawiyah di Serpong.",
+  description: "Profil MTs Nurul Falah Gunungsindur: identitas resmi, sejarah, visi misi, tujuan pendidikan, serta struktur organisasi madrasah tsanawiyah berciri khas Agama Islam di Gunungsindur, Kabupaten Bogor.",
 };
 
 const menu = [
@@ -15,61 +15,33 @@ const menu = [
 ];
 
 const identitas = [
-  { label: "Nama Madrasah", nilai: "MTs Nurul Falah Serpong" },
+  { label: "Nama Madrasah", nilai: "MTs Nurul Falah Gunungsindur" },
   { label: "Status Sekolah", nilai: "Swasta — di bawah naungan Kementerian Agama RI" },
-  { label: "Yayasan Penyelenggara", nilai: "Yayasan Pendidikan Islam Yatim dan Duafa (YPYD)" },
-  { label: "Tanggal Berdiri", nilai: "16 November 2001" },
-  { label: "Luas Tanah", nilai: "1.400 m²" },
-  { label: "Kurikulum", nilai: "KTSP / Kurikulum Kemenag terpadu dengan Kurikulum Nasional" },
+  { label: "Yayasan Penyelenggara", nilai: "Yayasan Pendidikan Islam Nurul Fadhilah (YADINA)" },
   { label: "Jenjang & Kelas", nilai: "Madrasah Tsanawiyah (Kelas VII, VIII, IX)" },
-  { label: "NPSN", nilai: "20623052" },
-  { label: "NSM", nilai: "121236740033" },
-  { label: "Peringkat Akreditasi", nilai: "Akreditasi B (Nilai 83, BAN-S/M 2019)" },
+  { label: "NPSN", nilai: "20277531" },
+  { label: "NSM", nilai: "121232010082" },
+  { label: "Peringkat Akreditasi", nilai: "Akreditasi A (BAN-S/M 2019, SK BAP-S/M Provinsi Jawa Barat No. 763/BAN-S/M/SK/2019)" },
   {
     label: "Alamat Lengkap",
-    nilai: "Jl. Serpong Raya, Lengkong Gudang RT 06/04, Kecamatan Serpong, Kota Tangerang Selatan, Banten 15310",
+    nilai: "Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340",
   },
 ];
 
 const sejarah = [
   {
-    tahun: "2001",
-    judul: "Pendirian Madrasah",
-    teks: "MTs Nurul Falah Serpong resmi didirikan pada 16 November 2001 berdasarkan SK Kepala Kanwil Kemenag Provinsi Jawa Barat Nomor D/Wi/MTs/965/2001. Diselenggarakan oleh Yayasan Pendidikan Islam Yatim dan Duafa (YPYD), madrasah memulai langkah awal dengan angkatan pertama sebanyak 25 siswa.",
-  },
-  {
-    tahun: "2013",
-    judul: "Legalitas Operasional Mandiri",
-    teks: "Seiring pemekaran wilayah Tangerang Selatan dan perkembangan madrasah, MTs Nurul Falah memperoleh SK Operasional Nomor D/Kd.28.08/4/03.2/698/2013 tertanggal 06 September 2013 dari Kantor Kementerian Agama Kota Tangerang Selatan.",
-  },
-  {
-    tahun: "2015",
-    judul: "Peningkatan Kepercayaan Masyarakat",
-    teks: "Pada tahun ajaran 2015/2016, jumlah siswa bertumbuh menjadi 129 siswa yang terbagi dalam lima rombongan belajar. Fasilitas belajar dan kegiatan ekstrakurikuler terus dikembangkan untuk memenuhi kebutuhan siswa.",
-  },
-  {
     tahun: "2019",
-    judul: "Raihan Akreditasi B BAN-S/M",
-    teks: "MTs Nurul Falah Serpong berhasil meraih status Akreditasi B dengan nilai 83 dari Badan Akreditasi Nasional Sekolah/Madrasah (BAN-S/M) berdasarkan SK Nomor 971/BAN-SM/SK/2019 tertanggal 05 November 2019.",
+    judul: "Terakreditasi A BAN-S/M",
+    teks: "MTs Nurul Falah Gunungsindur meraih status Terakreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah (BAN-S/M) berdasarkan SK BAP-S/M Provinsi Jawa Barat Nomor 763/BAN-SM/SK/2019.",
   },
 ];
 
 const misi = [
-  "Mewujudkan madrasah yang inovatif dalam metode pembelajaran dan teknologi",
-  "Mewujudkan organisasi madrasah yang terus belajar dan adaptif terhadap perkembangan zaman",
-  "Mewujudkan fasilitas madrasah yang relevan, mutakhir, dan berwawasan lingkungan",
-  "Mewujudkan pembiayaan pendidikan yang terjangkau bagi seluruh lapisan masyarakat",
-  "Mewujudkan pendidik dan tenaga kependidikan yang berakhlakul mulia dan kompeten",
-  "Mewujudkan manajemen berbasis madrasah yang transparan, akuntabel, dan handal",
+  "Rumusan misi resmi madrasah akan ditampilkan setelah data resmi diterima dari pihak madrasah",
 ];
 
 const tujuan = [
-  "Terwujudnya perkembangan potensi siswa secara optimal, baik spiritual, intelektual, maupun emosional",
-  "Terwujudnya kemandirian madrasah dalam tata kelola dan pengembangan mutu pendidikan",
-  "Tersedianya sarana dan prasarana pendidikan yang aman, nyaman, dan memadai",
-  "Tercapainya seluruh program kurikuler dan ekstrakurikuler madrasah dengan standar yang baik",
-  "Terlaksananya budaya kehidupan madrasah yang Islami, ramah, dan berdisiplin",
-  "Terwujudnya lulusan yang berkualitas, berprestasi, berakhlakul karimah, dan bertaqwa kepada Allah SWT",
+  "Rumusan tujuan resmi madrasah akan ditampilkan setelah data resmi diterima dari pihak madrasah",
 ];
 
 export default function ProfilPage() {
@@ -79,7 +51,7 @@ export default function ProfilPage() {
       <section className="relative overflow-hidden bg-primary-dark text-white">
         <Image
           src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?q=80&w=2000&auto=format&fit=crop"
-          alt="Gedung & Ruang Belajar MTs Nurul Falah Serpong"
+          alt="Gedung & Ruang Belajar MTs Nurul Falah Gunungsindur"
           fill
           className="object-cover opacity-80 sm:opacity-85"
           priority
@@ -90,12 +62,12 @@ export default function ProfilPage() {
             <LuSparkles className="h-3.5 w-3.5" aria-hidden="true" />
             <span>Profil Resmi Lembaga</span>
           </div>
-          <h1 className="mt-4 font-serif text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">Profil MTs Nurul Falah Serpong</h1>
+          <h1 className="mt-4 font-serif text-3xl font-black tracking-tight text-white sm:text-4xl lg:text-5xl">Profil MTs Nurul Falah Gunungsindur</h1>
           <div className="mt-4 flex items-center gap-2" aria-hidden="true">
             <span className="h-0.5 w-12 bg-accent" />
             <span className="h-1.5 w-1.5 rotate-45 bg-accent" />
           </div>
-          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">Mengenal lebih dekat identitas, sejarah pendirian sejak 2001, visi misi, serta komitmen pendidikan MTs Nurul Falah di Lengkong Gudang, Serpong.</p>
+          <p className="mt-4 max-w-2xl text-base leading-relaxed text-white/85 sm:text-lg">Mengenal lebih dekat identitas, sejarah, visi misi, serta komitmen pendidikan MTs Nurul Falah di Cibadung, Gunungsindur, Kabupaten Bogor.</p>
         </div>
       </section>
 
@@ -172,6 +144,10 @@ export default function ProfilPage() {
                   <p className="mt-3 text-sm leading-relaxed text-muted">{item.teks}</p>
                 </div>
               ))}
+            </div>
+
+            <div className="mt-6 border-2 border-dashed border-accent/40 bg-white p-6 text-center">
+              <p className="mx-auto max-w-lg text-sm leading-relaxed text-muted">Riwayat lengkap pendirian dan perjalanan madrasah akan dilengkapi setelah data resmi diterima dari pihak madrasah.</p>
             </div>
           </section>
 

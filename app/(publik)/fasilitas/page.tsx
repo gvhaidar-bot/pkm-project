@@ -8,7 +8,7 @@ import TeksBerformat from "@/components/TeksBerformat";
 
 export const metadata = {
   title: "Fasilitas",
-  description: "Fasilitas dan sarana pendukung kegiatan belajar di MTs Nurul Falah Serpong, Tangerang Selatan.",
+  description: "Fasilitas dan sarana pendukung kegiatan belajar di MTs Nurul Falah Gunungsindur, Kabupaten Bogor.",
 };
 
 async function DaftarFasilitas() {
@@ -84,7 +84,7 @@ async function DaftarFasilitas() {
 
           <div className="px-7 pb-7 pt-2">
             <span className="block text-[11px] font-bold tracking-wider text-primary/70 uppercase">
-              MTs Nurul Falah Serpong
+              MTs Nurul Falah Gunungsindur
             </span>
           </div>
         </article>

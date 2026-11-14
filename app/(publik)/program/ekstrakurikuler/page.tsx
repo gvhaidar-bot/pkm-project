@@ -7,7 +7,7 @@ import { IkonEkstrakurikuler } from "@/components/ekstrakurikuler/ikon";
 
 export const metadata = {
   title: "Ekstrakurikuler",
-  description: "Ragam kegiatan ekstrakurikuler MTs Nurul Falah Serpong: wadah minat, bakat, kepemimpinan, dan kreativitas siswa.",
+  description: "Ragam kegiatan ekstrakurikuler MTs Nurul Falah Gunungsindur: wadah minat, bakat, kepemimpinan, dan kreativitas siswa.",
 };
 
 const fallbackFotoEkskul: Record<string, string> = {

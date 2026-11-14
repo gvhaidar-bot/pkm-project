@@ -3,7 +3,7 @@ import { tambahEkstrakurikuler } from "../actions";
 
 export const metadata = {
   title: "Tambah Ekstrakurikuler — Panel Admin",
-  description: "Tambah ekstrakurikuler baru MTs Nurul Falah Serpong.",
+  description: "Tambah ekstrakurikuler baru MTs Nurul Falah Gunungsindur.",
 };
 
 export default function TambahEkstrakurikulerPage() {

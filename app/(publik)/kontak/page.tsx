@@ -15,14 +15,14 @@ import {
 export const metadata = {
   title: "Kontak",
   description:
-    "Hubungi MTs Nurul Falah Serpong: Jl. Serpong Raya, Lengkong Gudang, Kecamatan Serpong, Kota Tangerang Selatan, Banten 15310.",
+    "Hubungi MTs Nurul Falah Gunungsindur: Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340.",
 };
 
 const daftarKontak = [
   {
     label: "Alamat Madrasah",
-    nilai: "Jl. Serpong Raya, Lengkong Gudang RT 06/04, Kecamatan Serpong, Kota Tangerang Selatan, Banten 15310",
-    keterangan: "Akses mudah di tepi jalan utama Serpong Raya",
+    nilai: "Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340",
+    keterangan: "Berada di Jl. Pahlawan, Desa Cibadung, Gunungsindur",
     Icon: LuMapPin,
   },
   {
@@ -51,14 +51,14 @@ const daftarKontak = [
   },
   {
     label: "Media Sosial Resmi",
-    nilai: "Instagram: @mts_nurulfalah_lengkong",
-    keterangan: "TikTok: @mtsnurulfalahlengkong",
+    nilai: "[Akun Instagram Resmi Madrasah]",
+    keterangan: "[Akun TikTok Resmi Madrasah]",
     Icon: LuInstagram,
   },
 ];
 
 const petaUrl =
-  "https://maps.google.com/maps?q=MTs%20Nurul%20Falah%20Serpong%2C%20Lengkong%20Gudang%2C%20Serpong%2C%20Kota%20Tangerang%20Selatan&output=embed";
+  "https://maps.google.com/maps?q=MTs%20Nurul%20Falah%2C%20Jl.%20Pahlawan%20No.%2006%2C%20Cibadung%2C%20Gunungsindur%2C%20Kabupaten%20Bogor&output=embed";
 
 export default function KontakPage() {
   return (
@@ -67,7 +67,7 @@ export default function KontakPage() {
       <section className="relative overflow-hidden bg-primary-dark text-white">
         <Image
           src="https://images.unsplash.com/photo-1497366216548-37526070297c?q=80&w=2000&auto=format&fit=crop"
-          alt="Layanan Informasi dan Tata Usaha MTs Nurul Falah Serpong"
+          alt="Layanan Informasi dan Tata Usaha MTs Nurul Falah Gunungsindur"
           fill
           className="object-cover opacity-80 sm:opacity-85"
           priority
@@ -143,7 +143,7 @@ export default function KontakPage() {
             </div>
             <div className="mt-6 overflow-hidden border border-line bg-primary-dark p-1">
               <iframe
-                title="Peta lokasi MTs Nurul Falah Serpong"
+                title="Peta lokasi MTs Nurul Falah Gunungsindur"
                 src={petaUrl}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
@@ -151,7 +151,7 @@ export default function KontakPage() {
               />
             </div>
             <p className="mt-4 text-xs text-muted leading-relaxed">
-              Alamat: Jl. Serpong Raya, Lengkong Gudang RT 06/04, Kecamatan Serpong, Kota Tangerang Selatan, Banten 15310.
+              Alamat: Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340.
             </p>
           </div>
 
@@ -196,9 +196,7 @@ export default function KontakPage() {
             <div className="mt-8 border-t border-line/60 pt-6">
               <div className="flex items-center gap-4">
                 <a
-                  href="https://www.instagram.com/mts_nurulfalah_lengkong/"
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#"
                   className="flex items-center gap-2 text-xs font-bold text-primary hover:text-accent"
                 >
                   <LuInstagram className="h-4 w-4" aria-hidden="true" />
@@ -206,9 +204,7 @@ export default function KontakPage() {
                 </a>
                 <span className="h-3 w-px bg-line" aria-hidden="true" />
                 <a
-                  href="https://www.tiktok.com/@mtsnurulfalahlengkong"
-                  target="_blank"
-                  rel="noreferrer"
+                  href="#"
                   className="flex items-center gap-2 text-xs font-bold text-primary hover:text-accent"
                 >
                   <LuMusic2 className="h-4 w-4" aria-hidden="true" />

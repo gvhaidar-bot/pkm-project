@@ -9,7 +9,7 @@ import { hapusBerita } from "./actions";
 
 export const metadata = {
   title: "Kelola Berita — Panel Admin",
-  description: "Tambah, ubah, dan hapus berita MTs Nurul Falah Serpong.",
+  description: "Tambah, ubah, dan hapus berita MTs Nurul Falah Gunungsindur.",
 };
 
 function formatTanggal(t: Date | null) {

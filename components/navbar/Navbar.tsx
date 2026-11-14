@@ -49,7 +49,7 @@ const Navbar = () => {
         <Link
           href="/"
           className="group flex min-w-0 items-center gap-3.5"
-          aria-label="Beranda MTs Nurul Falah Serpong"
+          aria-label="Beranda MTs Nurul Falah Gunungsindur"
         >
           <div
             className={clsx(
@@ -61,7 +61,7 @@ const Navbar = () => {
           >
             <Image
               src="/logo.svg"
-              alt="Logo MTs Nurul Falah Serpong"
+              alt="Logo MTs Nurul Falah Gunungsindur"
               width={40}
               height={40}
               priority
@@ -83,7 +83,7 @@ const Navbar = () => {
                 isTransparent ? "text-accent-soft" : "text-accent",
               )}
             >
-              Serpong · Tangerang Selatan
+              Gunungsindur · Bogor
             </span>
           </span>
         </Link>

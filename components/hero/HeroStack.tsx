@@ -73,7 +73,7 @@ export default function HeroStack() {
           {/* Accreditation Tag */}
           <div className="inline-flex items-center gap-2 border border-accent/60 bg-primary-dark/80 px-3.5 py-1.5 text-xs font-bold tracking-[0.16em] text-accent uppercase backdrop-blur-xs">
             <span className="h-1.5 w-1.5 bg-accent" aria-hidden="true" />
-            <span>Madrasah Tsanawiyah Terakreditasi B · Serpong</span>
+            <span>Madrasah Tsanawiyah Terakreditasi A · Gunungsindur</span>
           </div>
 
           {/* Main Headline H1 */}
@@ -90,8 +90,8 @@ export default function HeroStack() {
 
           {/* Subtitle Description */}
           <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg">
-            Kenali profil MTs Nurul Falah Serpong, program unggulan, fasilitas, dan prestasi kami.
-            Pilihan madrasah terpercaya untuk buah hati Anda di Tangerang Selatan.
+            Kenali profil MTs Nurul Falah Gunungsindur, program unggulan, fasilitas, dan prestasi kami.
+            Pilihan madrasah terpercaya untuk buah hati Anda di Gunungsindur, Bogor.
           </p>
 
           {/* Action Buttons */}
