@@ -132,9 +132,9 @@ export default async function Footer() {
                 <span className="text-xs leading-relaxed">Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Cibadung, Gunungsindur, Kabupaten Bogor, Jawa Barat 16340</span>
               </li>
               <li>
-                <a href="https://www.instagram.com/mts_nurulfalah_lengkong/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-xs text-cream/85 transition-colors hover:text-accent">
+                <a href="https://www.instagram.com/mts_nurulfalahgns/" target="_blank" rel="noreferrer" className="flex items-center gap-2.5 text-xs text-cream/85 transition-colors hover:text-accent">
                   <LuInstagram className="h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
-                  <span>@mts_nurulfalah_lengkong</span>
+                  <span>@mts_nurulfalahgns</span>
                 </a>
               </li>
               <li>

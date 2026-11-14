@@ -65,10 +65,10 @@ const daftarKontak: Kontak[] = [
   },
   {
     label: "Media Sosial Resmi",
-    nilai: "Instagram: @mts_nurulfalah_lengkong",
+    nilai: "Instagram: @mts_nurulfalahgns",
     keterangan: "TikTok: [Akun TikTok Resmi Madrasah]",
     Icon: LuInstagram,
-    href: "https://www.instagram.com/mts_nurulfalah_lengkong/",
+    href: "https://www.instagram.com/mts_nurulfalahgns/",
     teksTombol: "Buka Instagram",
   },
 ];
@@ -222,7 +222,7 @@ export default function KontakPage() {
             <div className="mt-8 border-t border-line/60 pt-6">
               <div className="flex items-center gap-4">
                 <a
-                  href="https://www.instagram.com/mts_nurulfalah_lengkong/"
+                  href="https://www.instagram.com/mts_nurulfalahgns/"
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-2 text-xs font-bold text-primary hover:text-accent"
