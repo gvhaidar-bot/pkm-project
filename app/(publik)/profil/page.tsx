@@ -21,7 +21,8 @@ const identitas = [
   { label: "Jenjang & Kelas", nilai: "Madrasah Tsanawiyah (Kelas VII, VIII, IX)" },
   { label: "NPSN", nilai: "20277531" },
   { label: "NSM", nilai: "121232010082" },
-  { label: "Peringkat Akreditasi", nilai: "Akreditasi A (BAN-S/M 2019, SK BAP-S/M Provinsi Jawa Barat No. 763/BAN-S/M/SK/2019)" },
+  { label: "Nomor Pokok Yayasan (NPYP)", nilai: "AD2790" },
+  { label: "Peringkat Akreditasi", nilai: "Akreditasi A (BAN-S/M 2019, SK BAP-S/M Provinsi Jawa Barat No. 763/BAN-S/M/SK/2019, tanggal 9 September 2019)" },
   {
     label: "Alamat Lengkap",
     nilai: "Jl. Pahlawan No. 06, Kp. Bulaksaga RT 03/06, Desa Cibadung, Kecamatan Gunungsindur, Kabupaten Bogor, Jawa Barat 16340",
@@ -32,7 +33,7 @@ const sejarah = [
   {
     tahun: "2019",
     judul: "Terakreditasi A BAN-S/M",
-    teks: "MTs Nurul Falah Gunungsindur meraih status Terakreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah (BAN-S/M) berdasarkan SK BAP-S/M Provinsi Jawa Barat Nomor 763/BAN-SM/SK/2019.",
+    teks: "MTs Nurul Falah Gunungsindur meraih status Terakreditasi A dari Badan Akreditasi Nasional Sekolah/Madrasah (BAN-S/M) berdasarkan SK BAP-S/M Provinsi Jawa Barat Nomor 763/BAN-SM/SK/2019 tertanggal 9 September 2019.",
   },
 ];
 
